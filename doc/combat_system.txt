@@ -1,0 +1,6 @@
+combat system
+-------------
+
+einschränkungen
+---------------
+* nur 1v1 kampf

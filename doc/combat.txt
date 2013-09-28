@@ -1,0 +1,14 @@
+Combat System
+=============
+Stat modifier
+-------------
+* Increase Fire resistance by 10
+* Increase Block change by 10
+
+Round modifier
+--------------
+* Heals for x in every round
+* Deals damage for x in every round
+
+Skills
+------

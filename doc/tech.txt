@@ -1,0 +1,14 @@
+Welt GUI
+----
+* Charakter bewegt sich mit Cursor Tasten
+* Welt definiert mit Textfile
+
+Welt GUI
+--------
+* Inventar
+* angelegte Ausrüstung
+* aktuelle Werte
+* Questlog
+
+Kampf GUI
+---------

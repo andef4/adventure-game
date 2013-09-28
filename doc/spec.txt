@@ -1,0 +1,57 @@
+Welt
+----
+* 2D Karte auf der man sich mit seinem Charakter bewegen kann
+* Eingrezung der Karte mit Wänden, Bäumen
+* Charakter ist auf einem bestimmten Level Unterwegs
+* Übergang zum nächsten Level blockiert durch Gegner, Tür
+
+Kampf
+-----
+* Physikalischer und Zauberschaden
+* Physikalischer Schaden kann geblockt werden, wenn Schild ausgerüstet ist. Geblockter Schaden wird um einen gewissen Prozentsatz reduziert
+* Beiden Schadenstypen kann ausgewichen werden, dadurch entsteht kein Schaden
+* Die Chance auszuweisen ist signifikant kleiner als die Chance zu blocken
+
+Charakter
+---------
+* Rüstung: Helm, Schultern, Brust, Hosen, Schuhe
+* Waffen: Einhand Waffe + Schild, Zweihand Waffe
+
+* Werte
+    * Block: Erhöht Chance auf Blocken und wieviel Schaden geblockt wird
+    * Stärke: Erhöht Physikalischer Schaden
+    * Zauberkraft: Erhöht Magieschaden
+    * Ausweichen: Ermöglich ausweichen von Magie und Physikalischem schaden
+    * Magie Resistenz (Feuer, Wasser, Schatten)
+    * Verteidigung: Reduziert allen erlittenen Schaden um einen Prozentsatz
+
+* Fähigkeiten
+* Beispiele:
+    * Zuschlagen: Macht X schaden und reduziert Verteidigung des Gegners um 10 %
+    * Feuerball: Macht sofort hohen Feuerschaden
+    * Glut entfachen: Steckt den Gegner in Brand, fügt in der aktuellen Runde und in 2 weiteren Runden X Schaden hinzu
+    * Inferno: Braucht den Glut entfachen Effekt auf, fügt aber sofort hohen Feuerschaden zu
+* Fähigkeiten werden von Rollen gelernt, diese kommen von Händlern und besiegten Gegnern
+* Fähigkeiten können mit Punkten die man beim Levelaufstieg erhält verbessert werden
+* Pro Kampf können nur 4 Fähigkeiten eingesetzt werden, die vor dem Kampf ausgewählt werden müssen
+
+* Tränke
+    * Erhöht Feuerschaden für 2 Runden um X
+    * Heilt sofort X Leben
+    * Erhöht den Feuerwiederstand für 3 Runden um X
+    * Erhöht Wert X umd Y Punkte
+
+Gegner
+------
+* Gegner haben die selbe Werte wie der Charakter
+* Drachen: Hoher Feuerschaden, Resistenz gegen Feuerschaden, geringe Block & Ausweichchancen, hohe Verteidigung
+* Zauberer: Magieschaden aller Art, geringe resistenzen, kein Block, hohe ausweichchange, mittlere Verteidigung
+* Ritter: Magie & Physikalischer schaden, keine resistenz, mittlere Block & ausweichchange, mittlere Verteidigung
+
+Spieltiefe
+----------
+* Auswahl der Fähigkeiten
+* Auswahl der Ausrüstung
+* Genügen hohes Level für Endboss
+
+

@@ -1,0 +1,10 @@
+{
+    "id": "greatsword_red_dragon",
+    "name": "Greatsword of the Red Dragon",
+    "icon": "images/icons/sword1.png",
+    "stats": {
+        "strength": 120,
+        "life": 100,
+        "defense": 50,
+    }
+}
