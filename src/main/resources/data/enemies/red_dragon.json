@@ -3,7 +3,6 @@
     "name": "The Red Dragon",
     "ai_class": "ch.andefgassm.adventuregame.ai.RedDragon",
     "life": 1000,
-    "loot": ["greatsword_red_dragon"],
     "stats": {
         "fire_resistance": 30,
         "defense": 50,

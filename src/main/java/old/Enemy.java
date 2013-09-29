@@ -1,4 +1,4 @@
-package ch.andefgassm.adventuregame;
+package old;
 
 public class Enemy implements ICombatant {
 

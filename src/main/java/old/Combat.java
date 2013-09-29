@@ -1,4 +1,4 @@
-package ch.andefgassm.adventuregame;
+package old;
 
 public class Combat {
     private Player player;
@@ -17,8 +17,8 @@ public class Combat {
     
     public void fight() {
         
-        Action action = null;        
-        action = this.player.getNextAction();
+        //Action action = null;        
+        //action = this.player.getNextAction();
         
         
         
