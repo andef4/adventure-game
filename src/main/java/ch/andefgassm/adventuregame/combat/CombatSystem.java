@@ -14,4 +14,9 @@ public class CombatSystem {
 		return null;
 	}
 
+    public void registerSkill(Skill skill) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

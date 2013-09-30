@@ -1,6 +1,6 @@
 combat system
 -------------
 
-einschränkungen
----------------
-* nur 1v1 kampf
+* skills und effekte sollten mit json/xml definiert werden können,
+  optional mit java code überschrieben werden
+* resourcen und stats müssen in java definiert sein

@@ -11,19 +11,23 @@ import java.util.Map;
  */
 public class Skill {
 	private String name = null;
-	private Map<String, Integer> requiredResources = new HashMap<String, Integer>();
+	private String displayName = null;
+	private Map<IResource, Integer> requiredResources = new HashMap<IResource, Integer>();
 	private List<Effect> enemyEffects = new ArrayList<Effect>();
 	private List<Effect> playerEffects = new ArrayList<Effect>();
 	
-	public Skill(String name) {
-		super();
+	public Skill(String name, String displayName) {
 		this.name = name;
+		this.displayName = displayName;
 	}
 	
 	public String getName() {
 		return name;
 	}
-	public Map<String, Integer> getRequiredResources() {
+	public String getDisplayName() {
+        return displayName;
+    }
+	public Map<IResource, Integer> getRequiredResources() {
 		return requiredResources;
 	}
 	public List<Effect> getEnemyEffects() {
@@ -32,4 +36,15 @@ public class Skill {
 	public List<Effect> getPlayerEffects() {
 		return playerEffects;
 	}
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "Skill [name=" + name + ", displayName=" + displayName
+                + ", requiredResources=" + requiredResources
+                + ", enemyEffects=" + enemyEffects + ", playerEffects="
+                + playerEffects + "]";
+    }
 }
