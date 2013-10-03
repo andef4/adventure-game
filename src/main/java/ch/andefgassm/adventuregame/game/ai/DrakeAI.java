@@ -7,12 +7,15 @@ public class DrakeAI extends AbstractAICombatant{
 
     
     public DrakeAI(CombatSystem system) {
-        
+        super(system);
+        addSkill("drake_breath");
     }
     
+    
+
     @Override
-    public void getNextSkill() {
-        return getAvailableSkills()[0];
+    public String getNextSkill() {
+        return getAvailableSkills().get(0);
     }
 
 }

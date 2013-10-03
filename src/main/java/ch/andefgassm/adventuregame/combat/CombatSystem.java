@@ -1,22 +1,24 @@
 package ch.andefgassm.adventuregame.combat;
 
-import old.Combat;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class CombatSystem {
-
+    
+    private Map<String, Skill> skills = new HashMap<String, Skill>();
+    
     public void load(String string) {
         // TODO Auto-generated method stub
         
     }
 
-	public Combat createCombat() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public void registerSkill(String name, Skill skill) {
+        skills.put(name, skill);
+    }
 
-    public void registerSkill(Skill skill) {
-        // TODO Auto-generated method stub
-        
+    public Skill getSkill(String skill) {
+        return skills.get(skill);
     }
 
 }

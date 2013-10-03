@@ -1,5 +1,6 @@
 package ch.andefgassm.adventuregame.combat;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Effect {
@@ -7,8 +8,8 @@ public class Effect {
 	private int intervalsRunning = 1;
 	private int everyInterval = 1;
 	
-	private Map<IResource, Integer> resourceChanges;
-	private Map<IStat, Integer> statChanges;
+	private Map<IResource, Integer> resourceChanges = new HashMap<IResource, Integer>();
+	private Map<IStat, Integer> statChanges = new HashMap<IStat, Integer>();
     /**
      * @return the intervalsRunning
      */
