@@ -8,20 +8,20 @@ import java.util.Map.Entry;
 
 public class Combatant {
 	
-    private Map<IStat, Integer> stats = new HashMap<IStat, Integer>();
+    private Map<IStat, Integer> baseStats = new HashMap<IStat, Integer>();
     private Map<IResource, Integer> resources = new HashMap<IResource, Integer>();
     private List<String> skills = new ArrayList<String>();
     private CombatSystem system = null;
     private List<ActiveEffect> activeEffects = new ArrayList<ActiveEffect>();
-    private String name;
+    private String name = null;
+    private int currentLife = 0;
+    private int maxLife = 0;
     
-	public Combatant(CombatSystem system, String name) {
+	public Combatant(CombatSystem system, String name, int maxLife) {
 	    this.system = system;
 	    this.name = name;
-    }
-	
-	public String getName() {
-        return name;
+	    this.maxLife = maxLife;
+	    this.currentLife = maxLife;
     }
 
     public List<String> getAvailableSkills() {
@@ -44,20 +44,6 @@ public class Combatant {
 	    return availableSkills;
 	}
 	
-    /**
-     * @return the stats
-     */
-    public Map<IStat, Integer> getStats() {
-        return stats;
-    }
-    
-    /**
-     * @return the resources
-     */
-    public Map<IResource, Integer> getResources() {
-        return resources;
-    }
-    
     public void addSkill(String skill) {
         if (system.getSkill(skill) == null) {
             throw new IllegalArgumentException("Unknown skill " + skill);
@@ -89,9 +75,14 @@ public class Combatant {
      * applies all effects on this combatant one round
      */
     public void applyEffects() {
-        // effects to delete after this round
-        List<ActiveEffect> effectsToRemove = new ArrayList<ActiveEffect>();
+        // copy base stats to current stats
+        Map<IStat, Integer> currentStats = new HashMap<IStat, Integer>();
+        for (Entry<IStat, Integer> stat : baseStats.entrySet()) {
+            currentStats.put(stat.getKey(), stat.getValue());
+        }
+        
         for (ActiveEffect activeEffect : activeEffects) {
+            // apply all resource changes
             for (Entry<IResource, Integer> resourceChange : activeEffect.getEffect().getResourceChanges().entrySet()) {
                 IResource resource = resourceChange.getKey();
                 int change = resourceChange.getValue();
@@ -107,23 +98,59 @@ public class Combatant {
                     resources.put(resource, current);
                 }
             }
+            
+            // calculate current stats by applying the effects to the baseStats
             for (Entry<IStat, Integer> statChange : activeEffect.getEffect().getStatChanges().entrySet()) {
                 IStat stat = statChange.getKey();
                 int change = statChange.getValue();
-                Integer current = stats.get(stat);
+                Integer current = currentStats.get(stat);
                 if (current != null) {
                     current += change;
                     if (current < 0) {
                         current = 0;
                     }
-                    stats.put(stat, current);
+                    currentStats.put(stat, current);
                 }
             }
-            
+        }
+        
+        // calculate damage and healing and remove running out effects
+        List<ActiveEffect> effectsToRemove = new ArrayList<ActiveEffect>(); // effects to delete after this round
+        for (ActiveEffect activeEffect : activeEffects) {
+            Effect effect = activeEffect.getEffect();
+            currentLife += effect.getLifeChange();
             if (activeEffect.decrementInterval()) {
                 effectsToRemove.add(activeEffect);
             }
         }
+        if (currentLife < 0) {
+            currentLife = 0;
+        }
         activeEffects.removeAll(effectsToRemove);
+    }
+    
+    /**
+     * @return the stats
+     */
+    public Map<IStat, Integer> getBaseStats() {
+        return baseStats;
+    }
+    
+    /**
+     * @return the resources
+     */
+    public Map<IResource, Integer> getResources() {
+        return resources;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public int getCurrentLife() {
+        return currentLife;
+    }
+    public int getMaxLife() {
+        return maxLife;
     }
 }

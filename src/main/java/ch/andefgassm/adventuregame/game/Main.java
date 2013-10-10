@@ -18,7 +18,7 @@ public class Main {
         Skill strikeSkill = new Skill("Strike");
         strikeSkill.getRequiredResources().put(Resource.ENERGY, 20);
         Effect strikeDamageEffect = new Effect();
-        strikeDamageEffect.getStatChanges().put(Stat.LIFE, -50);
+        strikeDamageEffect.setLifeChange(-50, Stat.STRENGTH, -0.3);
         strikeSkill.getEnemyEffects().add(strikeDamageEffect);
         Effect strikeComboPointEffect = new Effect();
         strikeComboPointEffect.getResourceChanges().put(Resource.COMBO_POINT, 1);
@@ -29,31 +29,30 @@ public class Main {
         executeSkill.getRequiredResources().put(Resource.ENERGY, 20);
         executeSkill.getRequiredResources().put(Resource.COMBO_POINT, 3);
         Effect executeEffect = new Effect();
-        executeEffect.getStatChanges().put(Stat.LIFE, -200);
+        executeEffect.setLifeChange(-100, Stat.STRENGTH, -0.6);
         executeSkill.getEnemyEffects().add(executeEffect);
         system.registerSkill("warrior_execute", executeSkill);
         
         Skill breathSkill = new Skill("Breath");
         Effect breathEffect = new Effect();
-        breathEffect.getStatChanges().put(Stat.LIFE, -70);
+        breathEffect.setLifeChange(-70);
         breathSkill.getEnemyEffects().add(breathEffect);
         system.registerSkill("drake_breath", breathSkill);
         
-        Combatant player = new Combatant(system, "Player");
+        Combatant player = new Combatant(system, "Player", 500);
         player.addSkill("warrior_strike");
         player.addSkill("warrior_execute");
         player.getResources().put(Resource.ENERGY, 500);
         player.getResources().put(Resource.COMBO_POINT, 0);
-        player.getStats().put(Stat.LIFE, 1000);
         
         BlackDragonAI enemy = new BlackDragonAI(system);
         
         while(true) {
         	System.out.println("--------------------------------------");
         	System.out.println("########## Enemy stats ###############");
-        	System.out.println(enemy.getStats());
+        	System.out.println(enemy.getCurrentLife());
         	System.out.println("########## Player stats ##############");
-        	System.out.println(player.getStats());
+        	System.out.println(player.getCurrentLife());
         	System.out.println("########## Player resources ##########");
         	System.out.println(player.getResources());
         	
@@ -78,12 +77,12 @@ public class Main {
             enemy.cast(enemy.getNextSkill(), player); // add effects to enemy and player
             player.applyEffects();  // calculate stats
             
-            if (enemy.getStats().get(Stat.LIFE) == 0) {
+            if (enemy.getCurrentLife() == 0) {
                 System.out.println(player.getName() + " has defeated " + enemy.getName());
                 break;
             }
             
-            if (player.getStats().get(Stat.LIFE) == 0) {
+            if (player.getCurrentLife() == 0) {
                 System.out.println(enemy.getName() + " has defeated " + player.getName());
                 break;
             }
