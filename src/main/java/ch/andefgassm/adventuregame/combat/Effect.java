@@ -52,7 +52,9 @@ public class Effect {
         return statChanges;
     }
     
-    public void setLifeChange(int lifeChange, Stat scalingStat, double scalingValue) {
+    
+    // TODO: implement effects scaling with stats
+    protected void setLifeChange(int lifeChange, Stat scalingStat, double scalingValue) {
         this.lifeChange = lifeChange;
         this.scalingStat = scalingStat;
         this.scalingValue = scalingValue;

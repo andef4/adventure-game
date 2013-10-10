@@ -18,7 +18,7 @@ public class Main {
         Skill strikeSkill = new Skill("Strike");
         strikeSkill.getRequiredResources().put(Resource.ENERGY, 20);
         Effect strikeDamageEffect = new Effect();
-        strikeDamageEffect.setLifeChange(-50, Stat.STRENGTH, -0.3);
+        strikeDamageEffect.setLifeChange(-50);
         strikeSkill.getEnemyEffects().add(strikeDamageEffect);
         Effect strikeComboPointEffect = new Effect();
         strikeComboPointEffect.getResourceChanges().put(Resource.COMBO_POINT, 1);
@@ -29,7 +29,7 @@ public class Main {
         executeSkill.getRequiredResources().put(Resource.ENERGY, 20);
         executeSkill.getRequiredResources().put(Resource.COMBO_POINT, 3);
         Effect executeEffect = new Effect();
-        executeEffect.setLifeChange(-100, Stat.STRENGTH, -0.6);
+        executeEffect.setLifeChange(-100);
         executeSkill.getEnemyEffects().add(executeEffect);
         system.registerSkill("warrior_execute", executeSkill);
         
