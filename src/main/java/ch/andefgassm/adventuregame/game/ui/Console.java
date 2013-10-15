@@ -18,10 +18,10 @@ public abstract class Console {
 		while (true) {
 			print(prompt);
 			value = readInt();
+			println("");
 			if (value >= fromInclusive && value <= toInclusive) {
 				break;
 			}
-			println("");
 		}
 		return value;
 	}

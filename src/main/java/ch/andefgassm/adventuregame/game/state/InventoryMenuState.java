@@ -4,7 +4,8 @@ import ch.andefgassm.adventuregame.game.ui.Console;
 
 public class InventoryMenuState implements IGameState {
 
-	public void handle(GameStateContext context, Console console) {
+	public void handle(GameStateContext context) {
+		Console console = context.getConsole();
 		console.clear();
 		console.println("Inventory Menu");
 		console.println("=========");

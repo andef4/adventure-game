@@ -4,7 +4,8 @@ import ch.andefgassm.adventuregame.game.ui.Console;
 
 public class MainMenuState implements IGameState {
 
-	public void handle(GameStateContext context, Console console) {
+	public void handle(GameStateContext context) {
+		Console console = context.getConsole();
 		console.clear();
 		console.println("Main Menu");
 		console.println("=========");
