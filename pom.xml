@@ -3,4 +3,11 @@
   <groupId>ch.andefgassm</groupId>
   <artifactId>adventuregame</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.googlecode.lanterna</groupId>
+  		<artifactId>lanterna</artifactId>
+  		<version>2.1.6</version>
+  	</dependency>
+  </dependencies>
 </project>
