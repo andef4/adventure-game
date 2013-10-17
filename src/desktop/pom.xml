@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>adventure_game-desktop</artifactId>
+	<packaging>jar</packaging>
+	<name>Main desktop</name>
+	<groupId>ch.andefgassm</groupId>
+	<version>1.0</version>
+
+	<properties>
+		<gdx.version>0.9.9-SNAPSHOT</gdx.version>
+		<android.version>4.1.1.4</android.version>
+		<android.maven.version>3.6.0</android.maven.version>
+		<gwt.version>2.5.0</gwt.version>
+		<gwt.maven.version>2.5.0</gwt.maven.version>
+		<mainClass>ch.andefgassm.adventure_game.java.MainDesktop</mainClass>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>ch.andefgassm</groupId>
+			<artifactId>adventure_game-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.badlogicgames.gdx</groupId>
+			<artifactId>gdx</artifactId>
+			<version>${gdx.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.badlogicgames.gdx</groupId>
+			<artifactId>gdx-backend-lwjgl</artifactId>
+			<version>${gdx.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.badlogicgames.gdx</groupId>
+			<artifactId>gdx-platform</artifactId>
+			<version>${gdx.version}</version>
+			<classifier>natives-desktop</classifier>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- this run the game when you invoke: mvn integration-test -Pdesktop -->
+			<plugin>
+				<groupId>com.googlecode.mavennatives</groupId>
+				<artifactId>maven-nativedependencies-plugin</artifactId>
+				<version>0.0.6</version>
+				<executions>
+					<execution>
+						<id>unpacknatives</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<phase>integration-test</phase>
+						<configuration>
+							<target>
+								<java fork="true" classname="${mainClass}" classpathref="maven.test.classpath">
+									<sysproperty key="java.library.path" value="target/natives" />
+								</java>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- this builds a totally standalone jar file when you invoke: mvn package 
+				-Pdesktop -->
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>${mainClass}</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<repositories>
+		<repository>
+			<id>gdx-nightlies</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</repository>
+	</repositories>
+</project>
