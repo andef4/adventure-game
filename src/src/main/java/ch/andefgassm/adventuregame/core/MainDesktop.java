@@ -1,4 +1,4 @@
-package ch.andefgassm.adventuregame;
+package ch.andefgassm.adventuregame.core;
 
 import ch.andefgassm.adventuregame.core.Main;
 

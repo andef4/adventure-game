@@ -3,11 +3,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>adventure_game-desktop</artifactId>
+	<artifactId>adventuregame</artifactId>
 	<packaging>jar</packaging>
-	<name>Main desktop</name>
+	<name>Main Core</name>
 	<groupId>ch.andefgassm</groupId>
-	<version>1.0</version>
+	<version>1.0-SNAPSHOT</version>
 
 	<properties>
 		<gdx.version>0.9.9-SNAPSHOT</gdx.version>
@@ -15,14 +15,18 @@
 		<android.maven.version>3.6.0</android.maven.version>
 		<gwt.version>2.5.0</gwt.version>
 		<gwt.maven.version>2.5.0</gwt.maven.version>
-		<mainClass>ch.andefgassm.adventure_game.java.MainDesktop</mainClass>
 	</properties>
 
 	<dependencies>
 		<dependency>
-			<groupId>ch.andefgassm</groupId>
-			<artifactId>adventure_game-core</artifactId>
-			<version>${project.version}</version>
+			<groupId>com.badlogicgames.gdx</groupId>
+			<artifactId>gdx</artifactId>
+			<version>${gdx.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.lanterna</groupId>
+			<artifactId>lanterna</artifactId>
+			<version>2.1.6</version>
 		</dependency>
 
 		<dependency>
@@ -112,12 +116,18 @@
 					</execution>
 				</executions>
 			</plugin>
-
-
-
-
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
+
 	<repositories>
 		<repository>
 			<id>gdx-nightlies</id>
