@@ -42,10 +42,10 @@ public class GameStateContext {
         strikeSkill.getRequiredResources().put(Resource.ENERGY, 20);
         Effect strikeDamageEffect = new Effect();
         strikeDamageEffect.setLifeChange(-50);
-        strikeSkill.getEnemyEffects().add(strikeDamageEffect);
+        strikeSkill.getTargetEffects().add(strikeDamageEffect);
         Effect strikeComboPointEffect = new Effect();
         strikeComboPointEffect.getResourceChanges().put(Resource.COMBO_POINT, 1);
-        strikeSkill.getPlayerEffects().add(strikeComboPointEffect);
+        strikeSkill.getCasterEffects().add(strikeComboPointEffect);
         combatSystem.registerSkill("warrior_strike", strikeSkill);
         
         Skill executeSkill = new Skill("Execute");
@@ -53,13 +53,13 @@ public class GameStateContext {
         executeSkill.getRequiredResources().put(Resource.COMBO_POINT, 3);
         Effect executeEffect = new Effect();
         executeEffect.setLifeChange(-100);
-        executeSkill.getEnemyEffects().add(executeEffect);
+        executeSkill.getTargetEffects().add(executeEffect);
         combatSystem.registerSkill("warrior_execute", executeSkill);
         
         Skill breathSkill = new Skill("Breath");
         Effect breathEffect = new Effect();
         breathEffect.setLifeChange(-70);
-        breathSkill.getEnemyEffects().add(breathEffect);
+        breathSkill.getTargetEffects().add(breathEffect);
         combatSystem.registerSkill("drake_breath", breathSkill);
 	}
 	

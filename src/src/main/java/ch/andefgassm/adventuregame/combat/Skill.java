@@ -24,10 +24,10 @@ public class Skill {
 	public Map<IResource, Integer> getRequiredResources() {
 		return requiredResources;
 	}
-	public List<Effect> getEnemyEffects() {
+	public List<Effect> getTargetEffects() {
 		return enemyEffects;
 	}
-	public List<Effect> getPlayerEffects() {
+	public List<Effect> getCasterEffects() {
 		return playerEffects;
 	}
 }

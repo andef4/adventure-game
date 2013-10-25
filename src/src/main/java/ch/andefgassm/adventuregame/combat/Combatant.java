@@ -51,15 +51,15 @@ public class Combatant {
         skills.add(skill);
     }
 
-    public void cast(String skillName, Combatant enemy) {
+    public void cast(String skillName, Combatant target) {
         Skill skill = system.getSkill(skillName);
         // add effects to the player
-        for (Effect playerEffect : skill.getPlayerEffects()) {
-            activeEffects.add(new ActiveEffect(playerEffect));
+        for (Effect playerEffect : skill.getCasterEffects()) {
+            activeEffects.add(new ActiveEffect(playerEffect, this, target));
         }
         // add effects to the enemy
-        for (Effect enemyEffect : skill.getEnemyEffects()) {
-            enemy.activeEffects.add(new ActiveEffect(enemyEffect));
+        for (Effect enemyEffect : skill.getTargetEffects()) {
+            target.activeEffects.add(new ActiveEffect(enemyEffect, this, target));
         }
         // remove required resources from player
         for (Entry<IResource, Integer> requiredResource : skill.getRequiredResources().entrySet()) {
@@ -71,12 +71,9 @@ public class Combatant {
         }
     }
     
-    /**
-     * applies all effects on this combatant one round
-     */
-    public void applyEffects() {
-        // copy base stats to current stats
-        Map<IStat, Integer> currentStats = new HashMap<IStat, Integer>();
+    
+    public Map<IStat, Integer> getCurrentStats() {
+    	Map<IStat, Integer> currentStats = new HashMap<IStat, Integer>();
         for (Entry<IStat, Integer> stat : baseStats.entrySet()) {
             currentStats.put(stat.getKey(), stat.getValue());
         }
@@ -113,12 +110,17 @@ public class Combatant {
                 }
             }
         }
-        
+        return currentStats;
+    }
+    
+    /**
+     * applies all effects on this combatant one round
+     */
+    public void applyEffects() {
         // calculate damage and healing and remove running out effects
         List<ActiveEffect> effectsToRemove = new ArrayList<ActiveEffect>(); // effects to delete after this round
         for (ActiveEffect activeEffect : activeEffects) {
-            Effect effect = activeEffect.getEffect();
-            currentLife += effect.getLifeChange();
+            currentLife += activeEffect.calculateEffectiveLifeChange();
             if (activeEffect.decrementInterval()) {
                 effectsToRemove.add(activeEffect);
             }
