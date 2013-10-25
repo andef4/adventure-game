@@ -11,7 +11,9 @@ public class Effect {
 	
 	private Map<IResource, Integer> resourceChanges = new HashMap<IResource, Integer>();
 	private Map<IStat, Integer> statChanges = new HashMap<IStat, Integer>();
-
+	private IDamageType damageType = null;
+	
+	
 	private int lifeChange = 0;
 	private IStat scalingStat = null;
 	private double scalingValue = 0.0;
