@@ -12,12 +12,8 @@ public class InventoryMenuState implements IGameState {
 		console.println("");
 		console.println("Inventory (press button to equip item)");
 		console.println("--------------------------------------");
-		console.println("1) Axe [20 Stamina, 30 Strength]");
-		console.println("2) Shield [25 Stamina, 20 Strength]");
-		console.println("");
-		console.println("Currently Equiped");
-		console.println("-----------------");
-		console.println("Two Hand Axe [50 Stamins, 50 Strength");		
+		console.println("1) [x] Axe [20 Stamina, 30 Strength]");
+		console.println("2) [ ] Shield [25 Stamina, 20 Strength]");
 		console.println("");
 		console.getInt("Your choice:", 1, 1);
 		context.changeState(GameStateContext.MAIN_MENU);
