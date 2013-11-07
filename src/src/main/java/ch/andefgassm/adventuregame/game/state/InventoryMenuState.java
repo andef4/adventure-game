@@ -4,6 +4,8 @@ import ch.andefgassm.adventuregame.game.ui.Console;
 
 public class InventoryMenuState implements IGameState {
 
+	
+	//character mit items ausruesten
 	public void handle(GameStateContext context) {
 		Console console = context.getConsole();
 		console.clear();
