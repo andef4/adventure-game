@@ -1,22 +1,27 @@
 package ch.andefgassm.adventuregame.game.state;
 
-import ch.andefgassm.adventuregame.game.ui.Console;
 
-public class InventoryMenuState implements IGameState {
+public class InventoryMenuState extends AbstractConsoleGameState {
 
-	public void handle(GameStateContext context) {
-		Console console = context.getConsole();
-		console.clear();
-		console.println("Inventory Menu");
-		console.println("=========");
-		console.println("");
-		console.println("Inventory (press button to equip item)");
-		console.println("--------------------------------------");
-		console.println("1) [x] Axe [20 Stamina, 30 Strength]");
-		console.println("2) [ ] Shield [25 Stamina, 20 Strength]");
-		console.println("");
-		console.getInt("Your choice:", 1, 1);
-		context.changeState(GameStateContext.MAIN_MENU);
+	private GameStateContext context;
+
+	public void init(GameStateContext context) {
+		this.context = context;
+		clear();
+		println("Inventory Menu");
+		println("=========");
+		println("");
+		println("Inventory (press button to equip item)");
+		println("--------------------------------------");
+		println("1) [x] Axe [20 Stamina, 30 Strength]");
+		println("2) [ ] Shield [25 Stamina, 20 Strength]");
+		println("");
+		println("Your choice:");
+	}
+
+	@Override
+	public void handleInput(int input) {
+		context.changeState(GameStateContext.MAIN_MENU);		
 	}
 
 }

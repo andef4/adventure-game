@@ -1,26 +1,32 @@
 package ch.andefgassm.adventuregame.game.state;
 
-import ch.andefgassm.adventuregame.game.ui.Console;
 
-public class MainMenuState implements IGameState {
+public class MainMenuState extends AbstractConsoleGameState {
 
-	public void handle(GameStateContext context) {
-		Console console = context.getConsole();
-		console.clear();
-		console.println("Main Menu");
-		console.println("=========");
-		console.println("");
-		console.println("1) Combat");
-		console.println("2) Inventory");
-		console.println("3) Exit");
-		console.println("");
-		int choice = console.getInt("Your choice:", 1, 3);
-		if (choice == 1) {
+	private GameStateContext context;
+
+	public void init(GameStateContext context) {
+		this.context = context;
+		clear();
+		println("Main Menu");
+		println("=========");
+		println("");
+		println("1) Combat");
+		println("2) Inventory");
+		println("3) Exit");
+		println("");
+		println("Your choice:");
+		
+	}
+
+	@Override
+	public void handleInput(int input) {
+		if (input == 1) {
 			context.changeState(GameStateContext.COMBAT_MENU);
-		} else if (choice == 2) {
+		} else if (input == 2) {
 			context.changeState(GameStateContext.INVENTORY_MENU);
 		} else {
 			context.changeState(null);
-		}
+		}		
 	}
 }

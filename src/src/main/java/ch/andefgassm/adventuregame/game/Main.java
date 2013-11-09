@@ -2,11 +2,21 @@ package ch.andefgassm.adventuregame.game;
 
 import ch.andefgassm.adventuregame.game.state.GameStateContext;
 
-public class Main {
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
+public class Main extends Game {
+	
 	public static void main(String[] args) {
-		GameStateContext context = new GameStateContext();
-		context.run();
+		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		config.useGL20 = true;
+		new LwjglApplication(new Main(), config);
+	}
+
+	@Override
+	public void create() {
+		new GameStateContext(this);
 	}
 
 }
