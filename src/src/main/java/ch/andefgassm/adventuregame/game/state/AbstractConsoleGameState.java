@@ -2,19 +2,20 @@ package ch.andefgassm.adventuregame.game.state;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public abstract class AbstractConsoleGameState extends AbstractGameState {
 
-	Texture texture = new Texture(Gdx.files.internal("libgdx-logo.png"));
-	SpriteBatch batch = new SpriteBatch();
-	
+	private SpriteBatch batch = new SpriteBatch();
 	private StringBuffer buffer = new StringBuffer();
+	private BitmapFont font = new BitmapFont();
+	private int displayHeight = Gdx.graphics.getHeight();
+	
+	private static int LINE_HEIGHT = 20;
 	
 	public void clear() {
 		buffer.setLength(0);
-		
 	}
 	
 	public void print(String str) {
@@ -27,15 +28,20 @@ public abstract class AbstractConsoleGameState extends AbstractGameState {
 	
 	public abstract void handleInput(int input);
 	
-	
-	
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+
 		batch.begin();
-		batch.draw(texture, 100, 100);
+		int currentHeight = 0;
+		for(String line : buffer.toString().split("\n")) {
+			font.draw(batch, line, 0, displayHeight - currentHeight);
+			currentHeight += LINE_HEIGHT;
+		}
+		font.setColor(1, 1, 1, 1);
+		font.draw(batch, buffer, 1, 1);
+		
 		batch.end();
 	}
-
 }
