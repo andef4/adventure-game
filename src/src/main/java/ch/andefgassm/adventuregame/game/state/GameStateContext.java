@@ -6,6 +6,7 @@ import ch.andefgassm.adventuregame.combat.Skill;
 import ch.andefgassm.adventuregame.game.Resource;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 
 public class GameStateContext {
 	
@@ -27,8 +28,12 @@ public class GameStateContext {
 	}
 	
 	public void changeState(AbstractGameState newState) {
+		if (newState == null) {
+			Gdx.app.exit();
+		}
 		newState.init(this);
 		game.setScreen(newState);
+		Gdx.input.setInputProcessor(newState);
 	}
 	
 	private void initSkills() {

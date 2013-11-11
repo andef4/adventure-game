@@ -26,5 +26,4 @@ public class CombatMenuState extends AbstractConsoleGameState {
 			context.changeState(GameStateContext.MAIN_MENU);
 		}
 	}
-
 }
