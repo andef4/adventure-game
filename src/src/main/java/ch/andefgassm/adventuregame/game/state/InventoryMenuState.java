@@ -29,7 +29,7 @@ public class InventoryMenuState extends AbstractConsoleGameState {
 		inventory.add(testItem);		
 		//testItem
 				
-		for(int i=1; inventory.size() <= i; i++)
+		for(int i=1; i <= inventory.size(); i++)
 		{
 			
 			println(i + ") " + inventory.get(i-1).getName().toString());
