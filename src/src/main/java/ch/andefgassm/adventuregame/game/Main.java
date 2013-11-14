@@ -17,7 +17,7 @@ public class Main extends Game {
 		config.width = screenSize.width;
 		config.height = screenSize.height;
 		config.useGL20 = true;
-		config.fullscreen = true;
+		config.fullscreen = false;
 		new LwjglApplication(new Main(), config);
 	}
 
