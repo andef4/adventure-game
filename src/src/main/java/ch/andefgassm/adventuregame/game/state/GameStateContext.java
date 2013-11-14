@@ -16,7 +16,7 @@ public class GameStateContext {
 	public static final AbstractGameState COMBAT = new CombatState();
 	
 	private CombatSystem combatSystem = new CombatSystem();
-	private Game game;
+	private Game game = null;
 	
 	public GameStateContext(Game game) {
 		this.game = game;
