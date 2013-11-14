@@ -3,14 +3,14 @@ package ch.andefgassm.adventuregame.game.inventory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Character {
+public class Player {
 	
-	private static Character instance;
+	private static Player instance;
 	
-	public static Character getInstance()
+	public static Player getInstance()
 	{
 		if (instance == null){
-			instance = new Character();
+			instance = new Player();
 		}
 		
 		return instance;

@@ -17,7 +17,7 @@ public class GameStateContext {
 	private IGameState currentState;
 	private Console console = new LanternaConsole();
 	private CombatSystem combatSystem = new CombatSystem();
-	
+		
 	public void run() {
 		
 		initSkills();
