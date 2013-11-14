@@ -4,37 +4,36 @@ import ch.andefgassm.adventuregame.combat.CombatSystem;
 import ch.andefgassm.adventuregame.combat.Effect;
 import ch.andefgassm.adventuregame.combat.Skill;
 import ch.andefgassm.adventuregame.game.Resource;
-import ch.andefgassm.adventuregame.game.ui.Console;
-import ch.andefgassm.adventuregame.game.ui.LanternaConsole;
+
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 
 public class GameStateContext {
 	
-	public static final IGameState COMBAT_MENU = new CombatMenuState();
-	public static final IGameState MAIN_MENU = new MainMenuState();
-	public static final IGameState INVENTORY_MENU = new InventoryMenuState();
-	public static final IGameState COMBAT = new CombatState();
+	public static final AbstractGameState COMBAT_MENU = new CombatMenuState();
+	public static final AbstractGameState MAIN_MENU = new MainMenuState();
+	public static final AbstractGameState INVENTORY_MENU = new InventoryMenuState();
+	public static final AbstractGameState COMBAT = new CombatState();
 	
-	private IGameState currentState;
-	private Console console = new LanternaConsole();
 	private CombatSystem combatSystem = new CombatSystem();
+	private Game game = null;
 	
+	public GameStateContext(Game game) {
+		this.game = game;
+	}
+
 	public void run() {
-		
 		initSkills();
-		
-		currentState = MAIN_MENU;
-		
-		while (true) {
-			if (currentState == null) {
-				console.close();
-				return;
-			}
-			currentState.handle(this);
-		}
+		changeState(MAIN_MENU);
 	}
 	
-	public void changeState(IGameState newState) {
-		currentState = newState;
+	public void changeState(AbstractGameState newState) {
+		if (newState == null) {
+			Gdx.app.exit();
+		}
+		newState.init(this);
+		game.setScreen(newState);
+		Gdx.input.setInputProcessor(newState);
 	}
 	
 	private void initSkills() {
@@ -62,11 +61,7 @@ public class GameStateContext {
         breathSkill.getTargetEffects().add(breathEffect);
         combatSystem.registerSkill("drake_breath", breathSkill);
 	}
-	
-	public Console getConsole() {
-		return console;
-	}
-	
+		
 	public CombatSystem getCombatSystem() {
 		return combatSystem;
 	}
