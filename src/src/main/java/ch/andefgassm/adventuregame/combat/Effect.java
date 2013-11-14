@@ -3,20 +3,16 @@ package ch.andefgassm.adventuregame.combat;
 import java.util.HashMap;
 import java.util.Map;
 
-import ch.andefgassm.adventuregame.game.Stat;
-
 public class Effect {
 	private int intervalsRunning = 1;
 	private int everyInterval = 1;
+	private IDamageType damageType = null;
+	private int baseLifeChange = 0;
 	
 	private Map<IResource, Integer> resourceChanges = new HashMap<IResource, Integer>();
 	private Map<IStat, Integer> statChanges = new HashMap<IStat, Integer>();
-	private IDamageType damageType = null;
+	private Map<IStat, Float> statScaling = new HashMap<IStat, Float>();
 	
-	
-	private int lifeChange = 0;
-	private IStat scalingStat = null;
-	private double scalingValue = 0.0;
 	/**
      * @return the intervalsRunning
      */
@@ -41,7 +37,20 @@ public class Effect {
     public void setEveryInterval(int everyInterval) {
         this.everyInterval = everyInterval;
     }
-    /**
+    
+    public IDamageType getDamageType() {
+		return damageType;
+	}
+	public void setDamageType(IDamageType damageType) {
+		this.damageType = damageType;
+	}
+	public int getBaseLifeChange() {
+		return baseLifeChange;
+	}
+	public void setBaseLifeChange(int baseLifeChange) {
+		this.baseLifeChange = baseLifeChange;
+	}
+	/**
      * @return the resourceChanges
      */
     public Map<IResource, Integer> getResourceChanges() {
@@ -54,26 +63,7 @@ public class Effect {
         return statChanges;
     }
     
-    
-    // TODO: implement effects scaling with stats
-    protected void setLifeChange(int lifeChange, Stat scalingStat, double scalingValue) {
-        this.lifeChange = lifeChange;
-        this.scalingStat = scalingStat;
-        this.scalingValue = scalingValue;
-    }
-    
-    public void setLifeChange(int lifeChange) {
-        this.lifeChange = lifeChange;
-    }
-    
-    public int getLifeChange() {
-        return lifeChange;
-    }
-    public IStat getScalingStat() {
-        return scalingStat;
-    }
-    public double getScalingValue() {
-        return scalingValue;
-    }
-    
+    public Map<IStat, Float> getStatScaling() {
+		return statScaling;
+	}
 }

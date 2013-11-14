@@ -1,17 +1,19 @@
 package ch.andefgassm.adventuregame.combat;
 
+import java.util.Map.Entry;
+
 public class ActiveEffect {
 	private Effect effect = null;
 	private int intervalsLeft = 0;
 	private int baseLifeChange = 0;
 	private Combatant caster;
-	private Combatant target;
+	//private Combatant target;
 
 	public ActiveEffect(Effect effect, Combatant caster, Combatant target) {
 		this.effect = effect;
 		this.intervalsLeft = effect.getIntervalsRunning();
 		this.caster = caster;
-		this.target = target;
+		//this.target = target;
 		calculateBaseLifeChange();
 	}
 
@@ -37,8 +39,14 @@ public class ActiveEffect {
 	 * calculate base damage/heal based on caster stats
 	 */
 	private void calculateBaseLifeChange() {
-		caster.getCurrentStats();
-		baseLifeChange = 0;
+		baseLifeChange = effect.getBaseLifeChange();
+		for (Entry<IStat, Float> statScaling : effect.getStatScaling().entrySet()) {
+			IStat stat = statScaling.getKey();
+			Integer value = caster.getCurrentStats().get(stat);
+			if (value != null) {
+				baseLifeChange += statScaling.getValue() * value;
+			}
+		}
 	}
 
 	/**
@@ -48,6 +56,6 @@ public class ActiveEffect {
 	 * @return
 	 */
 	public int calculateEffectiveLifeChange() {
-		return (int) (baseLifeChange * 0.5);
+		return baseLifeChange;
 	}
 }

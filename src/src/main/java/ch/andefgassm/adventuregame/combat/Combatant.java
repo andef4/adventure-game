@@ -55,7 +55,7 @@ public class Combatant {
         Skill skill = system.getSkill(skillName);
         // add effects to the player
         for (Effect playerEffect : skill.getCasterEffects()) {
-            activeEffects.add(new ActiveEffect(playerEffect, this, target));
+            activeEffects.add(new ActiveEffect(playerEffect, this, this));
         }
         // add effects to the enemy
         for (Effect enemyEffect : skill.getTargetEffects()) {
@@ -79,23 +79,6 @@ public class Combatant {
         }
         
         for (ActiveEffect activeEffect : activeEffects) {
-            // apply all resource changes
-            for (Entry<IResource, Integer> resourceChange : activeEffect.getEffect().getResourceChanges().entrySet()) {
-                IResource resource = resourceChange.getKey();
-                int change = resourceChange.getValue();
-                Integer current = resources.get(resource);
-                if (current != null) {
-                    current += change;
-                    if (current < resource.getMin()) {
-                        current = resource.getMin();
-                    }
-                    if (current > resource.getMax()) {
-                        current = resource.getMax();
-                    }
-                    resources.put(resource, current);
-                }
-            }
-            
             // calculate current stats by applying the effects to the baseStats
             for (Entry<IStat, Integer> statChange : activeEffect.getEffect().getStatChanges().entrySet()) {
                 IStat stat = statChange.getKey();
