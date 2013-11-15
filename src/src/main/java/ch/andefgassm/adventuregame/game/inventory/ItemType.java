@@ -1,8 +1,7 @@
 package ch.andefgassm.adventuregame.game.inventory;
 
 public enum ItemType {
-	AXE,
-	SWORD,
+	WEAPON,
 	SHIELD,
 	HEAD,
 	SHOULDER,

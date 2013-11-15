@@ -1,7 +1,9 @@
 package ch.andefgassm.adventuregame.game.inventory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Player {
 	
@@ -22,6 +24,13 @@ public class Player {
 		return inventory;
 	}
 	
+	private Map<ItemType, Item> equipment = new HashMap<ItemType, Item>();
+	
+	public Map<ItemType, Item> getEquipment() {
+		return equipment;
+	}
+	
 	public void equip(Item item) {
+		this.getEquipment().put(item.getType(), item);
 	}
 }

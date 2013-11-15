@@ -24,4 +24,7 @@ public class Item {
 	public Map<IStat, Integer> getStats() {
 		return stats;
 	}
+	public void setStats(Map<IStat, Integer> stats) {
+		this.stats = stats;
+	}
 }
