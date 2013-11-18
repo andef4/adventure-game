@@ -4,6 +4,7 @@ import ch.andefgassm.adventuregame.combat.CombatSystem;
 import ch.andefgassm.adventuregame.combat.Effect;
 import ch.andefgassm.adventuregame.combat.Skill;
 import ch.andefgassm.adventuregame.game.Resource;
+import ch.andefgassm.adventuregame.game.Stat;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -42,6 +43,7 @@ public class GameStateContext {
         strikeSkill.getRequiredResources().put(Resource.ENERGY, 20);
         Effect strikeDamageEffect = new Effect();
         strikeDamageEffect.setBaseLifeChange(-50);
+        strikeDamageEffect.getStatScaling().put(Stat.STRENGTH, -1.0f);
         strikeSkill.getTargetEffects().add(strikeDamageEffect);
         Effect strikeComboPointEffect = new Effect();
         strikeComboPointEffect.getResourceChanges().put(Resource.COMBO_POINT, 1);
