@@ -129,6 +129,22 @@ public class Combatant {
             if (activeEffect.decrementInterval()) {
                 effectsToRemove.add(activeEffect);
             }
+            
+			for (Entry<IResource, Integer> resourceChange : activeEffect.getEffect().getResourceChanges().entrySet()) {
+				IResource resource = resourceChange.getKey();
+				int change = resourceChange.getValue();
+				Integer current = resources.get(resource);
+				if (current != null) {
+					current += change;
+					if (current < resource.getMin()) {
+						current = resource.getMin();
+					}
+					if (current > resource.getMax()) {
+						current = resource.getMax();
+					}
+					resources.put(resource, current);
+				}
+			}
         }
         if (currentLife < 0) {
             currentLife = 0;

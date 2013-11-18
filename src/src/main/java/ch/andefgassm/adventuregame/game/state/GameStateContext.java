@@ -30,6 +30,7 @@ public class GameStateContext {
 	public void changeState(AbstractGameState newState) {
 		if (newState == null) {
 			Gdx.app.exit();
+			return;
 		}
 		newState.init(this);
 		game.setScreen(newState);

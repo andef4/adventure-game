@@ -65,12 +65,15 @@ public class CombatState extends AbstractConsoleGameState {
             break;
         case WON:
             println(player.getName() + " has defeated " + enemy.getName());
+            println("[0] back to main menu");
             break;
         case LOST:
             println(enemy.getName() + " has defeated " + player.getName());
+            println("[0] back to main menu");
             break;
         case GIVE_UP:
             println("You have given up!");
+            println("[0] back to main menu");
             break;
         }
     }
@@ -102,6 +105,7 @@ public class CombatState extends AbstractConsoleGameState {
             enemy.applyHarmfulEffects();
             if (enemy.getCurrentLife() == 0) {
                 state = CurrentCombatState.WON;
+                break;
             }
             
             // enemy's turn
@@ -117,6 +121,7 @@ public class CombatState extends AbstractConsoleGameState {
             if (player.getCurrentLife() == 0) {
                 state = CurrentCombatState.LOST;
             }
+            break;
         case WON:
         case LOST:
         case GIVE_UP:
