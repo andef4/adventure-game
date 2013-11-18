@@ -1,0 +1,7 @@
+{
+    "type": "WEAPON",
+    "name": "Donnerbalken",
+    "stats": {
+        "STRENGTH": 120
+    }
+}
