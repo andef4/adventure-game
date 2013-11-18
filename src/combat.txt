@@ -1,6 +1,0 @@
-Effect initial damage and healing is calculated on cast. => Range of damage
-
-Effective damage is calculated on round execute.
-=> Potential static/percent damage modifiers on target
-
-

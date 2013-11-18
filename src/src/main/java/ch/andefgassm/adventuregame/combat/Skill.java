@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * A skill usable by players an enemies
  * @author andef4
@@ -13,11 +16,12 @@ public class Skill {
 	private String name = null;
 	private boolean harmful;
 	private Map<IResource, Integer> requiredResources = new HashMap<IResource, Integer>();
-	private List<Effect> enemyEffects = new ArrayList<Effect>();
-	private List<Effect> playerEffects = new ArrayList<Effect>();
+	private List<Effect> targetEffects = new ArrayList<Effect>();
+	private List<Effect> casterEffects = new ArrayList<Effect>();
 	
 	
-	public Skill(String name, boolean harmful) {
+	@JsonCreator
+	public Skill(@JsonProperty("name") String name, @JsonProperty("harmful") boolean harmful) {
 		this.name = name;
 		this.harmful= harmful;
 	}
@@ -31,9 +35,9 @@ public class Skill {
 		return requiredResources;
 	}
 	public List<Effect> getTargetEffects() {
-		return enemyEffects;
+		return targetEffects;
 	}
 	public List<Effect> getCasterEffects() {
-		return playerEffects;
+		return casterEffects;
 	}
 }
