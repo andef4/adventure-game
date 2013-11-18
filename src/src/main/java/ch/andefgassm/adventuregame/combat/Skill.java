@@ -11,15 +11,21 @@ import java.util.Map;
  */
 public class Skill {
 	private String name = null;
+	private boolean harmful;
 	private Map<IResource, Integer> requiredResources = new HashMap<IResource, Integer>();
 	private List<Effect> enemyEffects = new ArrayList<Effect>();
 	private List<Effect> playerEffects = new ArrayList<Effect>();
 	
-	public Skill(String name) {
+	
+	public Skill(String name, boolean harmful) {
 		this.name = name;
+		this.harmful= harmful;
 	}
 	public String getName() {
 		return name;
+	}
+	public boolean isHarmful() {
+		return harmful;
 	}
 	public Map<IResource, Integer> getRequiredResources() {
 		return requiredResources;

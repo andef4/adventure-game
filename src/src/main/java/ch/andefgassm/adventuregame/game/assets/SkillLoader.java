@@ -31,7 +31,7 @@ public class SkillLoader {
         if (rootNode.get("name") == null) {
             throw new AssetLoadException("name attribute of skill can't be null: " + file);
         }
-        Skill skill = new Skill(rootNode.get("name").asText());
+        Skill skill = new Skill(rootNode.get("name").asText(), true);
         
         
         

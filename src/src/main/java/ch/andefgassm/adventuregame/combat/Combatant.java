@@ -7,21 +7,24 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class Combatant {
-	
+    
     private Map<IStat, Integer> baseStats = new HashMap<IStat, Integer>();
     private Map<IResource, Integer> resources = new HashMap<IResource, Integer>();
     private List<String> skills = new ArrayList<String>();
     private CombatSystem system = null;
-    private List<ActiveEffect> activeEffects = new ArrayList<ActiveEffect>();
+    
+    private List<ActiveEffect> activeHarmfulEffects = new ArrayList<ActiveEffect>();
+    private List<ActiveEffect> activeHelpfulEffects = new ArrayList<ActiveEffect>();
+    
     private String name = null;
     private int currentLife = 0;
     private int maxLife = 0;
     
-	public Combatant(CombatSystem system, String name, int maxLife) {
-	    this.system = system;
-	    this.name = name;
-	    this.maxLife = maxLife;
-	    this.currentLife = maxLife;
+    public Combatant(CombatSystem system, String name, int maxLife) {
+        this.system = system;
+        this.name = name;
+        this.maxLife = maxLife;
+        this.currentLife = maxLife;
     }
 
     public List<String> getAvailableSkills() {
@@ -41,9 +44,9 @@ public class Combatant {
                 availableSkills.add(skill);
             }
         }
-	    return availableSkills;
-	}
-	
+        return availableSkills;
+    }
+    
     public void addSkill(String skill) {
         if (system.getSkill(skill) == null) {
             throw new IllegalArgumentException("Unknown skill " + skill);
@@ -53,14 +56,21 @@ public class Combatant {
 
     public void cast(String skillName, Combatant target) {
         Skill skill = system.getSkill(skillName);
-        // add effects to the player
-        for (Effect playerEffect : skill.getCasterEffects()) {
-            activeEffects.add(new ActiveEffect(playerEffect, this, this));
+        // add effects to the caster
+        for (Effect casterEffect : skill.getCasterEffects()) {
+            activeHelpfulEffects.add(new ActiveEffect(casterEffect, this, this));
         }
-        // add effects to the enemy
-        for (Effect enemyEffect : skill.getTargetEffects()) {
-            target.activeEffects.add(new ActiveEffect(enemyEffect, this, target));
+        // add effects to the target
+        if (this == target) {
+            for (Effect targetEffect : skill.getTargetEffects()) {
+                activeHelpfulEffects.add(new ActiveEffect(targetEffect, this, target));
+            }
+        } else {
+            for (Effect targetEffect : skill.getTargetEffects()) {
+                target.activeHarmfulEffects.add(new ActiveEffect(targetEffect, this, target));
+            }
         }
+
         // remove required resources from player
         for (Entry<IResource, Integer> requiredResource : skill.getRequiredResources().entrySet()) {
             Integer resource = resources.get(requiredResource.getKey());
@@ -73,12 +83,17 @@ public class Combatant {
     
     
     public Map<IStat, Integer> getCurrentStats() {
-    	Map<IStat, Integer> currentStats = new HashMap<IStat, Integer>();
+        Map<IStat, Integer> currentStats = new HashMap<IStat, Integer>();
         for (Entry<IStat, Integer> stat : baseStats.entrySet()) {
             currentStats.put(stat.getKey(), stat.getValue());
         }
-        
-        for (ActiveEffect activeEffect : activeEffects) {
+        calculateStats(activeHarmfulEffects, currentStats);
+        calculateStats(activeHelpfulEffects, currentStats);
+        return currentStats;
+    }
+    
+    private void calculateStats(List<ActiveEffect> effects, Map<IStat, Integer> currentStats) {
+        for (ActiveEffect activeEffect : effects) {
             // calculate current stats by applying the effects to the baseStats
             for (Entry<IStat, Integer> statChange : activeEffect.getEffect().getStatChanges().entrySet()) {
                 IStat stat = statChange.getKey();
@@ -93,16 +108,23 @@ public class Combatant {
                 }
             }
         }
-        return currentStats;
     }
     
     /**
-     * applies all effects on this combatant one round
+     * applies all effects on this combatant
      */
-    public void applyEffects() {
+    public void applyHelpfulEffects() {
+        applyEffects(activeHelpfulEffects);
+    }
+    
+    public void applyHarmfulEffects() {
+        applyEffects(activeHarmfulEffects);
+    }
+    
+    private void applyEffects(List<ActiveEffect> effects) {
         // calculate damage and healing and remove running out effects
         List<ActiveEffect> effectsToRemove = new ArrayList<ActiveEffect>(); // effects to delete after this round
-        for (ActiveEffect activeEffect : activeEffects) {
+        for (ActiveEffect activeEffect : effects) {
             currentLife += activeEffect.calculateEffectiveLifeChange();
             if (activeEffect.decrementInterval()) {
                 effectsToRemove.add(activeEffect);
@@ -111,8 +133,9 @@ public class Combatant {
         if (currentLife < 0) {
             currentLife = 0;
         }
-        activeEffects.removeAll(effectsToRemove);
+        effects.removeAll(effectsToRemove);
     }
+    
     
     /**
      * @return the stats
