@@ -12,6 +12,10 @@ public class Player {
 	
 	private static Player instance;
 	
+	public Player() {
+		//inventory.add(context.getItem("Donnerbalken"));
+	}
+	
 	public static Player getInstance()
 	{
 		if (instance == null){

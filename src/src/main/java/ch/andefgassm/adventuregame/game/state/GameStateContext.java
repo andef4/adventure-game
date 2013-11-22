@@ -1,10 +1,16 @@
 package ch.andefgassm.adventuregame.game.state;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import ch.andefgassm.adventuregame.combat.CombatSystem;
 import ch.andefgassm.adventuregame.combat.Effect;
 import ch.andefgassm.adventuregame.combat.Skill;
 import ch.andefgassm.adventuregame.game.Resource;
 import ch.andefgassm.adventuregame.game.Stat;
+import ch.andefgassm.adventuregame.game.assets.AssetLoadException;
+import ch.andefgassm.adventuregame.game.assets.ItemLoader;
+import ch.andefgassm.adventuregame.game.inventory.Item;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -24,6 +30,13 @@ public class GameStateContext {
 	}
 
 	public void run() {
+		//todo load item und skill loader
+		try {
+			ItemLoader.load(this);
+		} catch (AssetLoadException e) {
+			e.printStackTrace();
+		}
+		
 		initSkills();
 		changeState(MAIN_MENU);
 	}
@@ -68,5 +81,15 @@ public class GameStateContext {
 	public CombatSystem getCombatSystem() {
 		return combatSystem;
 	}
+	
+    private Map<String, Item> items = new HashMap<String, Item>();
+
+    public void registerItem(String name, Item item) {
+        items.put(name, item);
+    }
+    
+    public Item getItem(String item) {
+        return items.get(item);
+    }
 
 }

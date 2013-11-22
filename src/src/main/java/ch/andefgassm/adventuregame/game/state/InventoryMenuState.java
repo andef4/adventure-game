@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map.Entry;
 import ch.andefgassm.adventuregame.combat.IStat;
 import ch.andefgassm.adventuregame.game.Stat;
+import ch.andefgassm.adventuregame.game.assets.AssetLoadException;
+import ch.andefgassm.adventuregame.game.assets.ItemLoader;
 import ch.andefgassm.adventuregame.game.inventory.Item;
 import ch.andefgassm.adventuregame.game.inventory.ItemType;
 import ch.andefgassm.adventuregame.game.inventory.Player;
@@ -16,24 +18,34 @@ public class InventoryMenuState extends AbstractConsoleGameState {
 	//character mit items ausruesten	
 	
 	public InventoryMenuState() {
-		//testItem
-		Item testItem = new Item();
-		testItem.setName("Todes-Messer-NunJackOh");
-		testItem.setType(ItemType.WEAPON);
-		testItem.getStats().put(Stat.STRENGTH, 10);
-		testItem.getStats().put(Stat.BASMATI, 99);
-		inventory.add(testItem);		
-		//testItem
+//		//testItem
+//		Item testItem = new Item();
+//		testItem.setName("Todes-Messer-NunJackOh");
+//		testItem.setType(ItemType.WEAPON);
+//		testItem.getStats().put(Stat.STRENGTH, 10);
+//		testItem.getStats().put(Stat.BASMATI, 99);
+//		inventory.add(testItem);		
+//		//testItem
+//		
+//		//testItem
+//		Item testItem2 = new Item();
+//		testItem2.setName("Affenschaedel-Helm");
+//		testItem2.setType(ItemType.HEAD);
+//		testItem2.getStats().put(Stat.STRENGTH, 69);
+//		testItem2.getStats().put(Stat.SPEED, 3);
+//		testItem2.getStats().put(Stat.AGILITY, 19);
+//		inventory.add(testItem2);		
+//		//testItem
 		
-		//testItem
-		Item testItem2 = new Item();
-		testItem2.setName("Affenschaedel-Helm");
-		testItem2.setType(ItemType.HEAD);
-		testItem2.getStats().put(Stat.STRENGTH, 69);
-		testItem2.getStats().put(Stat.SPEED, 3);
-		testItem2.getStats().put(Stat.AGILITY, 19);
-		inventory.add(testItem2);		
-		//testItem
+//		Item item;
+//		try {
+//			item = ItemLoader.load();
+//			inventory.add(item);
+//		} catch (AssetLoadException e) {
+//			e.printStackTrace();
+//		}
+		
+				
 	}
 	
 	public void init(GameStateContext context) {
@@ -63,6 +75,9 @@ public class InventoryMenuState extends AbstractConsoleGameState {
 			
 			println(sb.toString());
 		}
+		
+		println("--------------------------------------");
+		println("0 ) Back to main menu");
 		
 	}
 
