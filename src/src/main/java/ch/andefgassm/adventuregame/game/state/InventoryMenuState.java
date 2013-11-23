@@ -2,10 +2,8 @@ package ch.andefgassm.adventuregame.game.state;
 
 import java.util.List;
 import java.util.Map.Entry;
+
 import ch.andefgassm.adventuregame.combat.IStat;
-import ch.andefgassm.adventuregame.game.Stat;
-import ch.andefgassm.adventuregame.game.assets.AssetLoadException;
-import ch.andefgassm.adventuregame.game.assets.ItemLoader;
 import ch.andefgassm.adventuregame.game.inventory.Item;
 import ch.andefgassm.adventuregame.game.inventory.ItemType;
 import ch.andefgassm.adventuregame.game.inventory.Player;

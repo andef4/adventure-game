@@ -3,8 +3,6 @@ package ch.andefgassm.adventuregame.combat;
 import java.util.HashMap;
 import java.util.Map;
 
-import ch.andefgassm.adventuregame.game.inventory.Item;
-
 
 public class CombatSystem {
     
