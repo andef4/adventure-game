@@ -7,4 +7,5 @@ public enum Stat implements IStat {
     AGILITY,
     SPEED,
     BASMATI,
+    FIRE_RESISTANCE,
 }

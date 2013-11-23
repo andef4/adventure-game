@@ -5,6 +5,7 @@ import ch.andefgassm.adventuregame.combat.Effect;
 import ch.andefgassm.adventuregame.combat.Skill;
 import ch.andefgassm.adventuregame.game.Resource;
 import ch.andefgassm.adventuregame.game.Stat;
+import ch.andefgassm.adventuregame.game.skills.FireResistanceProcessor;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -25,6 +26,7 @@ public class GameStateContext {
 
 	public void run() {
 		initSkills();
+		combatSystem.getStatProcessors().add(new FireResistanceProcessor());
 		changeState(MAIN_MENU);
 	}
 	

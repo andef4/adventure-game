@@ -56,6 +56,9 @@ public class ActiveEffect {
 	 * @return
 	 */
 	public int calculateEffectiveLifeChange() {
+		
+		
+		
 		return baseLifeChange;
 	}
 }
