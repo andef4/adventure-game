@@ -42,7 +42,7 @@ public class AssetLoader {
 				@Override
 				public Object deserializeKey(String key, DeserializationContext context) throws IOException, JsonProcessingException {
 					for (Stat s : Stat.values()) {
-						if (key.toLowerCase() == s.name().toLowerCase()) {
+						if (key.toLowerCase().equals(s.name().toLowerCase()) ) {
 							return s;
 						}
 					}

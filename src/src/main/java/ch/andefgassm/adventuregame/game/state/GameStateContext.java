@@ -1,10 +1,17 @@
 package ch.andefgassm.adventuregame.game.state;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import ch.andefgassm.adventuregame.combat.CombatSystem;
 import ch.andefgassm.adventuregame.combat.Effect;
 import ch.andefgassm.adventuregame.combat.Skill;
 import ch.andefgassm.adventuregame.game.Resource;
 import ch.andefgassm.adventuregame.game.Stat;
+import ch.andefgassm.adventuregame.game.assets.AssetLoadException;
+import ch.andefgassm.adventuregame.game.assets.ItemLoader;
+import ch.andefgassm.adventuregame.game.inventory.Item;
+import ch.andefgassm.adventuregame.game.inventory.Player;
 import ch.andefgassm.adventuregame.game.skills.FireResistanceProcessor;
 
 import com.badlogic.gdx.Game;
@@ -17,14 +24,23 @@ public class GameStateContext {
 	public static final AbstractGameState INVENTORY_MENU = new InventoryMenuState();
 	public static final AbstractGameState COMBAT = new CombatState();
 	
-	private CombatSystem combatSystem = new CombatSystem();
 	private Game game = null;
+	
+	private CombatSystem combatSystem = new CombatSystem();
+	private Player player = new Player();
 	
 	public GameStateContext(Game game) {
 		this.game = game;
 	}
 
 	public void run() {
+		//todo load item und skill loader
+		try {
+			ItemLoader.load(this);
+		} catch (AssetLoadException e) {
+			e.printStackTrace();
+		}
+		
 		initSkills();
 		combatSystem.getStatProcessors().add(new FireResistanceProcessor());
 		changeState(MAIN_MENU);
@@ -69,6 +85,20 @@ public class GameStateContext {
 		
 	public CombatSystem getCombatSystem() {
 		return combatSystem;
+	}
+	
+    private Map<String, Item> items = new HashMap<String, Item>();
+
+    public void registerItem(String name, Item item) {
+        items.put(name, item);
+    }
+    
+    public Item getItem(String item) {
+        return items.get(item);
+    }
+
+	public Player getPlayer() {
+		return player;
 	}
 
 }
