@@ -58,16 +58,16 @@ public class Combatant {
         Skill skill = system.getSkill(skillName);
         // add effects to the caster
         for (Effect casterEffect : skill.getCasterEffects()) {
-            activeHelpfulEffects.add(new ActiveEffect(casterEffect, this, this));
+            activeHelpfulEffects.add(new ActiveEffect(casterEffect, this, this, system));
         }
         // add effects to the target
         if (this == target) {
             for (Effect targetEffect : skill.getTargetEffects()) {
-                activeHelpfulEffects.add(new ActiveEffect(targetEffect, this, target));
+                activeHelpfulEffects.add(new ActiveEffect(targetEffect, this, target, system));
             }
         } else {
             for (Effect targetEffect : skill.getTargetEffects()) {
-                target.activeHarmfulEffects.add(new ActiveEffect(targetEffect, this, target));
+                target.activeHarmfulEffects.add(new ActiveEffect(targetEffect, this, target, system));
             }
         }
 

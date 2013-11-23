@@ -21,7 +21,7 @@ public class ItemLoader {
 				if (file.isFile() && file.getName().endsWith(".json")) {
 
 					Item item = AssetLoader.getObjectMapper()
-							.readValue(new File("assets/data/items/item.json"),
+							.readValue(file,
 									Item.class);
 					
 					gameStateContext.registerItem(item.getName(), item);

@@ -6,6 +6,7 @@ import java.util.Map;
 import ch.andefgassm.adventuregame.combat.CombatSystem;
 import ch.andefgassm.adventuregame.combat.Effect;
 import ch.andefgassm.adventuregame.combat.Skill;
+import ch.andefgassm.adventuregame.game.DamageType;
 import ch.andefgassm.adventuregame.game.Resource;
 import ch.andefgassm.adventuregame.game.Stat;
 import ch.andefgassm.adventuregame.game.assets.AssetLoadException;
@@ -79,8 +80,12 @@ public class GameStateContext {
         Skill breathSkill = new Skill("Breath", true);
         Effect breathEffect = new Effect();
         breathEffect.setBaseLifeChange(-70);
+        breathEffect.setDamageType(DamageType.FIRE);
         breathSkill.getTargetEffects().add(breathEffect);
         combatSystem.registerSkill("drake_breath", breathSkill);
+        
+        player.getInventory().add(getItem("Greatsword of the Red Dragon"));
+        player.getInventory().add(getItem("Donnerbalken"));
 	}
 		
 	public CombatSystem getCombatSystem() {

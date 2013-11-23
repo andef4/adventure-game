@@ -7,13 +7,15 @@ public class ActiveEffect {
 	private int intervalsLeft = 0;
 	private int baseLifeChange = 0;
 	private Combatant caster;
-	//private Combatant target;
+	private Combatant target;
+	private CombatSystem system;
 
-	public ActiveEffect(Effect effect, Combatant caster, Combatant target) {
+	public ActiveEffect(Effect effect, Combatant caster, Combatant target, CombatSystem system) {
 		this.effect = effect;
 		this.intervalsLeft = effect.getIntervalsRunning();
 		this.caster = caster;
-		//this.target = target;
+		this.target = target;
+		this.system = system;
 		calculateBaseLifeChange();
 	}
 
@@ -56,9 +58,9 @@ public class ActiveEffect {
 	 * @return
 	 */
 	public int calculateEffectiveLifeChange() {
-		
-		
-		
+		for (StatProcessor statProcessor : system.getStatProcessors()) {
+			baseLifeChange = statProcessor.modify(caster, target, effect, baseLifeChange);
+		}
 		return baseLifeChange;
 	}
 }
