@@ -8,7 +8,6 @@ import ch.andefgassm.adventuregame.combat.Combatant;
 import ch.andefgassm.adventuregame.combat.Skill;
 import ch.andefgassm.adventuregame.game.Resource;
 import ch.andefgassm.adventuregame.game.ai.BlackDragonAI;
-import ch.andefgassm.adventuregame.game.inventory.Player;
 
 
 public class CombatState extends AbstractConsoleGameState {
@@ -33,7 +32,7 @@ public class CombatState extends AbstractConsoleGameState {
         player.getResources().put(Resource.ENERGY, 500);
         player.getResources().put(Resource.COMBO_POINT, 0);
         
-        player.getBaseStats().putAll(Player.getInstance().getStats());
+        player.getBaseStats().putAll(context.getPlayer().getStats());
         
         enemy = new BlackDragonAI(system);
         

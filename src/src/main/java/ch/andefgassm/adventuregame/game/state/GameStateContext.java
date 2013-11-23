@@ -11,6 +11,7 @@ import ch.andefgassm.adventuregame.game.Stat;
 import ch.andefgassm.adventuregame.game.assets.AssetLoadException;
 import ch.andefgassm.adventuregame.game.assets.ItemLoader;
 import ch.andefgassm.adventuregame.game.inventory.Item;
+import ch.andefgassm.adventuregame.game.inventory.Player;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -22,8 +23,10 @@ public class GameStateContext {
 	public static final AbstractGameState INVENTORY_MENU = new InventoryMenuState();
 	public static final AbstractGameState COMBAT = new CombatState();
 	
-	private CombatSystem combatSystem = new CombatSystem();
 	private Game game = null;
+	
+	private CombatSystem combatSystem = new CombatSystem();
+	private Player player = new Player();
 	
 	public GameStateContext(Game game) {
 		this.game = game;
@@ -91,5 +94,9 @@ public class GameStateContext {
     public Item getItem(String item) {
         return items.get(item);
     }
+
+	public Player getPlayer() {
+		return player;
+	}
 
 }

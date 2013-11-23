@@ -9,22 +9,6 @@ import java.util.Map.Entry;
 import ch.andefgassm.adventuregame.combat.IStat;
 
 public class Player {
-	
-	private static Player instance;
-	
-	public Player() {
-		//inventory.add(context.getItem("Donnerbalken"));
-	}
-	
-	public static Player getInstance()
-	{
-		if (instance == null){
-			instance = new Player();
-		}
-		
-		return instance;
-	}
-	
 	private List<Item> inventory = new ArrayList<Item>();
 	
 	public List<Item> getInventory() {
