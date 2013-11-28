@@ -167,6 +167,14 @@ public class Combatant {
         return resources;
     }
     
+    public List<ActiveEffect> getActiveHarmfulEffects() {
+		return activeHarmfulEffects;
+	}
+    
+    public List<ActiveEffect> getActiveHelpfulEffects() {
+		return activeHelpfulEffects;
+	}
+    
     public String getName() {
         return name;
     }
