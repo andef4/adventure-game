@@ -1,16 +1,12 @@
 package ch.andefgassm.adventuregame.game.state;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import ch.andefgassm.adventuregame.combat.CombatSystem;
-import ch.andefgassm.adventuregame.combat.Effect;
 import ch.andefgassm.adventuregame.combat.Skill;
-import ch.andefgassm.adventuregame.game.DamageType;
-import ch.andefgassm.adventuregame.game.Resource;
-import ch.andefgassm.adventuregame.game.Stat;
-import ch.andefgassm.adventuregame.game.assets.AssetLoadException;
-import ch.andefgassm.adventuregame.game.assets.ItemLoader;
+import ch.andefgassm.adventuregame.game.assets.AssetLoader;
 import ch.andefgassm.adventuregame.game.inventory.Item;
 import ch.andefgassm.adventuregame.game.inventory.Player;
 import ch.andefgassm.adventuregame.game.skills.FireResistanceProcessor;
@@ -34,15 +30,22 @@ public class GameStateContext {
 		this.game = game;
 	}
 
-	public void run() {
-		//todo load item und skill loader
-		try {
-			ItemLoader.load(this);
-		} catch (AssetLoadException e) {
-			e.printStackTrace();
+	public void init() {
+		List<Item> items = AssetLoader.getInstance().load("assets/data/items", Item.class);
+		for (Item item : items) {
+			this.items.put(item.getId(), item);
 		}
 		
-		initSkills();
+		List<Skill> skills = AssetLoader.getInstance().load("assets/data/skills", Skill.class);
+		for (Skill skill : skills) {
+			combatSystem.registerSkill(skill.getId(), skill);
+		}
+		
+		// TODO: add enemy loader
+		
+        player.getInventory().add(getItem("Greatsword of the Red Dragon"));
+        player.getInventory().add(getItem("Donnerbalken"));
+        
 		combatSystem.getStatProcessors().add(new FireResistanceProcessor());
 		changeState(MAIN_MENU);
 	}
@@ -57,8 +60,9 @@ public class GameStateContext {
 		Gdx.input.setInputProcessor(newState);
 	}
 	
+	/*
 	private void initSkills() {
-		Skill strikeSkill = new Skill("Strike", true);
+		Skill strikeSkill = new Skill("player_strike", "Strike", true);
         strikeSkill.getRequiredResources().put(Resource.ENERGY, 20);
         Effect strikeDamageEffect = new Effect();
         strikeDamageEffect.setBaseLifeChange(-50);
@@ -69,7 +73,7 @@ public class GameStateContext {
         strikeSkill.getCasterEffects().add(strikeComboPointEffect);
         combatSystem.registerSkill("warrior_strike", strikeSkill);
         
-        Skill executeSkill = new Skill("Execute", true);
+        Skill executeSkill = new Skill("player_execute", "Execute", true);
         executeSkill.getRequiredResources().put(Resource.ENERGY, 20);
         executeSkill.getRequiredResources().put(Resource.COMBO_POINT, 3);
         Effect executeEffect = new Effect();
@@ -77,26 +81,20 @@ public class GameStateContext {
         executeSkill.getTargetEffects().add(executeEffect);
         combatSystem.registerSkill("warrior_execute", executeSkill);
         
-        Skill breathSkill = new Skill("Breath", true);
+        Skill breathSkill = new Skill("black_dragon_breath", "Breath", true);
         Effect breathEffect = new Effect();
         breathEffect.setBaseLifeChange(-70);
         breathEffect.setDamageType(DamageType.FIRE);
         breathSkill.getTargetEffects().add(breathEffect);
         combatSystem.registerSkill("drake_breath", breathSkill);
-        
-        player.getInventory().add(getItem("Greatsword of the Red Dragon"));
-        player.getInventory().add(getItem("Donnerbalken"));
 	}
+	*/
 		
 	public CombatSystem getCombatSystem() {
 		return combatSystem;
 	}
 	
     private Map<String, Item> items = new HashMap<String, Item>();
-
-    public void registerItem(String name, Item item) {
-        items.put(name, item);
-    }
     
     public Item getItem(String item) {
         return items.get(item);

@@ -13,17 +13,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author andef4
  */
 public class Skill {
+	private String id = null;
 	private String name = null;
 	private boolean harmful;
 	private Map<IResource, Integer> requiredResources = new HashMap<IResource, Integer>();
 	private List<Effect> targetEffects = new ArrayList<Effect>();
 	private List<Effect> casterEffects = new ArrayList<Effect>();
 	
-	
 	@JsonCreator
-	public Skill(@JsonProperty("name") String name, @JsonProperty("harmful") boolean harmful) {
+	public Skill(@JsonProperty("id") String id,
+			@JsonProperty("name") String name,
+			@JsonProperty("harmful") boolean harmful) {
+		this.id = id;
 		this.name = name;
 		this.harmful= harmful;
+	}
+	public String getId() {
+		return id;
 	}
 	public String getName() {
 		return name;

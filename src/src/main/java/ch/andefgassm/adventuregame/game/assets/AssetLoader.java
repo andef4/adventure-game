@@ -1,6 +1,8 @@
 package ch.andefgassm.adventuregame.game.assets;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import ch.andefgassm.adventuregame.combat.IDamageType;
@@ -9,7 +11,6 @@ import ch.andefgassm.adventuregame.combat.IStat;
 import ch.andefgassm.adventuregame.game.DamageType;
 import ch.andefgassm.adventuregame.game.Resource;
 import ch.andefgassm.adventuregame.game.Stat;
-import ch.andefgassm.adventuregame.game.inventory.Item;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -19,57 +20,74 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 
 public class AssetLoader {
 	
+	private ObjectMapper objectMapper = null;
 	
-	private static ObjectMapper objectMapper = null;
-	
-	public static <T> List<T> load(String directory, Class<T> clazz) {
-		// TODO gassm9
-		
-		//Item item = AssetLoader.getObjectMapper().readValue(file, clazz);
-		
-		
-		return null;
+	private AssetLoader() {
+		objectMapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addAbstractTypeMapping(IResource.class, Resource.class);
+        module.addAbstractTypeMapping(IDamageType.class, DamageType.class);
+        module.addAbstractTypeMapping(IStat.class, Stat.class);
+        module.addKeyDeserializer(IResource.class, new KeyDeserializer() {
+			@Override
+			public Object deserializeKey(String key, DeserializationContext context) throws IOException, JsonProcessingException {
+				for (Resource s : Resource.values()) {
+					if (key.toLowerCase() == s.name().toLowerCase()) {
+						return s;
+					}
+				}
+				throw new IllegalArgumentException("Unknown Resource key");
+			}
+        });
+        module.addKeyDeserializer(IStat.class, new KeyDeserializer() {
+			@Override
+			public Object deserializeKey(String key, DeserializationContext context) throws IOException, JsonProcessingException {
+				for (Stat s : Stat.values()) {
+					if (key.toLowerCase().equals(s.name().toLowerCase()) ) {
+						return s;
+					}
+				}
+				throw new IllegalArgumentException("Unknown Stat key");
+			}
+        });
+        objectMapper.registerModule(module);
 	}
 	
-	public static void main(String[] args) {
-		// example, delete this
-		List<Item> items = AssetLoader.load("assets/data/items", Item.class);
-		for (Item item : items) {
-			//new GameStateContext().registerItem(item.getName(), item);
+	public <T> List<T> load(String path, Class<T> clazz) {
+		File directory = new File(path);
+		
+		List<File> filePaths = new ArrayList<File>();
+		findJsonFiles(directory, filePaths);
+		
+		List<T> list = new ArrayList<T>();
+		
+		try {
+			for (File file : filePaths) {
+				T value = objectMapper.readValue(file, clazz);
+				list.add(value);
+			}
+		} catch (Exception ex) {
+			throw new AssetLoadException(ex);
+		}
+		
+		return list;
+	}
+	
+	private void findJsonFiles(File directory, List<File> filePaths) {
+		for (File file : directory.listFiles()) {
+			if (file.isFile() && file.getName().endsWith(".json")) {
+				filePaths.add(file);
+			} else if(file.isDirectory()) {
+				findJsonFiles(file, filePaths);
+			}
 		}
 	}
 	
-	public static ObjectMapper getObjectMapper() {
-		if (objectMapper == null) {
-			objectMapper = new ObjectMapper();
-	        SimpleModule module = new SimpleModule();
-	        module.addAbstractTypeMapping(IResource.class, Resource.class);
-	        module.addAbstractTypeMapping(IDamageType.class, DamageType.class);
-	        module.addAbstractTypeMapping(IStat.class, Stat.class);
-	        module.addKeyDeserializer(IResource.class, new KeyDeserializer() {
-				@Override
-				public Object deserializeKey(String key, DeserializationContext context) throws IOException, JsonProcessingException {
-					for (Resource s : Resource.values()) {
-						if (key.toLowerCase() == s.name().toLowerCase()) {
-							return s;
-						}
-					}
-					throw new IllegalArgumentException("Unknown Resource key");
-				}
-	        });
-	        module.addKeyDeserializer(IStat.class, new KeyDeserializer() {
-				@Override
-				public Object deserializeKey(String key, DeserializationContext context) throws IOException, JsonProcessingException {
-					for (Stat s : Stat.values()) {
-						if (key.toLowerCase().equals(s.name().toLowerCase()) ) {
-							return s;
-						}
-					}
-					throw new IllegalArgumentException("Unknown Stat key");
-				}
-	        });
-	        objectMapper.registerModule(module);
+	private static AssetLoader instance = null;
+	public static AssetLoader getInstance() {
+		if (instance == null) {
+			instance = new AssetLoader();
 		}
-		return objectMapper;
+		return instance;
 	}
 }
