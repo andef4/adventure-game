@@ -27,8 +27,8 @@ public class CombatState extends AbstractConsoleGameState {
         system = context.getCombatSystem();
         
         player = new Combatant(system, "Player", 500);
-        player.addSkill("warrior_strike");
-        player.addSkill("warrior_execute");
+        player.addSkill("player_strike");
+        player.addSkill("player_execute");
         player.getResources().put(Resource.ENERGY, 500);
         player.getResources().put(Resource.COMBO_POINT, 0);
         

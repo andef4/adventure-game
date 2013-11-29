@@ -32,11 +32,11 @@ public class AssetLoader {
 			@Override
 			public Object deserializeKey(String key, DeserializationContext context) throws IOException, JsonProcessingException {
 				for (Resource s : Resource.values()) {
-					if (key.toLowerCase() == s.name().toLowerCase()) {
+					if (key.toLowerCase().equals(s.name().toLowerCase())) {
 						return s;
 					}
 				}
-				throw new IllegalArgumentException("Unknown Resource key");
+				throw new IllegalArgumentException(String.format("Unknown Resource key %s", key));
 			}
         });
         module.addKeyDeserializer(IStat.class, new KeyDeserializer() {
@@ -47,7 +47,7 @@ public class AssetLoader {
 						return s;
 					}
 				}
-				throw new IllegalArgumentException("Unknown Stat key");
+				throw new IllegalArgumentException(String.format("Unknown Stat key %s", key));
 			}
         });
         objectMapper.registerModule(module);

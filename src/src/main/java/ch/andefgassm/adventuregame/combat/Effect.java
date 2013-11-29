@@ -12,7 +12,7 @@ public class Effect {
 	private Map<IResource, Integer> resourceChanges = new HashMap<IResource, Integer>();
 	private Map<IStat, Integer> statChanges = new HashMap<IStat, Integer>();
 	private Map<IStat, Float> statScaling = new HashMap<IStat, Float>();
-	private Map<Class<? extends SpellModifier>, Float> spellModifiers = new HashMap<Class<? extends SpellModifier>, Float>();
+	//private Map<Class<? extends SpellModifier>, Float> spellModifiers = new HashMap<Class<? extends SpellModifier>, Float>();
 	
 	/**
      * @return the intervalsRunning
@@ -68,7 +68,7 @@ public class Effect {
 		return statScaling;
 	}
     
-    public Map<Class<? extends SpellModifier>, Float> getSpellModifiers() {
+    /*public Map<Class<? extends SpellModifier>, Float> getSpellModifiers() {
 		return spellModifiers;
-	}
+	}*/
 }

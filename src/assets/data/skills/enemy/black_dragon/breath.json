@@ -1,0 +1,10 @@
+{
+    "id": "black_dragon_breath",
+    "name": "Breath",
+    "harmful": true,
+    "requiredResources": {},
+    "targetEffects": [{
+        "damageType": "FIRE",
+        "baseLifeChange": -70
+    }]
+}

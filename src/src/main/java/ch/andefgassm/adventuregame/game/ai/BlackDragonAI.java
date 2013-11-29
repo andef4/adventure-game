@@ -7,7 +7,7 @@ public class BlackDragonAI extends AbstractAICombatant{
 
     public BlackDragonAI(CombatSystem system) {
         super(system, "The Black Dragon", 500);
-        addSkill("drake_breath");
+        addSkill("black_dragon_breath");
     }
     
     @Override

@@ -1,0 +1,19 @@
+{
+    "id": "player_execute",
+    "name": "Execute",
+    "harmful": true,
+    "requiredResources": {
+        "ENERGY": 20,
+        "COMBO_POINT": 3
+    },
+    "targetEffects": [{
+        "intervalsRunning": 1,
+        "everyInterval": 1,
+        "damageType": null,
+        "baseLifeChange": -100,
+        "resourceChanges": {},
+        "statChanges": {},
+        "statScaling": {}
+    }],
+    "casterEffects": []
+}
