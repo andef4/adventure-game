@@ -2,12 +2,14 @@ package ch.andefgassm.adventuregame.game.state;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
+import java.util.Random;
 
 import ch.andefgassm.adventuregame.combat.AbstractAICombatant;
 import ch.andefgassm.adventuregame.combat.CombatSystem;
 import ch.andefgassm.adventuregame.combat.Combatant;
 import ch.andefgassm.adventuregame.combat.Skill;
 import ch.andefgassm.adventuregame.game.Enemy;
+import ch.andefgassm.adventuregame.game.Enemy.Drop;
 import ch.andefgassm.adventuregame.game.Resource;
 
 
@@ -18,6 +20,7 @@ public class CombatState extends AbstractConsoleGameState {
     private Combatant player = null;
     private AbstractAICombatant enemy = null;
     private CurrentCombatState state = CurrentCombatState.FIGHTING;
+	private Enemy baseEnemy;
     
     enum CurrentCombatState {
         FIGHTING, LOST, WON, BAD_INPUT, GIVE_UP
@@ -37,7 +40,7 @@ public class CombatState extends AbstractConsoleGameState {
         player.getResources().put(Resource.ENERGY, 500);
         player.getResources().put(Resource.COMBO_POINT, 0);
         
-        Enemy baseEnemy = context.getEnemy(enemyId);
+        baseEnemy = context.getEnemy(enemyId);
         
         try {
         	Class<?> aiClass = Class.forName(baseEnemy.getAiClass());
@@ -78,6 +81,16 @@ public class CombatState extends AbstractConsoleGameState {
             break;
         case WON:
             println(player.getName() + " has defeated " + enemy.getName());
+            
+            Random r = new Random();
+            List<Drop> drops = baseEnemy.getDrops();
+            for (Drop drop : drops) {
+            	float rnd = r.nextFloat();
+            	if (rnd <= drop.getDropRate()) {
+            		println("You have won an item!");
+            		context.getPlayer().getInventory().add(context.getItem(drop.getItemId()));
+            	}
+			}            
             println("[0] back to main menu");
             break;
         case LOST:

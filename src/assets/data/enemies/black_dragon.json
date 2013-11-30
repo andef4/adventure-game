@@ -5,5 +5,6 @@
     "life": 1000,
     "stats": {
         "fire_resistance": 30
-    }
+    },
+    "drops": [{"itemId": "greatsword_black_dragon", "dropRate": 1.0}]
 }

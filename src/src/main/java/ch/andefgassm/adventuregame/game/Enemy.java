@@ -11,9 +11,11 @@ import ch.andefgassm.adventuregame.combat.IStat;
 
 public class Enemy {
 	
-    class Drop {
+    public static class Drop {
 		private String itemId;
 		private float dropRate;
+		public Drop() {
+		}
 		public String getItemId() {
 			return itemId;
 		}
