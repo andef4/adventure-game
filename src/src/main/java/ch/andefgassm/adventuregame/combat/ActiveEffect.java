@@ -58,7 +58,7 @@ public class ActiveEffect {
 	 * @return
 	 */
 	public int calculateEffectiveLifeChange() {
-		for (StatProcessor statProcessor : system.getStatProcessors()) {
+		for (IStatProcessor statProcessor : system.getStatProcessors()) {
 			baseLifeChange = statProcessor.modify(caster, target, effect, baseLifeChange);
 		}
 		return baseLifeChange;

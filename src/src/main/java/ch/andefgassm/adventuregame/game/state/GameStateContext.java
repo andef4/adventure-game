@@ -10,7 +10,8 @@ import ch.andefgassm.adventuregame.game.Enemy;
 import ch.andefgassm.adventuregame.game.assets.AssetLoader;
 import ch.andefgassm.adventuregame.game.inventory.Item;
 import ch.andefgassm.adventuregame.game.inventory.Player;
-import ch.andefgassm.adventuregame.game.skills.FireResistanceProcessor;
+import ch.andefgassm.adventuregame.game.spellmodifiers.FireSpellModifier;
+import ch.andefgassm.adventuregame.game.stats.FireResistanceProcessor;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -51,6 +52,7 @@ public class GameStateContext {
 		}
         
 		combatSystem.getStatProcessors().add(new FireResistanceProcessor());
+		combatSystem.getSpellModifiers().put("fire", new FireSpellModifier());
 		changeState(MAIN_MENU);
 	}
 	

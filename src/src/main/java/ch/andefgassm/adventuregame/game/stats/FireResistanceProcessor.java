@@ -1,12 +1,12 @@
-package ch.andefgassm.adventuregame.game.skills;
+package ch.andefgassm.adventuregame.game.stats;
 
 import ch.andefgassm.adventuregame.combat.Combatant;
 import ch.andefgassm.adventuregame.combat.Effect;
-import ch.andefgassm.adventuregame.combat.StatProcessor;
+import ch.andefgassm.adventuregame.combat.IStatProcessor;
 import ch.andefgassm.adventuregame.game.DamageType;
 import ch.andefgassm.adventuregame.game.Stat;
 
-public class FireResistanceProcessor implements StatProcessor {
+public class FireResistanceProcessor implements IStatProcessor {
 
 	@Override
 	public int modify(Combatant caster, Combatant target, Effect effect, int baseDamage) {

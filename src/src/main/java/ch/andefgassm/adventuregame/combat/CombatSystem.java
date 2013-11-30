@@ -9,7 +9,8 @@ import java.util.Map;
 public class CombatSystem {
     
     private Map<String, Skill> skills = new HashMap<String, Skill>();
-    private List<StatProcessor> statProcessors = new ArrayList<StatProcessor>();
+    private List<IStatProcessor> statProcessors = new ArrayList<IStatProcessor>();
+    private Map<String, ISpellModifier> spellModifiers = new HashMap<String, ISpellModifier>();
 
     public void registerSkill(String name, Skill skill) {
         skills.put(name, skill);
@@ -19,7 +20,12 @@ public class CombatSystem {
         return skills.get(skill);
     }
 
-	public List<StatProcessor> getStatProcessors() {
+	public List<IStatProcessor> getStatProcessors() {
 		return statProcessors;
+	}
+	
+	
+	public Map<String, ISpellModifier> getSpellModifiers() {
+		return spellModifiers;
 	}
 }

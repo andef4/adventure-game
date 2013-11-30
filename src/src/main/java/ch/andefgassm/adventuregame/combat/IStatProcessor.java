@@ -6,6 +6,6 @@ package ch.andefgassm.adventuregame.combat;
  * Calculate blocking using block value and block chance
  * These modifiers are register on the combatSystem and modifies damage based on stats
  */
-public interface StatProcessor {
+public interface IStatProcessor {
 	public int modify(Combatant caster, Combatant target, Effect effect, int baseDamage);
 }
