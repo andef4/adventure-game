@@ -8,6 +8,7 @@ import ch.andefgassm.adventuregame.combat.AbstractAICombatant;
 import ch.andefgassm.adventuregame.combat.CombatSystem;
 import ch.andefgassm.adventuregame.combat.Combatant;
 import ch.andefgassm.adventuregame.combat.Skill;
+import ch.andefgassm.adventuregame.game.AdventureGameException;
 import ch.andefgassm.adventuregame.game.Enemy;
 import ch.andefgassm.adventuregame.game.Enemy.Drop;
 import ch.andefgassm.adventuregame.game.Resource;
@@ -20,22 +21,22 @@ public class CombatState extends AbstractConsoleGameState {
     private Combatant player = null;
     private AbstractAICombatant enemy = null;
     private CurrentCombatState state = CurrentCombatState.FIGHTING;
-	private Enemy baseEnemy;
+    private Enemy baseEnemy;
     
     enum CurrentCombatState {
         FIGHTING, LOST, WON, BAD_INPUT, GIVE_UP
     }
 
     public void init(GameStateContext context, String enemyId) {
-    	System.out.println(enemyId);
+        System.out.println(enemyId);
         this.context = context;
         system = context.getCombatSystem();
         
         player = new Combatant(system, "Player", 500);
         List<String> skills = context.getPlayer().getSkills();
         for (String skill : skills) {
-			player.addSkill(skill);
-		}
+            player.addSkill(skill);
+        }
         player.getBaseStats().putAll(context.getPlayer().getStats());
         player.getResources().put(Resource.ENERGY, 500);
         player.getResources().put(Resource.COMBO_POINT, 0);
@@ -43,12 +44,14 @@ public class CombatState extends AbstractConsoleGameState {
         baseEnemy = context.getEnemy(enemyId);
         
         try {
-        	Class<?> aiClass = Class.forName(baseEnemy.getAiClass());
-			Constructor<?> constructor = aiClass.getConstructor(CombatSystem.class);
-			enemy = (AbstractAICombatant) constructor.newInstance(context.getCombatSystem());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+            Class<?> aiClass = Class.forName(baseEnemy.getAiClass());
+            Constructor<?> constructor = aiClass.getConstructor(CombatSystem.class, String.class, Integer.TYPE);
+            enemy = (AbstractAICombatant) constructor.newInstance(context.getCombatSystem(), baseEnemy.getName(), baseEnemy.getLife());
+        } catch (Exception e) {
+            throw new AdventureGameException("Can't load enemy ai class", e);
+        }
+        
+        enemy.getBaseStats().putAll(baseEnemy.getStats());
         
         state = CurrentCombatState.FIGHTING;
         
@@ -85,12 +88,12 @@ public class CombatState extends AbstractConsoleGameState {
             Random r = new Random();
             List<Drop> drops = baseEnemy.getDrops();
             for (Drop drop : drops) {
-            	float rnd = r.nextFloat();
-            	if (rnd <= drop.getDropRate()) {
-            		println("You have won an item!");
-            		context.getPlayer().getInventory().add(context.getItem(drop.getItemId()));
-            	}
-			}            
+                float rnd = r.nextFloat();
+                if (rnd <= drop.getDropRate()) {
+                    println("You have won an item!");
+                    context.getPlayer().getInventory().add(context.getItem(drop.getItemId()));
+                }
+            }
             println("[0] back to main menu");
             break;
         case LOST:
