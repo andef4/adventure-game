@@ -12,38 +12,7 @@ public class InventoryMenuState extends AbstractConsoleGameState {
 	private GameStateContext context = null;
 	private Player player = null;
 	
-	public InventoryMenuState() {
-//		//testItem
-//		Item testItem = new Item();
-//		testItem.setName("Todes-Messer-NunJackOh");
-//		testItem.setType(ItemType.WEAPON);
-//		testItem.getStats().put(Stat.STRENGTH, 10);
-//		testItem.getStats().put(Stat.BASMATI, 99);
-//		inventory.add(testItem);		
-//		//testItem
-//		
-//		//testItem
-//		Item testItem2 = new Item();
-//		testItem2.setName("Affenschaedel-Helm");
-//		testItem2.setType(ItemType.HEAD);
-//		testItem2.getStats().put(Stat.STRENGTH, 69);
-//		testItem2.getStats().put(Stat.SPEED, 3);
-//		testItem2.getStats().put(Stat.AGILITY, 19);
-//		inventory.add(testItem2);		
-//		//testItem
-		
-//		Item item;
-//		try {
-//			item = ItemLoader.load();
-//			inventory.add(item);
-//		} catch (AssetLoadException e) {
-//			e.printStackTrace();
-//		}
-		
-				
-	}
-	
-	public void init(GameStateContext context) {
+	public void init(GameStateContext context, String param) {
 		this.context = context;
 		this.player = context.getPlayer();
 		
@@ -97,7 +66,7 @@ public class InventoryMenuState extends AbstractConsoleGameState {
 		}
 		else if(input <= player.getInventory().size()){
 			player.equip(player.getInventory().get(input-1));
-			init(context);
+			init(context, null);
 		}
 	}
 }

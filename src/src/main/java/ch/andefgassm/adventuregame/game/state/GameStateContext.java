@@ -55,11 +55,15 @@ public class GameStateContext {
 	}
 	
 	public void changeState(AbstractGameState newState) {
+		changeState(newState, null);
+	}
+	
+	public void changeState(AbstractGameState newState, String param) {
 		if (newState == null) {
 			Gdx.app.exit();
 			return;
 		}
-		newState.init(this);
+		newState.init(this, param);
 		game.setScreen(newState);
 		Gdx.input.setInputProcessor(newState);
 	}
@@ -78,6 +82,10 @@ public class GameStateContext {
 
 	public Player getPlayer() {
 		return player;
+	}
+
+	public Map<String, Enemy> getEnemies() {
+		return enemies;
 	}
 
 }

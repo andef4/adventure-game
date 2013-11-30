@@ -1,13 +1,14 @@
 package ch.andefgassm.adventuregame.game.state;
 
+import java.lang.reflect.Constructor;
 import java.util.List;
 
 import ch.andefgassm.adventuregame.combat.AbstractAICombatant;
 import ch.andefgassm.adventuregame.combat.CombatSystem;
 import ch.andefgassm.adventuregame.combat.Combatant;
 import ch.andefgassm.adventuregame.combat.Skill;
+import ch.andefgassm.adventuregame.game.Enemy;
 import ch.andefgassm.adventuregame.game.Resource;
-import ch.andefgassm.adventuregame.game.ai.BlackDragonAI;
 
 
 public class CombatState extends AbstractConsoleGameState {
@@ -22,7 +23,8 @@ public class CombatState extends AbstractConsoleGameState {
         FIGHTING, LOST, WON, BAD_INPUT, GIVE_UP
     }
 
-    public void init(GameStateContext context) {
+    public void init(GameStateContext context, String enemyId) {
+    	System.out.println(enemyId);
         this.context = context;
         system = context.getCombatSystem();
         
@@ -35,7 +37,15 @@ public class CombatState extends AbstractConsoleGameState {
         player.getResources().put(Resource.ENERGY, 500);
         player.getResources().put(Resource.COMBO_POINT, 0);
         
-        enemy = new BlackDragonAI(system);
+        Enemy baseEnemy = context.getEnemy(enemyId);
+        
+        try {
+        	Class<?> aiClass = Class.forName(baseEnemy.getAiClass());
+			Constructor<?> constructor = aiClass.getConstructor(CombatSystem.class);
+			enemy = (AbstractAICombatant) constructor.newInstance(context.getCombatSystem());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         
         state = CurrentCombatState.FIGHTING;
         

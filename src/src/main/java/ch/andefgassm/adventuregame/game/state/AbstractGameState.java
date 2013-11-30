@@ -6,7 +6,7 @@ import com.badlogic.gdx.ScreenAdapter;
 
 public abstract class AbstractGameState extends ScreenAdapter implements InputProcessor{
 	
-	public abstract void init(GameStateContext context);
+	public abstract void init(GameStateContext context, String param);
 
 	@Override
 	public boolean keyDown(int keycode) {

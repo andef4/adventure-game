@@ -5,7 +5,7 @@ public class MainMenuState extends AbstractConsoleGameState {
 
 	private GameStateContext context;
 
-	public void init(GameStateContext context) {
+	public void init(GameStateContext context, String param) {
 		this.context = context;
 		clear();
 		println("Main Menu");
