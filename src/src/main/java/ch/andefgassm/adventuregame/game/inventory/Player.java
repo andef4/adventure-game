@@ -16,6 +16,12 @@ public class Player {
 	}
 	
 	private Map<ItemType, Item> equipment = new HashMap<ItemType, Item>();
+	private List<String> skills = new ArrayList<String>();
+	
+	public Player() {
+        skills.add("player_strike");
+        skills.add("player_execute");
+    }
 	
 	public Map<ItemType, Item> getEquipment() {
 		return equipment;
@@ -39,5 +45,9 @@ public class Player {
 			}
 		}
 		return stats;
+	}
+
+	public List<String> getSkills() {
+		return skills ;
 	}
 }

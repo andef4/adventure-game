@@ -27,12 +27,13 @@ public class CombatState extends AbstractConsoleGameState {
         system = context.getCombatSystem();
         
         player = new Combatant(system, "Player", 500);
-        player.addSkill("player_strike");
-        player.addSkill("player_execute");
+        List<String> skills = context.getPlayer().getSkills();
+        for (String skill : skills) {
+			player.addSkill(skill);
+		}
+        player.getBaseStats().putAll(context.getPlayer().getStats());
         player.getResources().put(Resource.ENERGY, 500);
         player.getResources().put(Resource.COMBO_POINT, 0);
-        
-        player.getBaseStats().putAll(context.getPlayer().getStats());
         
         enemy = new BlackDragonAI(system);
         
