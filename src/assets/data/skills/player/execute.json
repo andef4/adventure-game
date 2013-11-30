@@ -15,5 +15,7 @@
         "statChanges": {},
         "statScaling": {}
     }],
-    "casterEffects": []
+    "casterEffects": [
+        "spellModifiers": {"fire": -0.5}
+    ]
 }

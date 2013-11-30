@@ -1,5 +1,6 @@
 package ch.andefgassm.adventuregame.combat;
 
+import java.util.Map;
 import java.util.Map.Entry;
 
 public class ActiveEffect {
@@ -29,7 +30,7 @@ public class ActiveEffect {
 
 	/**
 	 * reduce interval by 1
-	 * 
+	 *
 	 * @return true if no intervals are left
 	 */
 	public boolean decrementInterval() {
@@ -49,17 +50,33 @@ public class ActiveEffect {
 				baseLifeChange += statScaling.getValue() * value;
 			}
 		}
+
+		for (ActiveEffect activeEffect : caster.getActiveHelpfulEffects()) {
+			Map<String, Float> spellModifiers = activeEffect.getEffect().getSpellModifiers();
+			for (Entry<String, Float> entry : spellModifiers.entrySet()) {
+				ISpellModifier spellModifier = system.getSpellModifiers().get(entry.getKey());
+				baseLifeChange = spellModifier.modify(caster, target, effect, baseLifeChange, entry.getValue());
+			}
+		}
 	}
 
 	/**
 	 * calculate effective life damage/heal based on the baseLifeChange value
 	 * and resistances, armor and other effects on the target
-	 * 
+	 *
 	 * @return
 	 */
 	public int calculateEffectiveLifeChange() {
 		for (IStatProcessor statProcessor : system.getStatProcessors()) {
 			baseLifeChange = statProcessor.modify(caster, target, effect, baseLifeChange);
+		}
+
+		for (ActiveEffect activeEffect : target.getActiveHarmfulEffects()) {
+			Map<String, Float> spellModifiers = activeEffect.getEffect().getSpellModifiers();
+			for (Entry<String, Float> entry : spellModifiers.entrySet()) {
+				ISpellModifier spellModifier = system.getSpellModifiers().get(entry.getKey());
+				baseLifeChange = spellModifier.modify(caster, target, effect, baseLifeChange, entry.getValue());
+			}
 		}
 		return baseLifeChange;
 	}
