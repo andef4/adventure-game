@@ -1,5 +1,6 @@
 {
     "type": "WEAPON",
+    "id": "donnerbalken",
     "name": "Donnerbalken",
     "stats": {
         "STRENGTH": 120
