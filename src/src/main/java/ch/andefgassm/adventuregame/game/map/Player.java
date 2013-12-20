@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Vector2;
@@ -19,7 +19,7 @@ public class Player extends Sprite implements InputProcessor {
 
 	private Animation still, left, right, up, down;
 	private TiledMapTileLayer collisionLayer;
-	
+
 	private String blockedKey = "blocked";
 
 	public Player(Animation still, Animation left, Animation right, Animation up, Animation down, TiledMapTileLayer collisionLayer) {
@@ -32,10 +32,10 @@ public class Player extends Sprite implements InputProcessor {
 		this.collisionLayer = collisionLayer;
 	}
 
-	//@Override
-	public void draw(SpriteBatch spriteBatch) {
+	@Override
+	public void draw(Batch batch) {
 		update(Gdx.graphics.getDeltaTime());
-		super.draw(spriteBatch);
+		super.draw(batch);
 	}
 
 	public void update(float delta) {
@@ -112,20 +112,20 @@ public class Player extends Sprite implements InputProcessor {
 			setY(oldY);
 			velocity.y = 0;
 		}
-		
+
 		// update animation
 		animationTime += delta;
-		setRegion(velocity.x < 0 ? left.getKeyFrame(animationTime) : 
-					velocity.x > 0 ? right.getKeyFrame(animationTime) : 
-					velocity.y < 0 ? down.getKeyFrame(animationTime) :
-					velocity.y > 0 ? up.getKeyFrame(animationTime) : 
+		setRegion(velocity.x < 0 ? left.getKeyFrame(animationTime) :
+			velocity.x > 0 ? right.getKeyFrame(animationTime) :
+				velocity.y < 0 ? down.getKeyFrame(animationTime) :
+					velocity.y > 0 ? up.getKeyFrame(animationTime) :
 						still.getKeyFrame(animationTime));
 	}
-	
+
 	private boolean isCellBlocked(Cell cell) {
 		return cell.getTile() != null && cell.getTile().getProperties().containsKey(blockedKey);
 	}
-	
+
 	public Vector2 getVelocity() {
 		return velocity;
 	}

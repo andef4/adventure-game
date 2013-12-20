@@ -1,24 +1,18 @@
 package ch.andefgassm.adventuregame.game.state;
 
-import java.util.Iterator;
-
 import ch.andefgassm.adventuregame.game.map.Player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
-import com.badlogic.gdx.utils.Array;
 
 public class MapState extends AbstractGameState implements Screen  {
 
@@ -38,9 +32,9 @@ public class MapState extends AbstractGameState implements Screen  {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		//camera.position.set(player.getX() + player.getWidth() / 2, player.getY() + player.getHeight() / 2, 0);
-		camera.position.set(0, 0, 0);
-		camera.zoom = 10f;
+		camera.position.set(player.getX() + player.getWidth() / 2, player.getY() + player.getHeight() / 2, 0);
+		//camera.position.set(0, 0, 0);
+		//camera.zoom = 10f;
 		camera.update();
 
 		renderer.setView(camera);
@@ -92,7 +86,7 @@ public class MapState extends AbstractGameState implements Screen  {
 
 	@Override
 	public void show() {
-		map = new TmxMapLoader().load("maps/map1.tmx");
+		map = new TmxMapLoader().load("maps/map.tmx");
 
 		renderer = new OrthogonalTiledMapRenderer(map);
 //		sr = new ShapeRenderer();
