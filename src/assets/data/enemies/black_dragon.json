@@ -2,7 +2,7 @@
     "id": "red_dragon",
     "name": "The Red Dragon",
     "aiClass": "ch.andefgassm.adventuregame.game.ai.BlackDragonAI",
-    "life": 1000,
+    "life": 500,
     "stats": {
         "fire_resistance": 30
     },

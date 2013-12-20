@@ -14,10 +14,10 @@ public class Main extends Game {
 	public static void main(String[] args) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		config.width = screenSize.width;
-		config.height = screenSize.height;
+		config.width = 1280;
+		config.height = 720;
 		config.useGL20 = true;
-		config.fullscreen = false;
+		//config.fullscreen = false;
 		new LwjglApplication(new Main(), config);
 	}
 

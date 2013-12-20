@@ -25,6 +25,9 @@ public class MainMenuState extends AbstractConsoleGameState {
 			context.changeState(GameStateContext.COMBAT_MENU);
 		} else if (input == 2) {
 			context.changeState(GameStateContext.INVENTORY_MENU);
+		} 
+		else if (input == 4) {
+			context.changeState(GameStateContext.MAP);
 		} else {
 			context.changeState(null);
 		}		

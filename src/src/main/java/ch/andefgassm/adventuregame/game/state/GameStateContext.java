@@ -22,6 +22,7 @@ public class GameStateContext {
 	public static final AbstractGameState MAIN_MENU = new MainMenuState();
 	public static final AbstractGameState INVENTORY_MENU = new InventoryMenuState();
 	public static final AbstractGameState COMBAT = new CombatState();
+	public static final AbstractGameState MAP = new MapState();
 	
 	private Game game = null;
 	
@@ -53,7 +54,7 @@ public class GameStateContext {
         
 		combatSystem.getStatProcessors().add(new FireResistanceProcessor());
 		combatSystem.getSpellModifiers().put("fire", new FireSpellModifier());
-		changeState(MAIN_MENU);
+		changeState(MAP);
 	}
 	
 	public void changeState(AbstractGameState newState) {
@@ -67,7 +68,7 @@ public class GameStateContext {
 		}
 		newState.init(this, param);
 		game.setScreen(newState);
-		Gdx.input.setInputProcessor(newState);
+		//Gdx.input.setInputProcessor(newState);
 	}
 		
 	public CombatSystem getCombatSystem() {
