@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="tileset-blackvolution" tilewidth="16" tileheight="16">
+  <image source="tiles/tileset-blackvolution.png" width="128" height="1472"/>
+  <tile id="5">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="background" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1jEKACAMA8BODv7/wfoBXUQIesPtaUmhvao6AEwtIAPZ0jtymi99vpfYNZzZ3VDafaXl+W3etDz8RwcBAO7wZwEAwNoA6mFheQ==
+  </data>
+ </layer>
+ <layer name="foreground" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzjEOgCAUBUGuq1ZgpV6edwQTik8xk2y/rQEAAAAAOzjSma7qkUU9jXRXjyx60pu+6hEAAAAAfpuK/gQD
+  </data>
+ </layer>
+</map>

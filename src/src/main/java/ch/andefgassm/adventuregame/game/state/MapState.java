@@ -86,7 +86,7 @@ public class MapState extends AbstractGameState implements Screen  {
 
 	@Override
 	public void show() {
-		map = new TmxMapLoader().load("maps/map.tmx");
+		map = new TmxMapLoader().load("maps/lowlands.tmx");
 
 		renderer = new OrthogonalTiledMapRenderer(map);
 //		sr = new ShapeRenderer();
