@@ -154,18 +154,26 @@ public class Player extends Sprite implements InputProcessor {
 	public boolean keyDown(int keycode) {
 		switch(keycode) {
 		case Keys.W:
+		case Keys.UP:
 			velocity.y = speed;
+			velocity.x = 0;
 			animationTime = 0;
 			break;
 		case Keys.A:
+		case Keys.LEFT:
 			velocity.x = -speed;
+			velocity.y = 0;
 			animationTime = 0;
 			break;
 		case Keys.D:
+		case Keys.RIGHT:
 			velocity.x = speed;
+			velocity.y = 0;
 			animationTime = 0;
 			break;
 		case Keys.S:
+		case Keys.DOWN:
+			velocity.x = 0;
 			velocity.y = -speed;
 			animationTime = 0;
 		}
@@ -175,13 +183,34 @@ public class Player extends Sprite implements InputProcessor {
 	@Override
 	public boolean keyUp(int keycode) {
 		switch(keycode) {
-		case Keys.A:
-		case Keys.D:
 		case Keys.W:
+		case Keys.UP:
+			if (velocity.y == speed) {
+				velocity.y = 0;
+				animationTime = 0;
+			}
+			break;
+		case Keys.A:
+		case Keys.LEFT:
+			if (velocity.x == -speed) {
+				velocity.x = 0;
+				animationTime = 0;
+			}
+			break;
+		case Keys.D:
+		case Keys.RIGHT:
+			if (velocity.x == speed) {
+				velocity.x = 0;
+				animationTime = 0;
+			}
+			break;
 		case Keys.S:
-			velocity.x = 0;
-			velocity.y = 0;
-			animationTime = 0;
+		case Keys.DOWN:
+			if (velocity.y == -speed) {
+				velocity.y = 0;
+				animationTime = 0;
+			}
+			break;
 		}
 		return true;
 	}
