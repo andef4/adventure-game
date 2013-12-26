@@ -40,6 +40,13 @@ up
   index: -1
 left
   rotate: false
+  xy: 120, 0
+  size: 20, 20
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+left
+  rotate: false
   xy: 140, 0
   size: 20, 20
   orig: 10, 10
@@ -52,7 +59,7 @@ left
   orig: 10, 10
   offset: 0, 0
   index: -1
-left
+right
   rotate: false
   xy: 180, 0
   size: 20, 20
@@ -73,7 +80,7 @@ right
   orig: 10, 10
   offset: 0, 0
   index: -1
-right
+down
   rotate: false
   xy: 240, 0
   size: 20, 20
@@ -90,13 +97,6 @@ down
 down
   rotate: false
   xy: 280, 0
-  size: 20, 20
-  orig: 10, 10
-  offset: 0, 0
-  index: -1
-down
-  rotate: false
-  xy: 300, 0
   size: 20, 20
   orig: 10, 10
   offset: 0, 0
