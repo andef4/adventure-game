@@ -22,7 +22,7 @@ public class CombatState extends AbstractConsoleGameState {
     private AbstractAICombatant enemy = null;
     private CurrentCombatState state = CurrentCombatState.FIGHTING;
     private Enemy baseEnemy;
-    
+
     enum CurrentCombatState {
         FIGHTING, LOST, WON, BAD_INPUT, GIVE_UP
     }
@@ -31,7 +31,7 @@ public class CombatState extends AbstractConsoleGameState {
         System.out.println(enemyId);
         this.context = context;
         system = context.getCombatSystem();
-        
+
         player = new Combatant(system, "Player", 500);
         List<String> skills = context.getPlayer().getSkills();
         for (String skill : skills) {
@@ -40,9 +40,9 @@ public class CombatState extends AbstractConsoleGameState {
         player.getBaseStats().putAll(context.getPlayer().getStats());
         player.getResources().put(Resource.ENERGY, 500);
         player.getResources().put(Resource.COMBO_POINT, 0);
-        
+
         baseEnemy = context.getEnemy(enemyId);
-        
+
         try {
             Class<?> aiClass = Class.forName(baseEnemy.getAiClass());
             Constructor<?> constructor = aiClass.getConstructor(CombatSystem.class, String.class, Integer.TYPE);
@@ -50,21 +50,21 @@ public class CombatState extends AbstractConsoleGameState {
         } catch (Exception e) {
             throw new AdventureGameException("Can't load enemy ai class", e);
         }
-        
+
         enemy.getBaseStats().putAll(baseEnemy.getStats());
-        
+
         state = CurrentCombatState.FIGHTING;
-        
+
         draw();
     }
-    
+
     private void draw() {
         clear();
         println("Enemy: " + enemy.getCurrentLife() + " life");
         println("Player: " + player.getCurrentLife() + " life");
         print("Player resources: ");
         println(player.getResources().toString());
-        
+
         switch(state) {
         case FIGHTING:
         case BAD_INPUT:
@@ -73,7 +73,7 @@ public class CombatState extends AbstractConsoleGameState {
                 println("Player has no resources left.");
             }
             println("[0] give up");
-            
+
             for(int i = 0; i < skills.size(); i++) {
                 Skill skill = system.getSkill(skills.get(i));
                 println(String.format("[%d] %s", i + 1, skill.getName()));
@@ -84,7 +84,7 @@ public class CombatState extends AbstractConsoleGameState {
             break;
         case WON:
             println(player.getName() + " has defeated " + enemy.getName());
-            
+
             Random r = new Random();
             List<Drop> drops = baseEnemy.getDrops();
             for (Drop drop : drops) {
@@ -122,7 +122,7 @@ public class CombatState extends AbstractConsoleGameState {
             } else {
                 state = CurrentCombatState.FIGHTING;
             }
-            
+
             // player's turn
             String skill = skills.get(input - 1);
             if (system.getSkill(skill).isHarmful()) {
@@ -136,7 +136,7 @@ public class CombatState extends AbstractConsoleGameState {
                 state = CurrentCombatState.WON;
                 break;
             }
-            
+
             // enemy's turn
             skill = enemy.getNextSkill();
             if (system.getSkill(skill).isHarmful()) {
@@ -146,7 +146,7 @@ public class CombatState extends AbstractConsoleGameState {
             }
             enemy.applyHelpfulEffects();
             player.applyHarmfulEffects();
-    
+
             if (player.getCurrentLife() == 0) {
                 state = CurrentCombatState.LOST;
             }
@@ -155,7 +155,7 @@ public class CombatState extends AbstractConsoleGameState {
         case LOST:
         case GIVE_UP:
             if (input == 0) {
-                context.changeState(GameStateContext.MAIN_MENU);
+                context.changeState(GameStateContext.MAP);
                 return;
             }
             break;

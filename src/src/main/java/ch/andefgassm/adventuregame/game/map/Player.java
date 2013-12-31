@@ -20,7 +20,10 @@ public class Player extends Sprite implements InputProcessor {
 	private Animation still, left, right, up, down;
 	private TiledMapTileLayer collisionLayer;
 
-	private String blockedKey = "blocked";
+	private static final String BLOCKED_KEY = "blocked";
+	private static final String ENEMY_KEY = "enemy";
+
+	private String enemyId = null;
 
 	public Player(Animation still, Animation left, Animation right, Animation up, Animation down, TiledMapTileLayer collisionLayer) {
 		super(still.getKeyFrame(0));
@@ -43,6 +46,11 @@ public class Player extends Sprite implements InputProcessor {
 		// save old position
 		float oldX = getX(), oldY = getY(), tileWidth = collisionLayer.getTileWidth(), tileHeight = collisionLayer.getTileHeight();
 		boolean collisionX = false, collisionY = false;
+
+		if (velocity.x != 0|| velocity.y != 0) {
+			enemyId = null;
+		}
+
 
 		// move on x
 		setX(getX() + velocity.x * delta);
@@ -123,7 +131,16 @@ public class Player extends Sprite implements InputProcessor {
 	}
 
 	private boolean isCellBlocked(Cell cell) {
-		return cell.getTile() != null && cell.getTile().getProperties().containsKey(blockedKey);
+		if (cell.getTile() != null) {
+			String enemyId = cell.getTile().getProperties().get(ENEMY_KEY, String.class);
+			if (enemyId != null) {
+				this.enemyId = enemyId;
+			}
+			if (cell.getTile().getProperties().containsKey(BLOCKED_KEY)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public Vector2 getVelocity() {
@@ -214,6 +231,12 @@ public class Player extends Sprite implements InputProcessor {
 		}
 		return true;
 	}
+
+
+	public String getEnemyId() {
+		return enemyId ;
+	}
+
 
 	@Override
 	public boolean keyTyped(char character) {

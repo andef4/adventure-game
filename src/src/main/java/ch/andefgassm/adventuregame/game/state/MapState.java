@@ -130,7 +130,9 @@ public class MapState extends AbstractGameState implements Screen  {
 	public boolean keyUp(int keycode) {
 		switch(keycode) {
 		case Keys.E:
-			//TODO: implement game combat start
+			if (player.getEnemyId() != null) {
+				context.changeState(GameStateContext.COMBAT, player.getEnemyId());
+			}
 			return true;
 		case Keys.I:
 			context.changeState(GameStateContext.INVENTORY_MENU);

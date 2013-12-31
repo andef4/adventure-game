@@ -17,9 +17,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 
 public class GameStateContext {
-
-	public static final AbstractGameState COMBAT_MENU = new CombatMenuState();
-	public static final AbstractGameState MAIN_MENU = new MainMenuState();
 	public static final AbstractGameState INVENTORY_MENU = new InventoryMenuState();
 	public static final AbstractGameState COMBAT = new CombatState();
 	public static final AbstractGameState MAP = new MapState();

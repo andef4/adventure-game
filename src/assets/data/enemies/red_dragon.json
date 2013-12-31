@@ -1,10 +1,10 @@
 {
-    "id": "black_dragon",
-    "name": "The Black Dragon",
+    "id": "red_dragon",
+    "name": "The Red Dragon",
     "aiClass": "ch.andefgassm.adventuregame.game.ai.BlackDragonAI",
     "life": 500,
     "stats": {
         "fire_resistance": 30
     },
-    "drops": [{"itemId": "greatsword_black_dragon", "dropRate": 1.0}]
+    "drops": [{"itemId": "donnerbalken", "dropRate": 1.0}]
 }

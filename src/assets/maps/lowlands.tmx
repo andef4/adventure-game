@@ -2,6 +2,18 @@
 <map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="16" tileheight="16">
  <tileset firstgid="1" name="tileset-blackvolution" tilewidth="16" tileheight="16">
   <image source="tiles/tileset-blackvolution.png" width="128" height="1472"/>
+  <tile id="2">
+   <properties>
+    <property name="blocked" value=""/>
+    <property name="enemy" value="red_dragon"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="blocked" value=""/>
+    <property name="enemy" value="black_dragon"/>
+   </properties>
+  </tile>
   <tile id="5">
    <properties>
     <property name="blocked" value=""/>
@@ -10,7 +22,7 @@
  </tileset>
  <layer name="background" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt1jEKACAMA8BODv7/wfoBXUQIesPtaUmhvao6AEwtIAPZ0jtymi99vpfYNZzZ3VDafaXl+W3etDz8RwcBAO7wZwEAwNoA6mFheQ==
+   eJzt1jEKwCAQRcEFQwrvf+CkTZE0IvzoFNO/lV2wV1UHgNsZ0EC29B0Z7UufbyV/fusjoAG+bijtvtJ6dps3rYenFtAwmx0EAJjDPwsAAN5drQ5hbA==
   </data>
  </layer>
  <layer name="foreground" width="50" height="50">
