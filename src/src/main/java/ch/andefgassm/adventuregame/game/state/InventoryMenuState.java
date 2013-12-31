@@ -4,7 +4,6 @@ import java.util.Map.Entry;
 
 import ch.andefgassm.adventuregame.combat.IStat;
 import ch.andefgassm.adventuregame.game.inventory.Item;
-import ch.andefgassm.adventuregame.game.inventory.ItemType;
 import ch.andefgassm.adventuregame.game.inventory.Player;
 
 public class InventoryMenuState extends AbstractConsoleGameState {
@@ -25,10 +24,11 @@ public class InventoryMenuState extends AbstractConsoleGameState {
 
 		for(int i=1; i <= player.getInventory().size(); i++)
 		{
-			Item item = player.getInventory().get(i-1);
+			String itemId = player.getInventory().get(i-1);
+			Item item = context.getItem(itemId);
 			StringBuilder sb = new StringBuilder(i);
 			sb.append(String.format("%s ) ", i));
-			sb.append(String.format("[%s] ", isItemEquipped(item)));
+			sb.append(String.format("[%s] ", isItemEquipped(itemId)));
 			sb.append(item.getType());
 			sb.append(" ");
 			sb.append(item.getName());
@@ -46,17 +46,12 @@ public class InventoryMenuState extends AbstractConsoleGameState {
 
 	}
 
-	private String isItemEquipped(Item item) {
-		boolean hasMatch = false;
-		for (Entry<ItemType, Item> entry : player.getEquipment().entrySet()) {
-			if(entry.getValue() == item)
-				hasMatch = true;
-		}
-
-		if(hasMatch)
+	private String isItemEquipped(String itemId) {
+		if (player.getEquipment().containsValue(itemId)) {
 			return "X";
-		else
+		} else {
 			return "";
+		}
 	}
 
 	@Override

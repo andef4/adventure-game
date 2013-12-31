@@ -12,6 +12,7 @@ import ch.andefgassm.adventuregame.game.AdventureGameException;
 import ch.andefgassm.adventuregame.game.Enemy;
 import ch.andefgassm.adventuregame.game.Enemy.Drop;
 import ch.andefgassm.adventuregame.game.Resource;
+import ch.andefgassm.adventuregame.game.inventory.Item;
 
 
 public class CombatState extends AbstractConsoleGameState {
@@ -28,7 +29,6 @@ public class CombatState extends AbstractConsoleGameState {
     }
 
     public void init(GameStateContext context, String enemyId) {
-        System.out.println(enemyId);
         this.context = context;
         system = context.getCombatSystem();
 
@@ -85,13 +85,17 @@ public class CombatState extends AbstractConsoleGameState {
         case WON:
             println(player.getName() + " has defeated " + enemy.getName());
 
+            // drop items
             Random r = new Random();
             List<Drop> drops = baseEnemy.getDrops();
             for (Drop drop : drops) {
                 float rnd = r.nextFloat();
                 if (rnd <= drop.getDropRate()) {
-                    println("You have won an item!");
-                    context.getPlayer().getInventory().add(context.getItem(drop.getItemId()));
+                    Item item = context.getItem(drop.getItemId());
+                    if (!context.getPlayer().getInventory().contains(item.getId())) {
+                        println("You have won an item: " + item.getName());
+                        context.getPlayer().getInventory().add(item.getId());
+                    }
                 }
             }
             println("[0] back to main menu");

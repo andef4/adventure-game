@@ -7,33 +7,37 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import ch.andefgassm.adventuregame.combat.IStat;
+import ch.andefgassm.adventuregame.game.state.GameStateContext;
 
 public class Player {
-	private List<Item> inventory = new ArrayList<Item>();
-	
-	public List<Item> getInventory() {
+	private List<String> inventory = new ArrayList<String>();
+
+	public List<String> getInventory() {
 		return inventory;
 	}
-	
-	private Map<ItemType, Item> equipment = new HashMap<ItemType, Item>();
+
+	private Map<ItemType, String> equipment = new HashMap<ItemType, String>();
 	private List<String> skills = new ArrayList<String>();
-	
-	public Player() {
+	private GameStateContext context;
+
+	public Player(GameStateContext context) {
+		this.context = context;
         skills.add("player_strike");
         skills.add("player_execute");
     }
-	
-	public Map<ItemType, Item> getEquipment() {
+
+	public Map<ItemType, String> getEquipment() {
 		return equipment;
 	}
-	
-	public void equip(Item item) {
-		this.getEquipment().put(item.getType(), item);
+
+	public void equip(String item) {
+		this.getEquipment().put(context.getItem(item).getType(), item);
 	}
 
 	public Map<IStat, Integer> getStats() {
 		Map<IStat, Integer> stats = new HashMap<IStat, Integer>();
-		for (Item item : equipment.values()) {
+		for (String itemId : equipment.values()) {
+			Item item = context.getItem(itemId);
 			for (Entry<IStat, Integer> stat : item.getStats().entrySet()) {
 				if (stats.containsKey(stat.getKey())) {
 					Integer value = stats.get(stat.getKey());

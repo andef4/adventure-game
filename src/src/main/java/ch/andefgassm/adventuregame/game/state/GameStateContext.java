@@ -26,7 +26,7 @@ public class GameStateContext {
 	private CombatSystem combatSystem = new CombatSystem();
 	private Map<String, Item> items = new HashMap<String, Item>();
 	private Map<String, Enemy> enemies = new HashMap<String, Enemy>();
-	private Player player = new Player();
+	private Player player = new Player(this);
 
 
 	public GameStateContext(Game game) {
