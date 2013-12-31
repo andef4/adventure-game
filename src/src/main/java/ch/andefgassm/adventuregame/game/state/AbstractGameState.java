@@ -5,7 +5,7 @@ import com.badlogic.gdx.ScreenAdapter;
 
 
 public abstract class AbstractGameState extends ScreenAdapter implements InputProcessor{
-	
+
 	public abstract void init(GameStateContext context, String param);
 
 	@Override
@@ -46,5 +46,9 @@ public abstract class AbstractGameState extends ScreenAdapter implements InputPr
 	@Override
 	public boolean scrolled(int amount) {
 		return false;
+	}
+
+	public InputProcessor getInputProcessor() {
+		return this;
 	}
 }

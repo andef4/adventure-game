@@ -3,12 +3,14 @@ package ch.andefgassm.adventuregame.game.state;
 import ch.andefgassm.adventuregame.game.map.Player;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -19,73 +21,19 @@ public class MapState extends AbstractGameState implements Screen  {
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer renderer;
 	private OrthographicCamera camera;
-	
+
 	private TextureAtlas playerAtlas;
 	private Player player;
 
-	private int[] background = new int[] {0}, foreground = new int[] {1};
+	private int[] background = new int[] {0};
+	private int[] foreground = new int[] {1};
 
-	private ShapeRenderer sr;
+	//private ShapeRenderer sr;
 
-	@Override
-	public void render(float delta) {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	private InputMultiplexer inputMultiplexer = null;
+	private GameStateContext context;
 
-		camera.position.set(player.getX() + player.getWidth() / 2, player.getY() + player.getHeight() / 2, 0);
-		//camera.position.set(0, 0, 0);
-		//camera.zoom = 10f;
-		camera.update();
-
-		renderer.setView(camera);
-
-		renderer.render(background);
-
-		renderer.getSpriteBatch().begin();
-		player.draw(renderer.getSpriteBatch());
-		renderer.getSpriteBatch().end();
-
-		renderer.render(foreground);
-
-		// render objects
-		//sr.setProjectionMatrix(camera.combined);
-//		for(MapObject object : map.getLayers().get("objects").getObjects())
-//			if(object instanceof RectangleMapObject) {
-//				Rectangle rect = ((RectangleMapObject) object).getRectangle();
-//				sr.begin(ShapeType.Filled);
-//				sr.rect(rect.x, rect.y, rect.width, rect.height);
-//				sr.end();
-//			} else if(object instanceof CircleMapObject) {
-//				Circle circle = ((CircleMapObject) object).getCircle();
-//				sr.begin(ShapeType.Filled);
-//				sr.circle(circle.x, circle.y, circle.radius);
-//				sr.end();
-//			} else if(object instanceof EllipseMapObject) {
-//				Ellipse ellipse = ((EllipseMapObject) object).getEllipse();
-//				sr.begin(ShapeType.Filled);
-//				sr.ellipse(ellipse.x, ellipse.y, ellipse.width, ellipse.height);
-//				sr.end();
-//			} else if(object instanceof PolylineMapObject) {
-//				Polyline line = ((PolylineMapObject) object).getPolyline();
-//				sr.begin(ShapeType.Line);
-//				sr.polyline(line.getTransformedVertices());
-//				sr.end();
-//			} else if(object instanceof PolygonMapObject) {
-//				Polygon poly = ((PolygonMapObject) object).getPolygon();
-//				sr.begin(ShapeType.Line);
-//				sr.polygon(poly.getTransformedVertices());
-//				sr.end();
-//			}
-	}
-
-	@Override
-	public void resize(int width, int height) {
-		camera.viewportWidth = width / 2.5f;
-		camera.viewportHeight = height / 2.5f;
-	}
-
-	@Override
-	public void show() {
+	public MapState() {
 		map = new TmxMapLoader().load("maps/lowlands.tmx");
 
 		renderer = new OrthogonalTiledMapRenderer(map);
@@ -107,65 +55,59 @@ public class MapState extends AbstractGameState implements Screen  {
 		right.setPlayMode(Animation.LOOP);
 		up.setPlayMode(Animation.LOOP);
 		down.setPlayMode(Animation.LOOP);
-		
+
 		player = new Player(still, left, right, up, down, (TiledMapTileLayer) map.getLayers().get(0));
 		player.setPosition(11 * player.getCollisionLayer().getTileWidth(), (player.getCollisionLayer().getHeight() - 14) * player.getCollisionLayer().getTileHeight());
 
-		Gdx.input.setInputProcessor(player);
-		
-		// ANIMATED TILES
-
-		// frames
-		//Array<StaticTiledMapTile> frameTiles = new Array<StaticTiledMapTile>(2);
-		
-		// get the frame tiles
-//		Iterator<TiledMapTile> tiles = map.getTileSets().getTileSet("tiles").iterator();
-//		while(tiles.hasNext()) {
-//			TiledMapTile tile = tiles.next();
-//			if(tile.getProperties().containsKey("animation") && tile.getProperties().get("animation", String.class).equals("flower"))
-//				frameTiles.add((StaticTiledMapTile) tile);
-//		}
-		
-//		// create the animated tile
-//		AnimatedTiledMapTile animatedTile = new AnimatedTiledMapTile(1 / 3f, frameTiles);
-//
-//		// background layer
-//		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("background");
-//
-//		// replace static with animated tile
-//		for(int x = 0; x < layer.getWidth(); x++)
-//			for(int y = 0; y < layer.getHeight(); y++) {
-//				Cell cell = layer.getCell(x, y);
-//				if(cell.getTile().getProperties().containsKey("animation") && cell.getTile().getProperties().get("animation", String.class).equals("flower"))
-//					cell.setTile(animatedTile);
-//			}
+		inputMultiplexer = new InputMultiplexer(this, player);
 	}
 
 	@Override
-	public void hide() {
-		dispose();
+	public void render(float delta) {
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		camera.position.set(player.getX() + player.getWidth() / 2, player.getY() + player.getHeight() / 2, 0);
+		camera.update();
+
+		renderer.setView(camera);
+		renderer.render(background);
+
+		renderer.getSpriteBatch().begin();
+		player.draw(renderer.getSpriteBatch());
+		renderer.getSpriteBatch().end();
+
+		renderer.render(foreground);
 	}
 
 	@Override
-	public void pause() {
+	public void resize(int width, int height) {
+		camera.viewportWidth = width / 2.5f;
+		camera.viewportHeight = height / 2.5f;
 	}
 
 	@Override
-	public void resume() {
-	}
-
-	@Override
-	public void dispose() {
-		map.dispose();
-		renderer.dispose();
-		sr.dispose();
-		playerAtlas.dispose();
+	public InputProcessor getInputProcessor() {
+		return inputMultiplexer;
 	}
 
 	@Override
 	public void init(GameStateContext context, String param) {
-		// TODO Auto-generated method stub
-		
+		this.context = context;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		switch(keycode) {
+		case Keys.E:
+			//TODO: implement game combat start
+			return true;
+		case Keys.I:
+			context.changeState(GameStateContext.INVENTORY_MENU);
+			return true;
+		}
+		return false;
 	}
 
 }
+
