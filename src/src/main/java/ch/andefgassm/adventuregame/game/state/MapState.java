@@ -7,10 +7,13 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -28,18 +31,17 @@ public class MapState extends AbstractGameState implements Screen  {
 	private int[] background = new int[] {0};
 	private int[] foreground = new int[] {1};
 
-	//private ShapeRenderer sr;
+	private ShapeRenderer shapeRenderer;
 
 	private InputMultiplexer inputMultiplexer = null;
 	private GameStateContext context;
+	private int width;
 
 	public MapState() {
 		map = new TmxMapLoader().load("maps/lowlands.tmx");
 
 		renderer = new OrthogonalTiledMapRenderer(map);
-//		sr = new ShapeRenderer();
-//		sr.setColor(Color.CYAN);
-//		Gdx.gl.glLineWidth(3);
+		shapeRenderer = new ShapeRenderer();
 
 		camera = new OrthographicCamera();
 
@@ -78,10 +80,16 @@ public class MapState extends AbstractGameState implements Screen  {
 		renderer.getSpriteBatch().end();
 
 		renderer.render(foreground);
+
+		shapeRenderer.begin(ShapeType.Filled);
+		shapeRenderer.setColor(new Color(255f/255, 200f/255, 120f/255, 1f));
+		shapeRenderer.rect(0, 0, width, 150);
+		shapeRenderer.end();
 	}
 
 	@Override
 	public void resize(int width, int height) {
+		this.width = width;
 		camera.viewportWidth = width / 2.5f;
 		camera.viewportHeight = height / 2.5f;
 	}
