@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -31,11 +33,19 @@ public class MapState extends AbstractGameState implements Screen  {
 	private int[] background = new int[] {0};
 	private int[] foreground = new int[] {1};
 
-	private ShapeRenderer shapeRenderer;
 
 	private InputMultiplexer inputMultiplexer = null;
 	private GameStateContext context;
 	private int width;
+
+	// hud
+	private ShapeRenderer shapeRenderer;
+	private BitmapFont font = new BitmapFont();
+	SpriteBatch batch = new SpriteBatch();
+
+	private static final int HUD_HEIGHT = 150;
+	private static final int HUD_PADDING = 5;
+	private static final int LINE_HEIGHT = 20;
 
 	public MapState() {
 		map = new TmxMapLoader().load("maps/lowlands.tmx");
@@ -85,6 +95,18 @@ public class MapState extends AbstractGameState implements Screen  {
 		shapeRenderer.setColor(new Color(255f/255, 200f/255, 120f/255, 1f));
 		shapeRenderer.rect(0, 0, width, 150);
 		shapeRenderer.end();
+
+
+		batch.begin();
+		font.setColor(Color.BLACK);
+		font.draw(batch, "Wilkommen zu Adventure Game!", HUD_PADDING, HUD_HEIGHT - HUD_PADDING);
+		font.draw(batch, "Bewege dich mit den WASD oder Cursor Tasten", HUD_PADDING, HUD_HEIGHT - HUD_PADDING - LINE_HEIGHT);
+		font.draw(batch, "i) öffnet Inventar", HUD_PADDING, HUD_HEIGHT - HUD_PADDING - LINE_HEIGHT*2);
+		font.draw(batch, "e) beginnt Kampf. Du musst direkt neben dem Gegner stehen.", HUD_PADDING, HUD_HEIGHT - HUD_PADDING - LINE_HEIGHT*3);
+		font.draw(batch, "q) beendet das Spiel.", HUD_PADDING, HUD_HEIGHT - HUD_PADDING - LINE_HEIGHT*4);
+		batch.end();
+
+
 	}
 
 	@Override
@@ -113,6 +135,8 @@ public class MapState extends AbstractGameState implements Screen  {
 		case Keys.I:
 			context.changeState(GameStateContext.INVENTORY_MENU);
 			return true;
+		case Keys.Q:
+			context.changeState(null);
 		}
 		return false;
 	}
