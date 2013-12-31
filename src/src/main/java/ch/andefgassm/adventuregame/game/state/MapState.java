@@ -79,6 +79,7 @@ public class MapState extends AbstractGameState implements Screen  {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		// render map
 		camera.position.set(player.getX() + player.getWidth() / 2, player.getY() + player.getHeight() / 2, 0);
 		camera.update();
 
@@ -91,12 +92,13 @@ public class MapState extends AbstractGameState implements Screen  {
 
 		renderer.render(foreground);
 
+		// render hud rectangle
 		shapeRenderer.begin(ShapeType.Filled);
 		shapeRenderer.setColor(new Color(255f/255, 200f/255, 120f/255, 1f));
 		shapeRenderer.rect(0, 0, width, 150);
 		shapeRenderer.end();
 
-
+		// render hud text
 		batch.begin();
 		font.setColor(Color.BLACK);
 		font.draw(batch, "Wilkommen zu Adventure Game!", HUD_PADDING, HUD_HEIGHT - HUD_PADDING);
@@ -105,8 +107,6 @@ public class MapState extends AbstractGameState implements Screen  {
 		font.draw(batch, "e) beginnt Kampf. Du musst direkt neben dem Gegner stehen.", HUD_PADDING, HUD_HEIGHT - HUD_PADDING - LINE_HEIGHT*3);
 		font.draw(batch, "q) beendet das Spiel.", HUD_PADDING, HUD_HEIGHT - HUD_PADDING - LINE_HEIGHT*4);
 		batch.end();
-
-
 	}
 
 	@Override
@@ -140,6 +140,4 @@ public class MapState extends AbstractGameState implements Screen  {
 		}
 		return false;
 	}
-
 }
-
