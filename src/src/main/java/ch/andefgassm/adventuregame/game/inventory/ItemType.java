@@ -5,5 +5,5 @@ public enum ItemType {
 	HANDS,
 	CHEST,
 	LEGS,
-	BOOTS,
+	FEET,
 }

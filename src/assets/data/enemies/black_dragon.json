@@ -4,7 +4,7 @@
     "aiClass": "ch.andefgassm.adventuregame.game.ai.BlackDragonAI",
     "life": 500,
     "stats": {
-        "fire_resistance": 30
+        "magic_resistance": 30
     },
-    "drops": [{"itemId": "greatsword_black_dragon", "dropRate": 1.0}]
+    "drops": [{"itemId": "weapon1", "dropRate": 1.0}]
 }

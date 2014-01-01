@@ -1,0 +1,13 @@
+{
+    "type": "chest",
+    "id": "chest1",
+    "name": "Chest 1",
+    "icon": "armor/chest/chest1.png",
+    "stats": {
+        "life": 0,
+        "heal": 0,
+        "damage": 0,
+        "armor": 0,
+        "magic_resistance": 0
+    }
+}

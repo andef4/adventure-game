@@ -1,9 +1,0 @@
-{
-    "type": "WEAPON",
-    "id": "greatsword_black_dragon",
-    "name": "Greatsword of the Red Dragon",
-    "stats": {
-        "strength": 120,
-        "fire_resistance": 50
-    }
-}

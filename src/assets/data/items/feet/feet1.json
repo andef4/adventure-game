@@ -1,0 +1,13 @@
+{
+    "type": "feet",
+    "id": "feet1",
+    "name": "Feet 1",
+    "icon": "armor/feet/feet1.png",
+    "stats": {
+        "life": 0,
+        "heal": 0,
+        "damage": 0,
+        "armor": 0,
+        "magic_resistance": 0
+    }
+}

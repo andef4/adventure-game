@@ -13,7 +13,7 @@
         "resourceChanges": {},
         "statChanges": {},
         "statScaling": {
-            "STRENGTH": -1.0
+            "damage": -1.0
         }
     }],
     "casterEffects": [{

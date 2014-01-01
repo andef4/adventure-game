@@ -1,0 +1,13 @@
+{
+    "type": "hands",
+    "id": "hands1",
+    "name": "Hands 1",
+    "icon": "armor/hands/hands1.png",
+    "stats": {
+        "life": 0,
+        "heal": 0,
+        "damage": 0,
+        "armor": 0,
+        "magic_resistance": 0
+    }
+}

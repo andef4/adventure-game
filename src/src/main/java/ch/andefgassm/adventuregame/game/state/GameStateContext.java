@@ -11,7 +11,7 @@ import ch.andefgassm.adventuregame.game.assets.AssetLoader;
 import ch.andefgassm.adventuregame.game.inventory.Item;
 import ch.andefgassm.adventuregame.game.inventory.Player;
 import ch.andefgassm.adventuregame.game.spellmodifiers.FireSpellModifier;
-import ch.andefgassm.adventuregame.game.stats.FireResistanceProcessor;
+import ch.andefgassm.adventuregame.game.stats.MagicResistanceProcessor;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -49,7 +49,7 @@ public class GameStateContext {
 			this.enemies.put(enemy.getId(), enemy);
 		}
 
-		combatSystem.getStatProcessors().add(new FireResistanceProcessor());
+		combatSystem.getStatProcessors().add(new MagicResistanceProcessor());
 		combatSystem.getSpellModifiers().put("fire", new FireSpellModifier());
 		changeState(MAP);
 	}

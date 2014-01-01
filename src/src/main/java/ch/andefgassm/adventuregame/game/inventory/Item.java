@@ -10,7 +10,8 @@ public class Item {
 	private ItemType type = null;
 	private String name = null;
 	private String id = null;
-	
+	private String icon = null;
+
 	public ItemType getType() {
 		return type;
 	}
@@ -34,5 +35,11 @@ public class Item {
 	}
 	public String getId() {
 		return id;
+	}
+	public String getIcon() {
+		return icon;
+	}
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 }
