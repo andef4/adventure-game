@@ -1,5 +1,6 @@
 package ch.andefgassm.adventuregame.game.state;
 
+import ch.andefgassm.adventuregame.game.assets.Graphics;
 import ch.andefgassm.adventuregame.game.map.Player;
 
 import com.badlogic.gdx.Gdx;
@@ -40,7 +41,7 @@ public class MapState extends AbstractGameState implements Screen  {
 
 	// hud
 	private ShapeRenderer shapeRenderer;
-	private BitmapFont font = new BitmapFont();
+	private BitmapFont font = Graphics.getFont();
 	private SpriteBatch batch = new SpriteBatch();
 
 	private static final int HUD_HEIGHT = 150;
@@ -95,17 +96,17 @@ public class MapState extends AbstractGameState implements Screen  {
 		// render hud rectangle
 		shapeRenderer.begin(ShapeType.Filled);
 		shapeRenderer.setColor(new Color(255f/255, 200f/255, 120f/255, 1f));
-		shapeRenderer.rect(0, 0, width, 150);
+		shapeRenderer.rect(0, 0, width, HUD_HEIGHT);
 		shapeRenderer.end();
 
 		// render hud text
 		batch.begin();
 		font.setColor(Color.BLACK);
 		font.draw(batch, "Wilkommen zu Adventure Game!", HUD_PADDING, HUD_HEIGHT - HUD_PADDING);
-		font.draw(batch, "Bewege dich mit den WASD oder Cursor Tasten", HUD_PADDING, HUD_HEIGHT - HUD_PADDING - LINE_HEIGHT);
-		font.draw(batch, "i) öffnet Inventar", HUD_PADDING, HUD_HEIGHT - HUD_PADDING - LINE_HEIGHT*2);
-		font.draw(batch, "e) beginnt Kampf. Du musst direkt neben dem Gegner stehen.", HUD_PADDING, HUD_HEIGHT - HUD_PADDING - LINE_HEIGHT*3);
-		font.draw(batch, "q) beendet das Spiel.", HUD_PADDING, HUD_HEIGHT - HUD_PADDING - LINE_HEIGHT*4);
+		font.draw(batch, "Bewege dich mit den Cursor Tasten", HUD_PADDING, HUD_HEIGHT - HUD_PADDING - LINE_HEIGHT);
+		font.draw(batch, "[i] öffnet Inventar", HUD_PADDING, HUD_HEIGHT - HUD_PADDING - LINE_HEIGHT*2);
+		font.draw(batch, "[e] beginnt Kampf. Du musst direkt neben dem Gegner stehen.", HUD_PADDING, HUD_HEIGHT - HUD_PADDING - LINE_HEIGHT*3);
+		font.draw(batch, "[q] beendet das Spiel.", HUD_PADDING, HUD_HEIGHT - HUD_PADDING - LINE_HEIGHT*4);
 		batch.end();
 	}
 
@@ -135,9 +136,6 @@ public class MapState extends AbstractGameState implements Screen  {
 			}
 			return true;
 		case Keys.I:
-			context.changeState(GameStateContext.INVENTORY_MENU);
-			return true;
-		case Keys.J:
 			context.changeState(GameStateContext.INVENTORY);
 			return true;
 		case Keys.Q:

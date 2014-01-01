@@ -17,7 +17,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 
 public class GameStateContext {
-	public static final AbstractGameState INVENTORY_MENU = new InventoryMenuState();
 	public static final AbstractGameState INVENTORY = new InventoryState();
 	public static final AbstractGameState COMBAT = new CombatState();
 	public static final AbstractGameState MAP = new MapState();
@@ -60,14 +59,14 @@ public class GameStateContext {
         player.addItem("weapon2");
         player.addItem("weapon3");
         player.addItem("chest1");
-        player.addItem("legs1");
+        //player.addItem("legs1");
         player.addItem("hands1");
         player.addItem("feet1");
 
         player.equip("weapon1");
-        player.equip("chest1");
+        //player.equip("chest1");
         player.equip("hands1");
-        player.equip("legs1");
+        //player.equip("legs1");
         player.equip("feet1");
 
 		changeState(MAP);

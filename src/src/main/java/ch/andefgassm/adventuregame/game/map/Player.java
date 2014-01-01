@@ -200,28 +200,24 @@ public class Player extends Sprite implements InputProcessor {
 	@Override
 	public boolean keyUp(int keycode) {
 		switch(keycode) {
-		case Keys.W:
 		case Keys.UP:
 			if (velocity.y == speed) {
 				velocity.y = 0;
 				animationTime = 0;
 			}
 			break;
-		case Keys.A:
 		case Keys.LEFT:
 			if (velocity.x == -speed) {
 				velocity.x = 0;
 				animationTime = 0;
 			}
 			break;
-		case Keys.D:
 		case Keys.RIGHT:
 			if (velocity.x == speed) {
 				velocity.x = 0;
 				animationTime = 0;
 			}
 			break;
-		case Keys.S:
 		case Keys.DOWN:
 			if (velocity.y == -speed) {
 				velocity.y = 0;

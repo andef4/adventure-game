@@ -29,6 +29,10 @@ public class Player {
 		return equipment.values();
 	}
 
+	public String getEquippedItem(ItemType itemType) {
+		return equipment.get(itemType);
+	}
+
 	public void addItem(String itemId) {
 		context.getItem(itemId); // make sure an item with this id exists
 		inventory.add(itemId);

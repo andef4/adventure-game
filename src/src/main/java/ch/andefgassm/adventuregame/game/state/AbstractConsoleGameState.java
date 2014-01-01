@@ -1,5 +1,7 @@
 package ch.andefgassm.adventuregame.game.state;
 
+import ch.andefgassm.adventuregame.game.assets.Graphics;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL10;
@@ -10,27 +12,27 @@ public abstract class AbstractConsoleGameState extends AbstractGameState {
 
 	private SpriteBatch batch = new SpriteBatch();
 	private StringBuffer buffer = new StringBuffer();
-	private BitmapFont font = new BitmapFont();
+	private BitmapFont font = Graphics.getFont();
 	private int displayHeight = Gdx.graphics.getHeight();
-	
+
 	private static int LINE_HEIGHT = 20;
-	
+
 	public void clear() {
 		buffer.setLength(0);
 	}
-	
+
 	public void print(String str) {
 		buffer.append(str);
 	}
-	
+
 	public void println(String str) {
 		print(str + "\n");
 	}
-	
+
 	public abstract void handleInput(int input);
-	
+
 	@Override
-	public void render(float delta) {		
+	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
@@ -42,10 +44,10 @@ public abstract class AbstractConsoleGameState extends AbstractGameState {
 		}
 		font.setColor(1, 1, 1, 1);
 		font.draw(batch, buffer, 1, 1);
-		
+
 		batch.end();
 	}
-	
+
 	@Override
 	public boolean keyUp(int keycode) {
 		if (keycode >= Input.Keys.NUM_0 && keycode <= Input.Keys.NUM_9) {
