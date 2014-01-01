@@ -40,7 +40,7 @@ public class InventoryState extends AbstractGameState {
 	private static final int ITEM_TAB_SIZE = 150;
 	private static final int ITEM_ICON_SIZE = 64;
 
-	private static final int SELECTOR_WIDTH = 100;
+	private static final int SELECTOR_WIDTH = 120;
 	private static final int SELECTOR_HEIGHT = 30;
 
 	private static final int HUD_HEIGHT = 150;
@@ -175,8 +175,21 @@ public class InventoryState extends AbstractGameState {
 			shapeRenderer.end();
 
 			// text
+			String name = "";
+			if (itemType.name().equals("WEAPON")) {
+				name = "Waffen";
+			} else if (itemType.name().equals("HANDS")) {
+				name = "Handschuhe";
+			} if (itemType.name().equals("CHEST")) {
+				name = "Brust";
+			} if (itemType.name().equals("LEGS")) {
+				name = "Beine";
+			} if (itemType.name().equals("FEET")) {
+				name = "Füsse";
+			}
+
 			batch.begin();
-			font.draw(batch, itemType.name(), x + i*(SELECTOR_WIDTH + PADDING) + PADDING, y - PADDING*2);
+			font.draw(batch, name, x + i*(SELECTOR_WIDTH + PADDING) + PADDING, y - PADDING - 3);
 			batch.end();
 
 			i++;
@@ -209,10 +222,10 @@ public class InventoryState extends AbstractGameState {
 		batch.begin();
 		font.setColor(Color.BLACK);
 		font.draw(batch, "[←], [→] Gegenstands-Typ wechseln", PADDING, HUD_HEIGHT - PADDING);
-		font.draw(batch, "[↑], [↓] Gegenstand auswählen.", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT);
-		font.draw(batch, "[Enter] Gegenstand ausrüsten.", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT*2);
-		font.draw(batch, "[i] schliesst das Inventar", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT*3);
-		font.draw(batch, "[q] beendet das Spiel.", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT*4);
+		font.draw(batch, "[↑], [↓] Gegenstand auswählen", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT);
+		font.draw(batch, "[Enter] Gegenstand ausrüsten", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT*2);
+		font.draw(batch, "[i] Inventar schliessen", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT*3);
+		font.draw(batch, "[q] Spiel beenden", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT*4);
 		batch.end();
 	}
 
