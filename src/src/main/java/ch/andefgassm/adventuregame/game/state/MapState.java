@@ -41,7 +41,7 @@ public class MapState extends AbstractGameState implements Screen  {
 	// hud
 	private ShapeRenderer shapeRenderer;
 	private BitmapFont font = new BitmapFont();
-	SpriteBatch batch = new SpriteBatch();
+	private SpriteBatch batch = new SpriteBatch();
 
 	private static final int HUD_HEIGHT = 150;
 	private static final int HUD_PADDING = 5;
