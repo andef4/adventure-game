@@ -42,6 +42,7 @@ public class MapState extends AbstractGameState implements Screen  {
 	// hud
 	private ShapeRenderer shapeRenderer;
 	private BitmapFont font = Graphics.getFont();
+	private BitmapFont boldFont = Graphics.getBoldFont();
 	private SpriteBatch batch = new SpriteBatch();
 
 	private static final int HUD_HEIGHT = 150;
@@ -93,16 +94,21 @@ public class MapState extends AbstractGameState implements Screen  {
 
 		renderer.render(foreground);
 
-		// render hud rectangle
+		// render hud rectangle and border
 		shapeRenderer.begin(ShapeType.Filled);
 		shapeRenderer.setColor(new Color(255f/255, 200f/255, 120f/255, 1f));
 		shapeRenderer.rect(0, 0, width, HUD_HEIGHT);
+		shapeRenderer.end();
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.setColor(Color.BLACK);
+		shapeRenderer.line(0, HUD_HEIGHT, width, HUD_HEIGHT);
 		shapeRenderer.end();
 
 		// render hud text
 		batch.begin();
 		font.setColor(Color.BLACK);
-		font.draw(batch, "Wilkommen zu Adventure Game!", HUD_PADDING, HUD_HEIGHT - HUD_PADDING);
+		boldFont.setColor(Color.BLACK);
+		boldFont.draw(batch, "Wilkommen zu Adventure Game!", HUD_PADDING, HUD_HEIGHT - HUD_PADDING);
 		font.draw(batch, "Bewege dich mit den Cursor Tasten", HUD_PADDING, HUD_HEIGHT - HUD_PADDING - LINE_HEIGHT);
 		font.draw(batch, "[i] öffnet Inventar", HUD_PADDING, HUD_HEIGHT - HUD_PADDING - LINE_HEIGHT*2);
 		font.draw(batch, "[e] beginnt Kampf. Du musst direkt neben dem Gegner stehen.", HUD_PADDING, HUD_HEIGHT - HUD_PADDING - LINE_HEIGHT*3);

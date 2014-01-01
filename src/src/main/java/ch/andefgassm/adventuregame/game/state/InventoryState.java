@@ -65,11 +65,10 @@ public class InventoryState extends AbstractGameState {
 
 		// render titles
 		batch.begin();
-		font.setColor(Color.BLACK);
-		font.draw(batch, "Angelegte Ausrüstung", PADDING, height - PADDING);
-		font.draw(batch, "Gegenstände im Inventar", offsetRight + PADDING, height - PADDING);
+		boldFont.setColor(Color.BLACK);
+		boldFont.draw(batch, "Angelegte Ausrüstung", PADDING, height - PADDING);
+		boldFont.draw(batch, "Gegenstände im Inventar", offsetRight + PADDING, height - PADDING);
 		batch.end();
-
 
 		// render equipped items
 		drawEquippedItems();
@@ -200,6 +199,10 @@ public class InventoryState extends AbstractGameState {
 		shapeRenderer.begin(ShapeType.Filled);
 		shapeRenderer.setColor(new Color(255f/255, 200f/255, 120f/255, 1f));
 		shapeRenderer.rect(0, 0, width, 150);
+		shapeRenderer.end();
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.setColor(Color.BLACK);
+		shapeRenderer.line(0, HUD_HEIGHT, width, HUD_HEIGHT);
 		shapeRenderer.end();
 
 		// render hud text
