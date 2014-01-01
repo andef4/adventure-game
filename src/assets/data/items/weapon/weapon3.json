@@ -1,0 +1,13 @@
+{
+    "type": "weapon",
+    "id": "weapon3",
+    "name": "Weapon 3",
+    "icon": "armor/weapon/weapon3.png",    
+    "stats": {
+        "life": 100,
+        "heal": 100,
+        "damage": 50,
+        "armor": 0,
+        "magic_resistance": 0
+    }
+}

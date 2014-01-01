@@ -1,6 +1,7 @@
 package ch.andefgassm.adventuregame.game.inventory;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,16 +23,23 @@ public class Player {
 
 	public Player(GameStateContext context) {
 		this.context = context;
-        skills.add("player_strike");
-        skills.add("player_execute");
     }
 
-	public Map<ItemType, String> getEquipment() {
-		return equipment;
+	public Collection<String> getEquipment() {
+		return equipment.values();
 	}
 
-	public void equip(String item) {
-		this.getEquipment().put(context.getItem(item).getType(), item);
+	public void addItem(String itemId) {
+		context.getItem(itemId); // make sure an item with this id exists
+		inventory.add(itemId);
+	}
+
+	public void equip(String itemId) {
+		Item item = context.getItem(itemId);
+		if (!inventory.contains(itemId)) {
+			throw new IllegalArgumentException(String.format("Can not equip item which is not in the inventory", itemId));
+		}
+		equipment.put(item.getType(), itemId);
 	}
 
 	public Map<IStat, Integer> getStats() {

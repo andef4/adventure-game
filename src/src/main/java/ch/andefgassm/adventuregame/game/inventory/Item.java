@@ -12,6 +12,14 @@ public class Item {
 	private String id = null;
 	private String icon = null;
 
+	public int getStat(IStat stat) {
+		Integer value = stats.get(stat);
+		if (value == null) {
+			value = 0;
+		}
+		return value;
+	}
+
 	public ItemType getType() {
 		return type;
 	}
@@ -42,4 +50,5 @@ public class Item {
 	public void setIcon(String icon) {
 		this.icon = icon;
 	}
+
 }

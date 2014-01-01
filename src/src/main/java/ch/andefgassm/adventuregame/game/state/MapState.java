@@ -137,6 +137,9 @@ public class MapState extends AbstractGameState implements Screen  {
 		case Keys.I:
 			context.changeState(GameStateContext.INVENTORY_MENU);
 			return true;
+		case Keys.J:
+			context.changeState(GameStateContext.INVENTORY);
+			return true;
 		case Keys.Q:
 			context.changeState(null);
 		}

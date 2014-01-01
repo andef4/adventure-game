@@ -47,7 +47,7 @@ public class InventoryMenuState extends AbstractConsoleGameState {
 	}
 
 	private String isItemEquipped(String itemId) {
-		if (player.getEquipment().containsValue(itemId)) {
+		if (player.getEquipment().contains(itemId)) {
 			return "X";
 		} else {
 			return "";
