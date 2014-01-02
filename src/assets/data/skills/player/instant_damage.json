@@ -1,0 +1,28 @@
+{
+    "id": "instant_damage",
+    "name": "Instant Damage",
+    "icon": "skills/instant_damage.png",
+    "harmful": true,
+    "targetEffects": [{
+        "intervalsRunning": 1,
+        "everyInterval": 1,
+        "damageType": null,
+        "baseLifeChange": -50,
+        "resourceChanges": {},
+        "statChanges": {},
+        "statScaling": {
+            "damage": -1.0
+        }
+    }],
+    "casterEffects": [{
+        "intervalsRunning": 1,
+        "everyInterval": 1,
+        "damageType": null,
+        "baseLifeChange": 0,
+        "resourceChanges": {
+            "COMBO_POINT": 1
+        },
+        "statChanges": {},
+        "statScaling": {}
+    }]
+}

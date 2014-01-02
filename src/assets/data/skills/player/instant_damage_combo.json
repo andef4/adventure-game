@@ -1,0 +1,31 @@
+{
+    "id": "instant_damage_combo",
+    "name": "Instant Damage Combo",
+    "icon": "skills/instant_damage_combo.png",
+    "harmful": true,
+    "requiredResources": {
+        "COMBO_POINT": 2
+    },
+    "targetEffects": [{
+        "intervalsRunning": 1,
+        "everyInterval": 1,
+        "damageType": null,
+        "baseLifeChange": -50,
+        "resourceChanges": {},
+        "statChanges": {},
+        "statScaling": {
+            "damage": -1.0
+        }
+    }],
+    "casterEffects": [{
+        "intervalsRunning": 1,
+        "everyInterval": 1,
+        "damageType": null,
+        "baseLifeChange": 0,
+        "resourceChanges": {
+            "COMBO_POINT": 1
+        },
+        "statChanges": {},
+        "statScaling": {}
+    }]
+}

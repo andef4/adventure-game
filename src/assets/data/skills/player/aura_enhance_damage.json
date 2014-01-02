@@ -1,0 +1,31 @@
+{
+    "id": "aura_enhance_damage",
+    "name": "Aura enhance damage",
+    "icon": "skills/aura_enhance_damage.png",
+    "harmful": false,
+    "requiredResources": {
+        "COMBO_POINT": 3
+    },
+    "targetEffects": [{
+        "intervalsRunning": 1,
+        "everyInterval": 1,
+        "damageType": null,
+        "baseLifeChange": -50,
+        "resourceChanges": {},
+        "statChanges": {},
+        "statScaling": {
+            "damage": -1.0
+        }
+    }],
+    "casterEffects": [{
+        "intervalsRunning": 1,
+        "everyInterval": 1,
+        "damageType": null,
+        "baseLifeChange": 0,
+        "resourceChanges": {
+            "COMBO_POINT": 1
+        },
+        "statChanges": {},
+        "statScaling": {}
+    }]
+}

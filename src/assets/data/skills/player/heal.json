@@ -1,0 +1,31 @@
+{
+    "id": "heal",
+    "name": "Heal over time",
+    "icon": "skills/heal.png",
+    "harmful": false,
+    "requiredResources": {
+        "COMBO_POINT": 2
+    },
+    "targetEffects": [{
+        "intervalsRunning": 1,
+        "everyInterval": 1,
+        "damageType": null,
+        "baseLifeChange": -50,
+        "resourceChanges": {},
+        "statChanges": {},
+        "statScaling": {
+            "damage": -1.0
+        }
+    }],
+    "casterEffects": [{
+        "intervalsRunning": 1,
+        "everyInterval": 1,
+        "damageType": null,
+        "baseLifeChange": 0,
+        "resourceChanges": {
+            "COMBO_POINT": 1
+        },
+        "statChanges": {},
+        "statScaling": {}
+    }]
+}

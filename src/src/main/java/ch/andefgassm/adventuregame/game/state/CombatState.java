@@ -2,7 +2,6 @@ package ch.andefgassm.adventuregame.game.state;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
-import java.util.Random;
 
 import ch.andefgassm.adventuregame.combat.AbstractAICombatant;
 import ch.andefgassm.adventuregame.combat.CombatSystem;
@@ -10,12 +9,20 @@ import ch.andefgassm.adventuregame.combat.Combatant;
 import ch.andefgassm.adventuregame.combat.Skill;
 import ch.andefgassm.adventuregame.game.AdventureGameException;
 import ch.andefgassm.adventuregame.game.Enemy;
-import ch.andefgassm.adventuregame.game.Enemy.Drop;
 import ch.andefgassm.adventuregame.game.Resource;
-import ch.andefgassm.adventuregame.game.inventory.Item;
+import ch.andefgassm.adventuregame.game.assets.Graphics;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 
-public class CombatState extends AbstractConsoleGameState {
+public class CombatState extends AbstractGameState {
 
     private GameStateContext context = null;
     private CombatSystem system = null;
@@ -23,6 +30,29 @@ public class CombatState extends AbstractConsoleGameState {
     private AbstractAICombatant enemy = null;
     private CurrentCombatState state = CurrentCombatState.FIGHTING;
     private Enemy baseEnemy;
+
+	private ShapeRenderer shapeRenderer = new ShapeRenderer();
+	private BitmapFont font = Graphics.getFont();
+	private BitmapFont boldFont = Graphics.getBoldFont();
+	private SpriteBatch batch = new SpriteBatch();
+
+	private int currentSkill = 0;
+
+	private int width;
+	private int height;
+
+	private static final int LINE_HEIGHT = 20;
+	private static final int PADDING = 5;
+	private static final int PADDING_TOP = 25;
+
+	private static final int ITEM_WIDTH = 600;
+	private static final int ITEM_TAB_SIZE = 150;
+	private static final int ITEM_ICON_SIZE = 64;
+
+	private static final int SELECTOR_WIDTH = 120;
+	private static final int SELECTOR_HEIGHT = 30;
+
+	private static final int HUD_HEIGHT = 150;
 
     enum CurrentCombatState {
         FIGHTING, LOST, WON, BAD_INPUT, GIVE_UP
@@ -54,11 +84,119 @@ public class CombatState extends AbstractConsoleGameState {
         enemy.getBaseStats().putAll(baseEnemy.getStats());
 
         state = CurrentCombatState.FIGHTING;
-
-        draw();
     }
 
-    private void draw() {
+
+    @Override
+    public void render(float delta) {
+		Gdx.gl.glClearColor(255f/255, 200f/255, 120f/255, 1f);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		int offsetRight = width/2;
+
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.setColor(Color.BLACK);
+		shapeRenderer.line(offsetRight, 0, offsetRight, height);
+		shapeRenderer.end();
+
+		renderSkills();
+
+		renderEnemy();
+
+		renderCombatText();
+
+		// render tutorial
+		renderTutorial();
+	}
+
+	private void renderSkills() {
+		context.getPlayer().getSkills();
+		player.getAvailableSkills();
+	}
+
+	private void renderSkill(Skill skill, int x, int y, boolean available) {
+
+	}
+
+
+	private void renderCombatText() {
+
+	}
+
+
+	private void renderEnemy() {
+
+	}
+
+
+
+
+
+	private void renderTutorial() {
+		// render hud rectangle
+		shapeRenderer.begin(ShapeType.Filled);
+		shapeRenderer.setColor(new Color(255f/255, 200f/255, 120f/255, 1f));
+		shapeRenderer.rect(0, 0, width, 150);
+		shapeRenderer.end();
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.setColor(Color.BLACK);
+		shapeRenderer.line(0, HUD_HEIGHT, width, HUD_HEIGHT);
+		shapeRenderer.end();
+
+		// render hud text
+		batch.begin();
+		font.setColor(Color.BLACK);
+		font.draw(batch, "[↑], [↓] Zauber auswählen", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT);
+		font.draw(batch, "[Enter] Zauber ausführen", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT*2);
+		font.draw(batch, "[e] Fliehen", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT*3);
+		font.draw(batch, "[q] Spiel beenden", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT*4);
+		batch.end();
+	}
+
+
+	@Override
+	public void resize(int width, int height) {
+		this.width = width;
+		this.height = height;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		switch (keycode) {
+		case Keys.UP:
+			/*if (selectedItem == 0 && currentItems.size() != 0) {
+				selectedItem = currentItems.size() - 1;
+			} else {
+				selectedItem--;
+			}/*
+			break;
+		case Keys.DOWN:
+			/*if (selectedItem == currentItems.size() - 1 || currentItems.size() == 0) {
+				selectedItem = 0;
+			} else {
+				selectedItem++;
+			}*/
+			break;
+		case Keys.ENTER:
+			/*if (currentItems.size() != 0) {
+				String itemId = currentItems.get(selectedItem).getId();
+				context.getPlayer().equip(itemId);
+			}*/
+			break;
+		case Keys.E:
+			context.changeState(GameStateContext.MAP);
+		case Keys.Q:
+			context.changeState(null);
+			break;
+		}
+		return true;
+	}
+
+
+
+
+
+    /*private void draw() {
         clear();
         println("Enemy: " + enemy.getCurrentLife() + " life");
         println("Player: " + player.getCurrentLife() + " life");
@@ -109,8 +247,8 @@ public class CombatState extends AbstractConsoleGameState {
             println("[0] back to main menu");
             break;
         }
-    }
-
+    }*/
+/*
     @Override
     public void handleInput(int input) {
         switch(state) {
@@ -166,4 +304,5 @@ public class CombatState extends AbstractConsoleGameState {
         }
         draw();
     }
+    */
 }

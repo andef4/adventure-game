@@ -15,11 +15,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Skill {
 	private String id = null;
 	private String name = null;
+	private String icon = null;
 	private boolean harmful;
 	private Map<IResource, Integer> requiredResources = new HashMap<IResource, Integer>();
 	private List<Effect> targetEffects = new ArrayList<Effect>();
 	private List<Effect> casterEffects = new ArrayList<Effect>();
-	
+
 	@JsonCreator
 	public Skill(@JsonProperty("id") String id,
 			@JsonProperty("name") String name,
@@ -33,6 +34,12 @@ public class Skill {
 	}
 	public String getName() {
 		return name;
+	}
+	public String getIcon() {
+		return icon;
+	}
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 	public boolean isHarmful() {
 		return harmful;

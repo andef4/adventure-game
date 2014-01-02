@@ -69,7 +69,7 @@ public class GameStateContext {
         //player.equip("legs1");
         player.equip("feet1");
 
-		changeState(MAP);
+		changeState(new CombatState(), "black_dragon");
 	}
 
 	public void changeState(AbstractGameState newState) {
