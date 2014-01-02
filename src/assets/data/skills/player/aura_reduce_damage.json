@@ -1,6 +1,7 @@
 {
     "id": "aura_reduce_damage.",
     "name": "Aura reduce damage",
+    "description": "Description",
     "icon": "skills/aura_reduce_damage.png",
     "harmful": false,
     "requiredResources": {

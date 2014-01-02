@@ -20,6 +20,7 @@ public class Skill {
 	private Map<IResource, Integer> requiredResources = new HashMap<IResource, Integer>();
 	private List<Effect> targetEffects = new ArrayList<Effect>();
 	private List<Effect> casterEffects = new ArrayList<Effect>();
+	private String description;
 
 	@JsonCreator
 	public Skill(@JsonProperty("id") String id,
@@ -52,5 +53,11 @@ public class Skill {
 	}
 	public List<Effect> getCasterEffects() {
 		return casterEffects;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

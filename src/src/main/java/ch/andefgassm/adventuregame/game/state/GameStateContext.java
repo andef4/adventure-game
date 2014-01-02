@@ -52,8 +52,12 @@ public class GameStateContext {
 		combatSystem.getStatProcessors().add(new MagicResistanceProcessor());
 		combatSystem.getSpellModifiers().put("fire", new FireSpellModifier());
 
-        player.getSkills().add("player_strike");
-        player.getSkills().add("player_execute");
+        player.getSkills().add("instant_damage");
+        player.getSkills().add("instant_damage_combo");
+        player.getSkills().add("dot");
+        player.getSkills().add("heal");
+        player.getSkills().add("aura_enhance_damage");
+        player.getSkills().add("aura_reduce_damage.");
 
         player.addItem("weapon1");
         player.addItem("weapon2");

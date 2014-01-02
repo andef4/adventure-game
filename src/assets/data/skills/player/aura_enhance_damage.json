@@ -1,6 +1,7 @@
 {
     "id": "aura_enhance_damage",
     "name": "Aura enhance damage",
+    "description": "Description",
     "icon": "skills/aura_enhance_damage.png",
     "harmful": false,
     "requiredResources": {

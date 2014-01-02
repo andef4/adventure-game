@@ -1,6 +1,7 @@
 {
     "id": "heal",
     "name": "Heal over time",
+    "description": "Description",
     "icon": "skills/heal.png",
     "harmful": false,
     "requiredResources": {

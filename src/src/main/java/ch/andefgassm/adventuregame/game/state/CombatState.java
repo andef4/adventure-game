@@ -28,7 +28,7 @@ public class CombatState extends AbstractGameState {
     private CombatSystem system = null;
     private Combatant player = null;
     private AbstractAICombatant enemy = null;
-    private CurrentCombatState state = CurrentCombatState.FIGHTING;
+    //private CurrentCombatState state = CurrentCombatState.FIGHTING;
     private Enemy baseEnemy;
 
 	private ShapeRenderer shapeRenderer = new ShapeRenderer();
@@ -36,7 +36,7 @@ public class CombatState extends AbstractGameState {
 	private BitmapFont boldFont = Graphics.getBoldFont();
 	private SpriteBatch batch = new SpriteBatch();
 
-	private int currentSkill = 0;
+	//private int currentSkill = 0;
 
 	private int width;
 	private int height;
@@ -45,12 +45,8 @@ public class CombatState extends AbstractGameState {
 	private static final int PADDING = 5;
 	private static final int PADDING_TOP = 25;
 
-	private static final int ITEM_WIDTH = 600;
-	private static final int ITEM_TAB_SIZE = 150;
-	private static final int ITEM_ICON_SIZE = 64;
-
-	private static final int SELECTOR_WIDTH = 120;
-	private static final int SELECTOR_HEIGHT = 30;
+	private static final int SPELL_WIDTH = 600;
+	private static final int SPELL_ICON_SIZE = 64;
 
 	private static final int HUD_HEIGHT = 150;
 
@@ -83,7 +79,7 @@ public class CombatState extends AbstractGameState {
 
         enemy.getBaseStats().putAll(baseEnemy.getStats());
 
-        state = CurrentCombatState.FIGHTING;
+        //state = CurrentCombatState.FIGHTING;
     }
 
 
@@ -110,12 +106,47 @@ public class CombatState extends AbstractGameState {
 	}
 
 	private void renderSkills() {
-		context.getPlayer().getSkills();
-		player.getAvailableSkills();
+		int i = 0;
+		for (String skillId : context.getPlayer().getSkills()) {
+			Skill skill = system.getSkill(skillId);
+			renderSkill(skill, PADDING, height - PADDING_TOP - (i * (SPELL_ICON_SIZE + PADDING)), true, false);
+			i++;
+		}
 	}
 
-	private void renderSkill(Skill skill, int x, int y, boolean available) {
+	private void renderSkill(Skill skill, int x, int y, boolean available, boolean selected) {
+		shapeRenderer.begin(ShapeType.Filled);
+		if (selected) {
+			shapeRenderer.setColor(Color.LIGHT_GRAY);
+		} else {
+			shapeRenderer.setColor(Color.WHITE);
+		}
+		shapeRenderer.rect(x, y - SPELL_ICON_SIZE, SPELL_WIDTH, 64);
+		shapeRenderer.end();
 
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.setColor(Color.BLACK);
+		shapeRenderer.rect(x, y - SPELL_ICON_SIZE, SPELL_WIDTH, 64);
+		shapeRenderer.line(x + SPELL_ICON_SIZE, y, x + SPELL_ICON_SIZE, y - SPELL_ICON_SIZE);
+		shapeRenderer.end();
+
+		batch.begin();
+		batch.draw(Graphics.getTexture(skill.getIcon()), x - 1, y - SPELL_ICON_SIZE);
+
+		int textX = x + SPELL_ICON_SIZE + PADDING;
+		int textY = y - PADDING;
+
+		font.setColor(Color.BLACK);
+		boldFont.setColor(Color.BLACK);
+
+		boldFont.draw(batch, skill.getName(), textX, textY);
+
+		font.draw(batch, skill.getRequiredResources().toString(), textX, textY - LINE_HEIGHT);
+
+		font.draw(batch, skill.getDescription(), textX, textY - LINE_HEIGHT*2);
+
+
+		batch.end();
 	}
 
 

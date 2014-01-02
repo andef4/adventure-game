@@ -1,6 +1,7 @@
 {
     "id": "instant_damage_combo",
     "name": "Instant Damage Combo",
+    "description": "Description",
     "icon": "skills/instant_damage_combo.png",
     "harmful": true,
     "requiredResources": {

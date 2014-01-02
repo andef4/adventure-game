@@ -1,6 +1,7 @@
 {
     "id": "instant_damage",
     "name": "Instant Damage",
+    "description": "Description",
     "icon": "skills/instant_damage.png",
     "harmful": true,
     "targetEffects": [{

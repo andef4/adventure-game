@@ -1,6 +1,7 @@
 {
     "id": "dot",
     "name": "Damage over time",
+    "description": "Description",
     "icon": "skills/dot.png",
     "harmful": true,
     "requiredResources": {
