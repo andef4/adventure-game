@@ -17,6 +17,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -44,6 +45,11 @@ public class CombatState extends AbstractGameState {
 	private static final int LINE_HEIGHT = 20;
 	private static final int PADDING = 5;
 	private static final int PADDING_TOP = 25;
+
+	private static final int HEALTH_HEIGHT = 30;
+	private static final int HEALTH_WIDTH = 420;
+
+	private static final int COMBO_RADIUS = 15;
 
 	private static final int SPELL_WIDTH = 600;
 	private static final int SPELL_ICON_SIZE = 64;
@@ -95,21 +101,85 @@ public class CombatState extends AbstractGameState {
 		shapeRenderer.line(offsetRight, 0, offsetRight, height);
 		shapeRenderer.end();
 
-		renderSkills();
+		// render titles
+		batch.begin();
+		boldFont.setColor(Color.BLACK);
+		boldFont.draw(batch, "Du", PADDING, height - PADDING);
+		boldFont.draw(batch, baseEnemy.getName(), offsetRight + PADDING, height - PADDING);
+		batch.end();
+
+		renderPlayer(PADDING, height - PADDING_TOP);
+
+		renderSkills(PADDING, height - PADDING_TOP - 100);
 
 		renderEnemy();
 
 		renderCombatText();
 
-		// render tutorial
 		renderTutorial();
 	}
 
-	private void renderSkills() {
+	private void renderPlayer(int x, int y) {
+		batch.begin();
+		font.setColor(Color.BLACK);
+		font.draw(batch, "Gesundheit:", x, y - PADDING);
+		font.draw(batch, "Combo Punkte:", x, y - HEALTH_HEIGHT - PADDING*3);
+		batch.end();
+
+		renderHealth(x + 180, y, 100, 3);
+		renderComboPoints(x + 180, y - HEALTH_HEIGHT - PADDING*2, 3, 1);
+	}
+
+	private void renderHealth(int x, int y, int max, int current) {
+		shapeRenderer.begin(ShapeType.Filled);
+		shapeRenderer.setColor(Color.WHITE);
+		shapeRenderer.rect(x, y - HEALTH_HEIGHT, HEALTH_WIDTH, HEALTH_HEIGHT);
+		shapeRenderer.setColor(Color.GREEN);
+		shapeRenderer.rect(x, y - HEALTH_HEIGHT, (float)HEALTH_WIDTH / max * current, HEALTH_HEIGHT);
+		shapeRenderer.end();
+
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.setColor(Color.BLACK);
+		shapeRenderer.rect(x, y - HEALTH_HEIGHT, HEALTH_WIDTH, HEALTH_HEIGHT);
+		shapeRenderer.end();
+
+		String health = String.format("%d/%d", current, max);
+		TextBounds bounds = font.getBounds(health);
+
+		batch.begin();
+		font.setColor(Color.BLACK);
+		font.draw(batch, health, x + (HEALTH_WIDTH - bounds.width) / 2, y - (HEALTH_HEIGHT - bounds.height) / 2);
+		batch.end();
+	}
+
+	private void renderComboPoints(int x, int y, int max, int current) {
+		for (int i = 0; i < max; i++) {
+			shapeRenderer.begin(ShapeType.Filled);
+			if (i < current) {
+				shapeRenderer.setColor(Color.YELLOW);
+			} else {
+				shapeRenderer.setColor(Color.WHITE);
+			}
+			shapeRenderer.circle(x + i*(COMBO_RADIUS*2 + PADDING) + COMBO_RADIUS, y - COMBO_RADIUS, COMBO_RADIUS);
+			shapeRenderer.end();
+
+
+			shapeRenderer.begin(ShapeType.Line);
+			shapeRenderer.setColor(Color.BLACK);
+			shapeRenderer.circle(x + i*(COMBO_RADIUS*2 + PADDING) + COMBO_RADIUS, y - COMBO_RADIUS, COMBO_RADIUS);
+			shapeRenderer.end();
+
+		}
+
+
+	}
+
+
+	private void renderSkills(int x, int y) {
 		int i = 0;
 		for (String skillId : context.getPlayer().getSkills()) {
 			Skill skill = system.getSkill(skillId);
-			renderSkill(skill, PADDING, height - PADDING_TOP - (i * (SPELL_ICON_SIZE + PADDING)), true, false);
+			renderSkill(skill, x, y - (i * (SPELL_ICON_SIZE + PADDING)), true, false);
 			i++;
 		}
 	}
@@ -124,28 +194,25 @@ public class CombatState extends AbstractGameState {
 		shapeRenderer.rect(x, y - SPELL_ICON_SIZE, SPELL_WIDTH, 64);
 		shapeRenderer.end();
 
+		batch.begin();
+		batch.draw(Graphics.getTexture(skill.getIcon()), x - 1, y - SPELL_ICON_SIZE);
+		batch.end();
+
 		shapeRenderer.begin(ShapeType.Line);
 		shapeRenderer.setColor(Color.BLACK);
 		shapeRenderer.rect(x, y - SPELL_ICON_SIZE, SPELL_WIDTH, 64);
 		shapeRenderer.line(x + SPELL_ICON_SIZE, y, x + SPELL_ICON_SIZE, y - SPELL_ICON_SIZE);
 		shapeRenderer.end();
 
-		batch.begin();
-		batch.draw(Graphics.getTexture(skill.getIcon()), x - 1, y - SPELL_ICON_SIZE);
-
 		int textX = x + SPELL_ICON_SIZE + PADDING;
 		int textY = y - PADDING;
 
+		batch.begin();
 		font.setColor(Color.BLACK);
 		boldFont.setColor(Color.BLACK);
-
 		boldFont.draw(batch, skill.getName(), textX, textY);
-
 		font.draw(batch, skill.getRequiredResources().toString(), textX, textY - LINE_HEIGHT);
-
 		font.draw(batch, skill.getDescription(), textX, textY - LINE_HEIGHT*2);
-
-
 		batch.end();
 	}
 
