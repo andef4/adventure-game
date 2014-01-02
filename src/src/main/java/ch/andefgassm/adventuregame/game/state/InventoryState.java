@@ -24,7 +24,6 @@ public class InventoryState extends AbstractGameState {
 	private int selectedItem = 0;
 	private List<Item> currentItems = null;
 
-
 	private ShapeRenderer shapeRenderer = new ShapeRenderer();
 	private BitmapFont font = Graphics.getFont();
 	private BitmapFont boldFont = Graphics.getBoldFont();
@@ -71,21 +70,21 @@ public class InventoryState extends AbstractGameState {
 		batch.end();
 
 		// render equipped items
-		drawEquippedItems();
+		renderEquippedItems();
 
 		// render inventory
-		drawInventorySelectors(offsetRight + PADDING, height - PADDING_TOP);
-		drawInventory(offsetRight + PADDING, height - PADDING_TOP -  SELECTOR_HEIGHT - PADDING);
+		renderInventorySelectors(offsetRight + PADDING, height - PADDING_TOP);
+		renderInventory(offsetRight + PADDING, height - PADDING_TOP -  SELECTOR_HEIGHT - PADDING);
 
 		// render tutorial
-		drawTutorial();
+		renderTutorial();
 	}
 
-	private void drawItem(Item item, int x, int y) {
-		drawItem(item, x, y, false);
+	private void renderItem(Item item, int x, int y) {
+		renderItem(item, x, y, false);
 	}
 
-	private void drawItem(Item item, int x, int y, boolean selected) {
+	private void renderItem(Item item, int x, int y, boolean selected) {
 		shapeRenderer.begin(ShapeType.Filled);
 		if (selected) {
 			shapeRenderer.setColor(Color.LIGHT_GRAY);
@@ -124,7 +123,7 @@ public class InventoryState extends AbstractGameState {
 		batch.end();
 	}
 
-	private void drawEquippedItems() {
+	private void renderEquippedItems() {
 		List<String> equippedItems = new ArrayList<String>();
 		String weapon = context.getPlayer().getEquippedItem(ItemType.WEAPON);
 		if (weapon != null) {
@@ -150,12 +149,12 @@ public class InventoryState extends AbstractGameState {
 		int i = 0;
 		for (String itemId : equippedItems) {
 			Item item = context.getItem(itemId);
-			drawItem(item, PADDING, height - PADDING_TOP - (i * (ITEM_ICON_SIZE + PADDING)));
+			renderItem(item, PADDING, height - PADDING_TOP - (i * (ITEM_ICON_SIZE + PADDING)));
 			i++;
 		};
 	}
 
-	private void drawInventorySelectors(int x, int y) {
+	private void renderInventorySelectors(int x, int y) {
 		int i = 0;
 		for (ItemType itemType : ItemType.values()) {
 			// filling
@@ -196,18 +195,18 @@ public class InventoryState extends AbstractGameState {
 		}
 	}
 
-	private void drawInventory(int x, int y) {
+	private void renderInventory(int x, int y) {
 		int i = 0;
 		for (String itemId : context.getPlayer().getInventory()) {
 			Item item = context.getItem(itemId);
 			if (item.getType() == ItemType.values()[currentType]) {
-				drawItem(item, x, y - i * (ITEM_ICON_SIZE + PADDING), i == selectedItem);
+				renderItem(item, x, y - i * (ITEM_ICON_SIZE + PADDING), i == selectedItem);
 				i++;
 			}
 		}
 	}
 
-	private void drawTutorial() {
+	private void renderTutorial() {
 		// render hud rectangle
 		shapeRenderer.begin(ShapeType.Filled);
 		shapeRenderer.setColor(new Color(255f/255, 200f/255, 120f/255, 1f));
