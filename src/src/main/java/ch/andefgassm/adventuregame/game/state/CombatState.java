@@ -196,7 +196,11 @@ public class CombatState extends AbstractGameState {
 		font.setColor(Color.BLACK);
 		font.draw(batch, "[↑], [↓] Zauber auswählen", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT);
 		font.draw(batch, "[Enter] Zauber ausführen", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT*2);
-		font.draw(batch, "[e] Fliehen", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT*3);
+		if (state == CurrentCombatState.FIGHTING) {
+			font.draw(batch, "[e] Fliehen", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT*3);
+		} else {
+			font.draw(batch, "[e] Kampf verlassen", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT*3);
+		}
 		font.draw(batch, "[q] Spiel beenden", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT*4);
 		batch.end();
 	}
