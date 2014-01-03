@@ -1,6 +1,7 @@
 package ch.andefgassm.adventuregame.game.state;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.List;
 
 import ch.andefgassm.adventuregame.combat.AbstractAICombatant;
@@ -29,7 +30,7 @@ public class CombatState extends AbstractGameState {
     private CombatSystem system = null;
     private Combatant player = null;
     private AbstractAICombatant enemy = null;
-    //private CurrentCombatState state = CurrentCombatState.FIGHTING;
+    private CurrentCombatState state = CurrentCombatState.FIGHTING;
     private Enemy baseEnemy;
 
 	private ShapeRenderer shapeRenderer = new ShapeRenderer();
@@ -37,7 +38,9 @@ public class CombatState extends AbstractGameState {
 	private BitmapFont boldFont = Graphics.getBoldFont();
 	private SpriteBatch batch = new SpriteBatch();
 
-	//private int currentSkill = 0;
+	private List<Skill> allSkills = null;
+	private List<Skill> availableSkills = null;
+	private int selectedSkill = 0;
 
 	private int width;
 	private int height;
@@ -70,7 +73,6 @@ public class CombatState extends AbstractGameState {
             player.addSkill(skill);
         }
         player.getBaseStats().putAll(context.getPlayer().getStats());
-        player.getResources().put(Resource.ENERGY, 500);
         player.getResources().put(Resource.COMBO_POINT, 0);
 
         baseEnemy = context.getEnemy(enemyId);
@@ -85,7 +87,9 @@ public class CombatState extends AbstractGameState {
 
         enemy.getBaseStats().putAll(baseEnemy.getStats());
 
-        //state = CurrentCombatState.FIGHTING;
+        loadSkills();
+
+        state = CurrentCombatState.FIGHTING;
     }
 
 
@@ -112,13 +116,14 @@ public class CombatState extends AbstractGameState {
 
 		renderSkills(PADDING, height - PADDING_TOP - 100);
 
-		renderEnemy();
+		renderEnemy(offsetRight + PADDING, height - PADDING_TOP);
 
 		renderCombatText();
 
 		renderTutorial();
 	}
 
+    // render portions of the screen
 	private void renderPlayer(int x, int y) {
 		batch.begin();
 		font.setColor(Color.BLACK);
@@ -126,9 +131,57 @@ public class CombatState extends AbstractGameState {
 		font.draw(batch, "Combo Punkte:", x, y - HEALTH_HEIGHT - PADDING*3);
 		batch.end();
 
-		renderHealth(x + 180, y, 100, 3);
-		renderComboPoints(x + 180, y - HEALTH_HEIGHT - PADDING*2, 3, 1);
+		renderHealth(x + 180, y, player.getMaxLife(), player.getCurrentLife());
+		renderComboPoints(x + 180, y - HEALTH_HEIGHT - PADDING*2, 3, player.getResources().get(Resource.COMBO_POINT));
 	}
+
+	private void renderSkills(int x, int y) {
+		int i = 0;
+		for (Skill skill : allSkills) {
+			boolean selected = i == selectedSkill;
+			boolean available = availableSkills.contains(skill);
+			renderSkill(skill, x, y - (i * (SPELL_ICON_SIZE + PADDING)), available, selected);
+			i++;
+		}
+	}
+
+
+	private void renderEnemy(int x, int y) {
+		batch.begin();
+		font.setColor(Color.BLACK);
+		font.draw(batch, "Gesundheit:", x, y - PADDING);
+		batch.end();
+
+		renderHealth(x + 180, y, enemy.getMaxLife(), enemy.getCurrentLife());
+	}
+
+
+	private void renderCombatText() {
+	}
+
+
+	private void renderTutorial() {
+		// render hud rectangle
+		shapeRenderer.begin(ShapeType.Filled);
+		shapeRenderer.setColor(new Color(255f/255, 200f/255, 120f/255, 1f));
+		shapeRenderer.rect(0, 0, width, 150);
+		shapeRenderer.end();
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.setColor(Color.BLACK);
+		shapeRenderer.line(0, HUD_HEIGHT, width, HUD_HEIGHT);
+		shapeRenderer.end();
+
+		// render hud text
+		batch.begin();
+		font.setColor(Color.BLACK);
+		font.draw(batch, "[↑], [↓] Zauber auswählen", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT);
+		font.draw(batch, "[Enter] Zauber ausführen", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT*2);
+		font.draw(batch, "[e] Fliehen", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT*3);
+		font.draw(batch, "[q] Spiel beenden", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT*4);
+		batch.end();
+	}
+
+	// render single elements
 
 	private void renderHealth(int x, int y, int max, int current) {
 		shapeRenderer.begin(ShapeType.Filled);
@@ -168,19 +221,6 @@ public class CombatState extends AbstractGameState {
 			shapeRenderer.setColor(Color.BLACK);
 			shapeRenderer.circle(x + i*(COMBO_RADIUS*2 + PADDING) + COMBO_RADIUS, y - COMBO_RADIUS, COMBO_RADIUS);
 			shapeRenderer.end();
-
-		}
-
-
-	}
-
-
-	private void renderSkills(int x, int y) {
-		int i = 0;
-		for (String skillId : context.getPlayer().getSkills()) {
-			Skill skill = system.getSkill(skillId);
-			renderSkill(skill, x, y - (i * (SPELL_ICON_SIZE + PADDING)), true, false);
-			i++;
 		}
 	}
 
@@ -188,8 +228,10 @@ public class CombatState extends AbstractGameState {
 		shapeRenderer.begin(ShapeType.Filled);
 		if (selected) {
 			shapeRenderer.setColor(Color.LIGHT_GRAY);
-		} else {
+		} else if (available){
 			shapeRenderer.setColor(Color.WHITE);
+		} else {
+			shapeRenderer.setColor(Color.DARK_GRAY);
 		}
 		shapeRenderer.rect(x, y - SPELL_ICON_SIZE, SPELL_WIDTH, 64);
 		shapeRenderer.end();
@@ -216,46 +258,28 @@ public class CombatState extends AbstractGameState {
 		batch.end();
 	}
 
-
-	private void renderCombatText() {
-
-	}
-
-
-	private void renderEnemy() {
-
-	}
-
-
-
-
-
-	private void renderTutorial() {
-		// render hud rectangle
-		shapeRenderer.begin(ShapeType.Filled);
-		shapeRenderer.setColor(new Color(255f/255, 200f/255, 120f/255, 1f));
-		shapeRenderer.rect(0, 0, width, 150);
-		shapeRenderer.end();
-		shapeRenderer.begin(ShapeType.Line);
-		shapeRenderer.setColor(Color.BLACK);
-		shapeRenderer.line(0, HUD_HEIGHT, width, HUD_HEIGHT);
-		shapeRenderer.end();
-
-		// render hud text
-		batch.begin();
-		font.setColor(Color.BLACK);
-		font.draw(batch, "[↑], [↓] Zauber auswählen", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT);
-		font.draw(batch, "[Enter] Zauber ausführen", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT*2);
-		font.draw(batch, "[e] Fliehen", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT*3);
-		font.draw(batch, "[q] Spiel beenden", PADDING, HUD_HEIGHT - PADDING - LINE_HEIGHT*4);
-		batch.end();
-	}
-
-
 	@Override
 	public void resize(int width, int height) {
 		this.width = width;
 		this.height = height;
+	}
+
+	private void loadSkills() {
+		allSkills = new ArrayList<Skill>();
+		List<String> allSkillIds = context.getPlayer().getSkills();
+		for (String skillId : allSkillIds) {
+			allSkills.add(system.getSkill(skillId));
+		}
+
+		availableSkills = new ArrayList<Skill>();
+		List<String> availableSkillIds = player.getAvailableSkills();
+		for (String skillId : availableSkillIds) {
+			availableSkills.add(system.getSkill(skillId));
+		}
+
+		if (!availableSkillIds.contains(allSkillIds.get(selectedSkill))) {
+			selectedSkill = 0;
+		}
 	}
 
 	@Override
@@ -266,7 +290,7 @@ public class CombatState extends AbstractGameState {
 				selectedItem = currentItems.size() - 1;
 			} else {
 				selectedItem--;
-			}/*
+			}*/
 			break;
 		case Keys.DOWN:
 			/*if (selectedItem == currentItems.size() - 1 || currentItems.size() == 0) {
