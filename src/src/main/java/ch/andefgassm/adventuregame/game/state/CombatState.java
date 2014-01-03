@@ -258,7 +258,9 @@ public class CombatState extends AbstractGameState {
 		font.setColor(Color.BLACK);
 		boldFont.setColor(Color.BLACK);
 		boldFont.draw(batch, skill.getName(), textX, textY);
-		font.draw(batch, skill.getRequiredResources().toString(), textX, textY - LINE_HEIGHT);
+		if (skill.getRequiredResources().size() > 0) {
+			font.draw(batch, "Combo Punkte: " + skill.getRequiredResources().get(Resource.COMBO_POINT), textX, textY - LINE_HEIGHT);
+		}
 		font.draw(batch, skill.getDescription(), textX, textY - LINE_HEIGHT*2);
 		batch.end();
 	}
