@@ -4,6 +4,5 @@ import ch.andefgassm.adventuregame.combat.IDamageType;
 
 public enum DamageType implements IDamageType {
 	PHYSICAL,
-	FIRE,
 	MAGIC;
 }

@@ -10,7 +10,6 @@ import ch.andefgassm.adventuregame.game.Enemy;
 import ch.andefgassm.adventuregame.game.assets.AssetLoader;
 import ch.andefgassm.adventuregame.game.inventory.Item;
 import ch.andefgassm.adventuregame.game.inventory.Player;
-import ch.andefgassm.adventuregame.game.spellmodifiers.FireSpellModifier;
 import ch.andefgassm.adventuregame.game.stats.MagicResistanceProcessor;
 
 import com.badlogic.gdx.Game;
@@ -50,7 +49,7 @@ public class GameStateContext {
 		}
 
 		combatSystem.getStatProcessors().add(new MagicResistanceProcessor());
-		combatSystem.getSpellModifiers().put("fire", new FireSpellModifier());
+		//combatSystem.getSpellModifiers().put("fire", new FireSpellModifier());
 
         player.getSkills().add("instant_damage");
         player.getSkills().add("instant_damage_combo");
