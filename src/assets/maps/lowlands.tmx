@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="16" tileheight="16">
+<map version="1.0" orientation="orthogonal" width="200" height="178" tilewidth="16" tileheight="16">
  <tileset firstgid="1" name="tileset-blackvolution" tilewidth="16" tileheight="16">
   <image source="tiles/tileset-blackvolution.png" width="128" height="1472"/>
-  <tile id="2">
-   <properties>
-    <property name="blocked" value=""/>
-    <property name="enemy" value="red_dragon"/>
-   </properties>
-  </tile>
-  <tile id="3">
-   <properties>
-    <property name="blocked" value=""/>
-    <property name="enemy" value="black_dragon"/>
-   </properties>
-  </tile>
   <tile id="5">
    <properties>
     <property name="blocked" value=""/>
@@ -34,24 +22,24 @@
    </properties>
   </tile>
  </tileset>
- <layer name="background" width="50" height="50">
+ <layer name="background2" width="200" height="178">
   <data encoding="base64" compression="zlib">
-   eJzt1jEKwCAQRcEFQwrvf+CkTZE0IvzoFNO/lV2wV1UHgNsZ0EC29B0Z7UufbyV/fusjoAG+bijtvtJ6dps3rYenFtAwmx0EAJjDPwsAAN5drQ5hbA==
+   eJzt08EJwDAAA7G8u//A3aC/ciZI4A185wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8OW5ZPCH+tf6YFn9a32wrP61PlhW/1ofLKt/rQ+W1b/WB8vqX2uEZfWntcGy+tf6YFn9a32wrP61PlhW/1ofLKt/rQ+W1b/WB8vqX+uDZfWv9cGy+tf6YFn9a32wrP61PlhW/1ofLKt/rQ+W1b/WB8vqX+uDZfWv9cGy+tf6YFn9a32wrP61Plj2AlySNrs=
   </data>
  </layer>
- <layer name="mobs" width="50" height="50">
+ <layer name="background" width="200" height="178">
   <data encoding="base64" compression="zlib">
-   eJzt00ENAAAIxDASvOFfEjIIl1bBPqsCAAAAAIAc09cF8INXAACARAttpgCT
+   eJzt2k1KHEEABeBykSxMJD+YRdTsdBFIFgE9WJYJ5B7eQMgmJxJcewqrEoc0Y/XPtFXdJX4fPFqYYRbDvHnd04YAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMCQL3shvIt5v/fv77F8jfkV5uU6k6uYnzG/74+b5J47FigtfeY/xhzt0I85vof+fkx9rn6wtFwHhvZEP3hOch0Y2pPUj/2we37EXGbyJ/Nc/aAVU8+pzu9zMbMfu0Q/aMXUfox9po9HHp+aRD9oxVgvLhbajCnnYmOB0lIPPnfOn84XPpcqkTcxb2u9QTxrj7nmbiUnMZ/KvzVQvR8vK71uN4cxH8q/NfC3H99iTjM5eyK7Yj+ope/aPN0jPJzYj1K/Xc19bftBLX39SPcITxrbj76u2A9qeex9jxZiP6hlzX6Uuna3H9RSsx9L/HZlP6hpuxPb9wrXPneyH6wp14+WtsF+sKa5/aiVOb8V2w9qaa0fc7pjP6gld92xdg/sB60ovRtLXpds/m/XflBLtx8ba+/BlCSb3bAf1NI9r+qzdhe29yIdD8L/3bAf1DJ2XhUGHlsyr8LDvbAf1DalH93v7TWOr0N+L+wHtaV+vAjDGfvebuUIpaV+3IT+3Macxpw9gSOUdgf9esY/
   </data>
  </layer>
- <layer name="boss_red_dragon" width="50" height="50">
+ <layer name="mobs" width="200" height="178">
   <data encoding="base64" compression="zlib">
-   eJztzkENAAAIBKBz9u9sCudDSEACAAAAAAB/VF8PAAAAgC0DZu0ABQ==
+   eJzt16ENAAAIwDASfuP/k1BIcLjW7YRFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMCrvBgAA+LL9hy8BAAAAAAAAAAAAAAAAAOBLA3twASU=
   </data>
  </layer>
- <layer name="foreground" width="50" height="50">
+ <layer name="boss_red_dragon" width="200" height="178">
   <data encoding="base64" compression="zlib">
-   eJztzjEOgCAUBUGuq1ZgpV6edwQTik8xk2y/rQEAAAAAOzjSma7qkUU9jXRXjyx60pu+6hEAAAAAfpuK/gQD
+   eJztzgENAAAIA6A7+3c2hs5BAhIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgq+rtAQAAAAAAAAAAAAAAAAAAAAAAAABw1QBvSgAF
   </data>
  </layer>
 </map>
