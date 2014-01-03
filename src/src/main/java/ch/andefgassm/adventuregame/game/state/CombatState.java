@@ -54,12 +54,15 @@ public class CombatState extends AbstractGameState {
 	private static final int PADDING_TOP = 25;
 
 	private static final int HEALTH_HEIGHT = 30;
-	private static final int HEALTH_WIDTH = 420;
+	private static final int HEALTH_WIDTH = 450;
 
 	private static final int COMBO_RADIUS = 15;
 
-	private static final int SPELL_WIDTH = 600;
+	private static final int SPELL_WIDTH = 630;
 	private static final int SPELL_ICON_SIZE = 64;
+
+	private static final int COMBAT_TEXT_HEIGHT = 500;
+	private static final int COMBAT_TEXT_WIDTH = 630;
 
 	private static final int HUD_HEIGHT = 150;
 
@@ -123,12 +126,12 @@ public class CombatState extends AbstractGameState {
 
 		renderEnemy(offsetRight + PADDING, height - PADDING_TOP);
 
-		renderCombatText();
+		renderCombatText(offsetRight + PADDING, height - PADDING_TOP - HEALTH_HEIGHT - PADDING*2);
 
 		renderTutorial();
 	}
 
-    // render portions of the screen
+	// render portions of the screen
 	private void renderPlayer(int x, int y) {
 		batch.begin();
 		font.setColor(Color.BLACK);
@@ -161,9 +164,21 @@ public class CombatState extends AbstractGameState {
 	}
 
 
-	private void renderCombatText() {
-	}
+    private void renderCombatText(int x, int y) {
+		shapeRenderer.begin(ShapeType.Filled);
+		shapeRenderer.setColor(Color.WHITE);
+		shapeRenderer.rect(x, y - COMBAT_TEXT_HEIGHT, COMBAT_TEXT_WIDTH, COMBAT_TEXT_HEIGHT);
+		shapeRenderer.end();
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.setColor(Color.BLACK);
+		shapeRenderer.rect(x, y - COMBAT_TEXT_HEIGHT, COMBAT_TEXT_WIDTH, COMBAT_TEXT_HEIGHT);
+		shapeRenderer.end();
 
+    	batch.begin();
+    	font.setColor(Color.BLACK);
+    	font.drawWrapped(batch, combatText, x + PADDING, y - PADDING, COMBAT_TEXT_WIDTH - PADDING * 2);
+    	batch.end();
+	}
 
 	private void renderTutorial() {
 		// render hud rectangle
@@ -363,7 +378,7 @@ public class CombatState extends AbstractGameState {
                 if (rnd <= drop.getDropRate()) {
                     Item item = context.getItem(drop.getItemId());
                     if (!context.getPlayer().getInventory().contains(item.getId())) {
-                    	combatText.append("Du hast ein Gegenstand gewwonnen: " + item.getName() + "\n");
+                    	combatText.append("Du hast ein Gegenstand gewonnen: " + item.getName() + "\n");
                         context.getPlayer().getInventory().add(item.getId());
                     }
                 }
