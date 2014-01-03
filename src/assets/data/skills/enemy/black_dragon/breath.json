@@ -4,7 +4,7 @@
     "harmful": true,
     "requiredResources": {},
     "targetEffects": [{
-        "damageType": "FIRE",
+        "damageType": "MAGIC",
         "baseLifeChange": -70
     }]
 }
