@@ -231,13 +231,16 @@ public class CombatState extends AbstractGameState {
 
 	private void renderSkill(Skill skill, int x, int y, boolean available, boolean selected) {
 		shapeRenderer.begin(ShapeType.Filled);
-		if (selected) {
-			shapeRenderer.setColor(Color.LIGHT_GRAY);
-		} else if (available){
-			shapeRenderer.setColor(Color.WHITE);
+		if (available) {
+			if (selected) {
+				shapeRenderer.setColor(Color.LIGHT_GRAY);
+			} else {
+				shapeRenderer.setColor(Color.WHITE);
+			}
 		} else {
 			shapeRenderer.setColor(Color.DARK_GRAY);
 		}
+
 		shapeRenderer.rect(x, y - SPELL_ICON_SIZE, SPELL_WIDTH, 64);
 		shapeRenderer.end();
 
@@ -303,18 +306,31 @@ public class CombatState extends AbstractGameState {
 		if (state == CurrentCombatState.FIGHTING) {
 			switch (keycode) {
 			case Keys.UP:
-				/*
-				 * if (selectedItem == 0 && currentItems.size() != 0) {
-				 * selectedItem = currentItems.size() - 1; } else {
-				 * selectedItem--; }
-				 */
+				if (selectedSkill == 0) {
+					selectedSkill = allSkills.size();
+				}
+				// move to available skill
+				do {
+					selectedSkill--;
+					if (selectedSkill == -1) {
+						selectedSkill = 0;
+						break;
+					}
+				} while (!availableSkills.contains(allSkills.get(selectedSkill)));
 				break;
 			case Keys.DOWN:
-				/*
-				 * if (selectedItem == currentItems.size() - 1 ||
-				 * currentItems.size() == 0) { selectedItem = 0; } else {
-				 * selectedItem++; }
-				 */
+				if (selectedSkill == allSkills.size() - 1) {
+					selectedSkill = 0;
+					break;
+				}
+				// move to available skill
+				do {
+					selectedSkill++;
+					if (selectedSkill == allSkills.size()) {
+						selectedSkill = 0;
+						break;
+					}
+				} while (!availableSkills.contains(allSkills.get(selectedSkill)));
 				break;
 			case Keys.ENTER:
 				castSkill();
@@ -337,6 +353,7 @@ public class CombatState extends AbstractGameState {
 
         if (enemy.getCurrentLife() == 0) {
             state = CurrentCombatState.WON;
+            availableSkills.clear();
             combatText.append("Du hast " + enemy.getName() + " besiegt!\n");
 
             Random r = new Random();
@@ -351,6 +368,7 @@ public class CombatState extends AbstractGameState {
                     }
                 }
             }
+            return;
         }
 
         // enemy's turn
@@ -365,7 +383,9 @@ public class CombatState extends AbstractGameState {
 
         if (player.getCurrentLife() == 0) {
             state = CurrentCombatState.LOST;
+            availableSkills.clear();
             combatText.append(enemy.getName() + " hat dich besiegt!\n");
+            return;
         }
         loadSkills();
 	}
