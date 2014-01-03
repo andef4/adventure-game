@@ -3,6 +3,7 @@ package ch.andefgassm.adventuregame.game.state;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import ch.andefgassm.adventuregame.combat.AbstractAICombatant;
 import ch.andefgassm.adventuregame.combat.CombatSystem;
@@ -10,8 +11,10 @@ import ch.andefgassm.adventuregame.combat.Combatant;
 import ch.andefgassm.adventuregame.combat.Skill;
 import ch.andefgassm.adventuregame.game.AdventureGameException;
 import ch.andefgassm.adventuregame.game.Enemy;
+import ch.andefgassm.adventuregame.game.Enemy.Drop;
 import ch.andefgassm.adventuregame.game.Resource;
 import ch.andefgassm.adventuregame.game.assets.Graphics;
+import ch.andefgassm.adventuregame.game.inventory.Item;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -30,8 +33,8 @@ public class CombatState extends AbstractGameState {
     private CombatSystem system = null;
     private Combatant player = null;
     private AbstractAICombatant enemy = null;
-    private CurrentCombatState state = CurrentCombatState.FIGHTING;
-    private Enemy baseEnemy;
+    private CurrentCombatState state = null;
+    private Enemy baseEnemy = null;
 
 	private ShapeRenderer shapeRenderer = new ShapeRenderer();
 	private BitmapFont font = Graphics.getFont();
@@ -41,6 +44,7 @@ public class CombatState extends AbstractGameState {
 	private List<Skill> allSkills = null;
 	private List<Skill> availableSkills = null;
 	private int selectedSkill = 0;
+	private StringBuilder combatText = null;
 
 	private int width;
 	private int height;
@@ -90,6 +94,7 @@ public class CombatState extends AbstractGameState {
         loadSkills();
 
         state = CurrentCombatState.FIGHTING;
+        combatText = new StringBuilder();
     }
 
 
@@ -285,67 +290,53 @@ public class CombatState extends AbstractGameState {
 	@Override
 	public boolean keyUp(int keycode) {
 		switch (keycode) {
-		case Keys.UP:
-			/*if (selectedItem == 0 && currentItems.size() != 0) {
-				selectedItem = currentItems.size() - 1;
-			} else {
-				selectedItem--;
-			}*/
-			break;
-		case Keys.DOWN:
-			/*if (selectedItem == currentItems.size() - 1 || currentItems.size() == 0) {
-				selectedItem = 0;
-			} else {
-				selectedItem++;
-			}*/
-			break;
-		case Keys.ENTER:
-			/*if (currentItems.size() != 0) {
-				String itemId = currentItems.get(selectedItem).getId();
-				context.getPlayer().equip(itemId);
-			}*/
-			break;
 		case Keys.E:
 			context.changeState(GameStateContext.MAP);
+			return true;
 		case Keys.Q:
 			context.changeState(null);
-			break;
+			return true;
+		}
+
+		if (state == CurrentCombatState.FIGHTING) {
+			switch (keycode) {
+			case Keys.UP:
+				/*
+				 * if (selectedItem == 0 && currentItems.size() != 0) {
+				 * selectedItem = currentItems.size() - 1; } else {
+				 * selectedItem--; }
+				 */
+				break;
+			case Keys.DOWN:
+				/*
+				 * if (selectedItem == currentItems.size() - 1 ||
+				 * currentItems.size() == 0) { selectedItem = 0; } else {
+				 * selectedItem++; }
+				 */
+				break;
+			case Keys.ENTER:
+				castSkill();
+				break;
+			}
 		}
 		return true;
 	}
 
 
+	private void castSkill() {
+		Skill skill = allSkills.get(selectedSkill);
+		if (skill.isHarmful()) {
+            player.cast(skill.getId(), enemy);
+        } else {
+            player.cast(skill.getId(), player);
+        }
+        player.applyHelpfulEffects();
+        enemy.applyHarmfulEffects();
 
+        if (enemy.getCurrentLife() == 0) {
+            state = CurrentCombatState.WON;
+            combatText.append("Du hast " + enemy.getName() + " besiegt!\n");
 
-
-    /*private void draw() {
-        clear();
-        println("Enemy: " + enemy.getCurrentLife() + " life");
-        println("Player: " + player.getCurrentLife() + " life");
-        print("Player resources: ");
-        println(player.getResources().toString());
-
-        switch(state) {
-        case FIGHTING:
-        case BAD_INPUT:
-            List<String> skills = player.getAvailableSkills();
-            if (skills.size() == 0) {
-                println("Player has no resources left.");
-            }
-            println("[0] give up");
-
-            for(int i = 0; i < skills.size(); i++) {
-                Skill skill = system.getSkill(skills.get(i));
-                println(String.format("[%d] %s", i + 1, skill.getName()));
-            }
-            if (state == CurrentCombatState.BAD_INPUT) {
-                println("Unknown Skill");
-            }
-            break;
-        case WON:
-            println(player.getName() + " has defeated " + enemy.getName());
-
-            // drop items
             Random r = new Random();
             List<Drop> drops = baseEnemy.getDrops();
             for (Drop drop : drops) {
@@ -353,78 +344,27 @@ public class CombatState extends AbstractGameState {
                 if (rnd <= drop.getDropRate()) {
                     Item item = context.getItem(drop.getItemId());
                     if (!context.getPlayer().getInventory().contains(item.getId())) {
-                        println("You have won an item: " + item.getName());
+                    	combatText.append("Du hast ein Gegenstand gewwonnen: " + item.getName() + "\n");
                         context.getPlayer().getInventory().add(item.getId());
                     }
                 }
             }
-            println("[0] back to main menu");
-            break;
-        case LOST:
-            println(enemy.getName() + " has defeated " + player.getName());
-            println("[0] back to main menu");
-            break;
-        case GIVE_UP:
-            println("You have given up!");
-            println("[0] back to main menu");
-            break;
         }
-    }*/
-/*
-    @Override
-    public void handleInput(int input) {
-        switch(state) {
-        case BAD_INPUT:
-        case FIGHTING:
-            List<String> skills = player.getAvailableSkills();
-            if (input == 0) {
-                state = CurrentCombatState.GIVE_UP;
-                break;
-            } else if (input < 0 || input > skills.size()) {
-                state = CurrentCombatState.BAD_INPUT;
-                break;
-            } else {
-                state = CurrentCombatState.FIGHTING;
-            }
 
-            // player's turn
-            String skill = skills.get(input - 1);
-            if (system.getSkill(skill).isHarmful()) {
-                player.cast(skill, enemy);
-            } else {
-                player.cast(skill, player);
-            }
-            player.applyHelpfulEffects();
-            enemy.applyHarmfulEffects();
-            if (enemy.getCurrentLife() == 0) {
-                state = CurrentCombatState.WON;
-                break;
-            }
-
-            // enemy's turn
-            skill = enemy.getNextSkill();
-            if (system.getSkill(skill).isHarmful()) {
-                enemy.cast(skill, player);
-            } else {
-                enemy.cast(skill, enemy);
-            }
-            enemy.applyHelpfulEffects();
-            player.applyHarmfulEffects();
-
-            if (player.getCurrentLife() == 0) {
-                state = CurrentCombatState.LOST;
-            }
-            break;
-        case WON:
-        case LOST:
-        case GIVE_UP:
-            if (input == 0) {
-                context.changeState(GameStateContext.MAP);
-                return;
-            }
-            break;
+        // enemy's turn
+        String skillId = enemy.getNextSkill();
+        if (system.getSkill(skillId).isHarmful()) {
+            enemy.cast(skillId, player);
+        } else {
+            enemy.cast(skillId, enemy);
         }
-        draw();
-    }
-    */
+        enemy.applyHelpfulEffects();
+        player.applyHarmfulEffects();
+
+        if (player.getCurrentLife() == 0) {
+            state = CurrentCombatState.LOST;
+            combatText.append(enemy.getName() + " hat dich besiegt!\n");
+        }
+        loadSkills();
+	}
 }
