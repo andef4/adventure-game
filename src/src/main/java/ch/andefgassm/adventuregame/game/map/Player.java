@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Vector2;
 
 public class Player extends Sprite implements InputProcessor {
@@ -22,16 +23,18 @@ public class Player extends Sprite implements InputProcessor {
 	}
 	private List<Direction> directions = new LinkedList<Direction>();
 
-
 	private Animation still, left, right, up, down;
 	private TiledMapTileLayer collisionLayer;
+
 
 //	private static final String ENEMY_KEY = "enemy";
 
 	private String enemyId = null;
 
+	private static final int TILE_WIDTH = 16;
+	private static final int TILE_HEIGHT = 16;
 
-
+	private static final float FLOAT_FIX = 0.000001f;
 
 	public Player(Animation still, Animation left, Animation right, Animation up, Animation down, TiledMapTileLayer collisionLayer) {
 		super(still.getKeyFrame(0));
@@ -141,29 +144,79 @@ public class Player extends Sprite implements InputProcessor {
 		if (directions.size() != 0) {
 			currentDirection = directions.get(directions.size() - 1);
 		}
-		if (velocity.x > 0 && currentDirection != Direction.RIGHT || velocity.x < 0 && currentDirection != Direction.LEFT) {
+		boolean noCollision = false;
+		if (velocity.x > 0 && currentDirection != Direction.RIGHT) {
 			float snapX = newX % 16;
 			if (snapX <= 3.0) {
 				newX -= snapX;
 				newVelocity();
-			} else if (snapX >= 13.0) {
+				noCollision = true;
+			}
+		} else if (velocity.x < 0 && currentDirection != Direction.LEFT) {
+			float snapX = newX % 16;
+			if (snapX >= 13.0) {
 				newX += 16 - snapX;
 				newVelocity();
+				noCollision = true;
 			}
-		} else if (velocity.y < 0 && currentDirection != Direction.DOWN || velocity.y > 0 && currentDirection != Direction.UP) {
+		} else if (velocity.y < 0 && currentDirection != Direction.DOWN) {
 			float snapY = newY % 16;
+			if (snapY >= 13.0) {
+				newY += 16 - snapY;
+				newVelocity();
+				noCollision = true;
+			}
+		} else if (velocity.y > 0 && currentDirection != Direction.UP) {
+			float snapY = newY % 16;
+
 			if (snapY <= 3.0) {
 				newY -= snapY;
 				newVelocity();
-			} else if (snapY >= 13.0) {
-				newY += 16 - snapY;
-				newVelocity();
+				noCollision = true;
 			}
 		}
-
-		// set new position
-		setX(newX);
-		setY(newY);
+		boolean collisionX = false;
+		if (!noCollision) {
+			if(velocity.x > 0) { // right
+				Cell cell = collisionLayer.getCell((int) ((getX() + getWidth()) / TILE_WIDTH), (int) ((getY() + getHeight() / 2) / TILE_HEIGHT));
+				if (cell != null) {
+					collisionX = true;
+				}
+			} else if(velocity.x < 0) { // left
+				// FLOAT_FIX: player should already collide when x % 16.0 == 0
+				Cell cell = collisionLayer.getCell((int) ((getX() - FLOAT_FIX) / TILE_WIDTH), (int) ((getY() + getHeight() / 2) / TILE_HEIGHT));
+				if (cell != null) {
+					collisionX = true;
+				}
+			}
+		}
+		boolean collisionY = false;
+		if (!noCollision) {
+			if(velocity.y > 0) { // up
+				Cell cell = collisionLayer.getCell((int) ((getX() + getWidth() / 2) / TILE_WIDTH), (int) ((getY() + getHeight()) / TILE_HEIGHT));
+				if (cell != null) {
+					collisionY = true;
+				}
+			} else if(velocity.y < 0) { // down
+				// FLOAT_FIX: player should already collide when y % 16.0 == 0
+				Cell cell = collisionLayer.getCell((int) ((getX() + getWidth() / 2) / TILE_WIDTH), (int) ((getY() - FLOAT_FIX) / TILE_HEIGHT));
+				if (cell != null) {
+					collisionY = true;
+				}
+			}
+		}
+		if (collisionX) {
+			velocity.x = 0;
+			newVelocity();
+		} else {
+			setX(newX);
+		}
+		if (collisionY) {
+			velocity.y = 0;
+			newVelocity();
+		} else {
+			setY(newY);
+		}
 
 		// update animation
 		animationTime += delta;
@@ -172,85 +225,6 @@ public class Player extends Sprite implements InputProcessor {
 				velocity.y < 0 ? down.getKeyFrame(animationTime) :
 					velocity.y > 0 ? up.getKeyFrame(animationTime) :
 						still.getKeyFrame(animationTime));
-
-		/*
-		// save old position
-		float oldX = getX(), oldY = getY(), tileWidth = collisionLayer.getTileWidth(), tileHeight = collisionLayer.getTileHeight();
-		boolean collisionX = false, collisionY = false;
-
-		if (velocity.x != 0|| velocity.y != 0) {
-			enemyId = null;
-		}
-
-
-		// move on x
-
-
-		if(velocity.x < 0) { // going left
-			// top left
-			collisionX = isCellBlocked(collisionLayer.getCell((int) (getX() / tileWidth), (int) ((getY() + getHeight()) / tileHeight)));
-
-			// middle left
-			if(!collisionX)
-				collisionX = isCellBlocked(collisionLayer.getCell((int) (getX() / tileWidth), (int) ((getY() + getHeight() / 2) / tileHeight)));
-
-			// bottom left
-			if(!collisionX)
-				collisionX = isCellBlocked(collisionLayer.getCell((int) (getX() / tileWidth), (int) (getY() / tileHeight)));
-		} else if(velocity.x > 0) { // going right
-			// top right
-			collisionX = isCellBlocked(collisionLayer.getCell((int) ((getX() + getWidth()) / tileWidth), (int) ((getY() + getHeight()) / tileHeight)));
-
-			// middle right
-			if(!collisionX)
-				collisionX = isCellBlocked(collisionLayer.getCell((int) ((getX() + getWidth()) / tileWidth), (int) ((getY() + getHeight() / 2) / tileHeight)));
-
-			// bottom right
-			if(!collisionX)
-				collisionX = isCellBlocked(collisionLayer.getCell((int) ((getX() + getWidth()) / tileWidth), (int) (getY() / tileHeight)));
-		}
-
-		// react to x collision
-		if(collisionX) {
-			setX(oldX);
-			velocity.x = 0;
-			velocity.y = 0;
-		}
-
-		// move on y
-		setY(getY() + velocity.y * delta);
-
-		if(velocity.y < 0) { // going down
-			// bottom left
-			collisionY = isCellBlocked(collisionLayer.getCell((int) (getX() / tileWidth), (int) (getY() / tileHeight)));
-
-			// bottom middle
-			if(!collisionY)
-				collisionY = isCellBlocked(collisionLayer.getCell((int) ((getX() + getWidth() / 2) / tileWidth), (int) (getY() / tileHeight)));
-
-			// bottom right
-			if(!collisionY)
-				collisionY = isCellBlocked(collisionLayer.getCell((int) ((getX() + getWidth()) / tileWidth), (int) (getY() / tileHeight)));
-
-			//canJump = collisionY;
-		} else if(velocity.y > 0) { // going up
-			// top left
-			collisionY = isCellBlocked(collisionLayer.getCell((int) (getX() / tileWidth), (int) ((getY() + getHeight()) / tileHeight)));
-
-			// top middle
-			if(!collisionY)
-				collisionY = isCellBlocked(collisionLayer.getCell((int) ((getX() + getWidth() / 2) / tileWidth), (int) ((getY() + getHeight()) / tileHeight)));
-
-			// top right
-			if(!collisionY)
-				collisionY = isCellBlocked(collisionLayer.getCell((int) ((getX() + getWidth()) / tileWidth), (int) ((getY() + getHeight()) / tileHeight)));
-		}
-
-		// react to y collision
-		if(collisionY) {
-			setY(oldY);
-			velocity.y = 0;
-		}*/
 
 	}
 	/*
