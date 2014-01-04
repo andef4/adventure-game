@@ -34,8 +34,6 @@ public class Player extends Sprite implements InputProcessor {
 	private static final int TILE_WIDTH = 16;
 	private static final int TILE_HEIGHT = 16;
 
-	private static final float FLOAT_FIX = 0.000001f;
-
 	public Player(Animation still, Animation left, Animation right, Animation up, Animation down, TiledMapTileLayer collisionLayer) {
 		super(still.getKeyFrame(0));
 		this.still = still;
@@ -168,7 +166,6 @@ public class Player extends Sprite implements InputProcessor {
 			}
 		} else if (velocity.y > 0 && currentDirection != Direction.UP) {
 			float snapY = newY % 16;
-
 			if (snapY <= 3.0) {
 				newY -= snapY;
 				newVelocity();
@@ -178,13 +175,12 @@ public class Player extends Sprite implements InputProcessor {
 		boolean collisionX = false;
 		if (!noCollision) {
 			if(velocity.x > 0) { // right
-				Cell cell = collisionLayer.getCell((int) ((getX() + getWidth()) / TILE_WIDTH), (int) ((getY() + getHeight() / 2) / TILE_HEIGHT));
+				Cell cell = collisionLayer.getCell((int) ((newX + getWidth()) / TILE_WIDTH), (int) ((newY + getHeight() / 2) / TILE_HEIGHT));
 				if (cell != null) {
 					collisionX = true;
 				}
 			} else if(velocity.x < 0) { // left
-				// FLOAT_FIX: player should already collide when x % 16.0 == 0
-				Cell cell = collisionLayer.getCell((int) ((getX() - FLOAT_FIX) / TILE_WIDTH), (int) ((getY() + getHeight() / 2) / TILE_HEIGHT));
+				Cell cell = collisionLayer.getCell((int) ((newX) / TILE_WIDTH), (int) ((newY + getHeight() / 2) / TILE_HEIGHT));
 				if (cell != null) {
 					collisionX = true;
 				}
@@ -193,13 +189,12 @@ public class Player extends Sprite implements InputProcessor {
 		boolean collisionY = false;
 		if (!noCollision) {
 			if(velocity.y > 0) { // up
-				Cell cell = collisionLayer.getCell((int) ((getX() + getWidth() / 2) / TILE_WIDTH), (int) ((getY() + getHeight()) / TILE_HEIGHT));
+				Cell cell = collisionLayer.getCell((int) ((newX + getWidth() / 2) / TILE_WIDTH), (int) ((newY + getHeight()) / TILE_HEIGHT));
 				if (cell != null) {
 					collisionY = true;
 				}
 			} else if(velocity.y < 0) { // down
-				// FLOAT_FIX: player should already collide when y % 16.0 == 0
-				Cell cell = collisionLayer.getCell((int) ((getX() + getWidth() / 2) / TILE_WIDTH), (int) ((getY() - FLOAT_FIX) / TILE_HEIGHT));
+				Cell cell = collisionLayer.getCell((int) ((newX + getWidth() / 2) / TILE_WIDTH), (int) ((newY) / TILE_HEIGHT));
 				if (cell != null) {
 					collisionY = true;
 				}
