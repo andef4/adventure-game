@@ -1,5 +1,6 @@
 package ch.andefgassm.adventuregame.game.state;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,7 @@ public class GameStateContext {
 	private Map<String, Item> items = new HashMap<String, Item>();
 	private Map<String, Enemy> enemies = new HashMap<String, Enemy>();
 	private Player player = new Player(this);
-
+	private List<String> livingBosses = new ArrayList<String>();
 
 	public GameStateContext(Game game) {
 		this.game = game;
@@ -46,6 +47,9 @@ public class GameStateContext {
 		List<Enemy> enemies = AssetLoader.getInstance().load("assets/data/enemies", Enemy.class);
 		for (Enemy enemy : enemies) {
 			this.enemies.put(enemy.getId(), enemy);
+			if (enemy.isBoss()) {
+				livingBosses.add(enemy.getId());
+			}
 		}
 
 		combatSystem.getStatProcessors().add(new MagicResistanceProcessor());
@@ -111,5 +115,8 @@ public class GameStateContext {
 
 	public Map<String, Enemy> getEnemies() {
 		return enemies;
+	}
+	public List<String> getLivingBosses() {
+		return livingBosses;
 	}
 }

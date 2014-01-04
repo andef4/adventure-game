@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import ch.andefgassm.adventuregame.combat.IStat;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Enemy {
-	
+
     public static class Drop {
 		private String itemId;
 		private float dropRate;
@@ -29,14 +29,15 @@ public class Enemy {
 			this.dropRate = dropRate;
 		}
 	}
-	
+
     private String id = null;
 	private String name = null;
+	private boolean boss = false;
 	private int life = 0;
 	private String aiClass = null;
 	private List<Drop> drops = new ArrayList<Drop>();
 	private Map<IStat, Integer> stats = new HashMap<IStat, Integer>();
-	
+
 	public Enemy(@JsonProperty("id") String id,
 			@JsonProperty("name") String name,
 			@JsonProperty("life") int life,
@@ -57,6 +58,12 @@ public class Enemy {
 	}
 	public int getLife() {
 		return life;
+	}
+	public void setBoss(boolean boss) {
+		this.boss = boss;
+	}
+	public boolean isBoss() {
+		return boss;
 	}
 	public String getAiClass() {
 		return aiClass;

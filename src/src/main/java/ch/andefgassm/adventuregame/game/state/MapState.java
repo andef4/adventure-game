@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -45,6 +46,7 @@ public class MapState extends AbstractGameState implements Screen  {
 	private BitmapFont font = Graphics.getFont();
 	private BitmapFont boldFont = Graphics.getBoldFont();
 	private SpriteBatch batch = new SpriteBatch();
+	private MapLayers layers;
 
 	private static final int HUD_HEIGHT = 150;
 	private static final int HUD_PADDING = 5;
@@ -52,6 +54,7 @@ public class MapState extends AbstractGameState implements Screen  {
 
 	public MapState() {
 		map = new TmxMapLoader().load("maps/lowlands.tmx");
+		layers = map.getLayers();
 
 		renderer = new OrthogonalTiledMapRenderer(map);
 		shapeRenderer = new ShapeRenderer();
@@ -69,12 +72,8 @@ public class MapState extends AbstractGameState implements Screen  {
 		 * The order is reversed from the Tiled map editor order.
 		 * The collision layer is only used for collision and is not rendered.
 		 */
-		int backgroundCount = map.getLayers().getCount() - 2;
-		background = new int[backgroundCount];
-		for (int i = 0; i < backgroundCount; i++) {
-			background[i] = i;
-		}
-		foreground = new int[] {backgroundCount}; // 3 in the example above
+		background = new int[] {0, 1};
+		foreground = new int[] {map.getLayers().getCount()-2}; // 3 in the example above
 
 		playerAtlas = new TextureAtlas("img/player/player.pack");
 		Animation still, left, right, up, down;
@@ -105,13 +104,19 @@ public class MapState extends AbstractGameState implements Screen  {
 		camera.update();
 
 		renderer.setView(camera);
-		renderer.render(background);
+		renderer.render(background); // render environment and mobs
 
 		renderer.getSpriteBatch().begin();
-		player.draw(renderer.getSpriteBatch());
+
+		// render living bosses
+		for (String enemyId : context.getLivingBosses()) {
+			renderer.renderTileLayer((TiledMapTileLayer) layers.get("boss_" + enemyId));
+		}
+
+		player.draw(renderer.getSpriteBatch()); // render player
 		renderer.getSpriteBatch().end();
 
-		renderer.render(foreground);
+		renderer.render(foreground); // render foreground (e.g. ceiling of caverns)
 
 		renderHud();
 	}

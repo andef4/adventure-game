@@ -374,7 +374,9 @@ public class CombatState extends AbstractGameState {
             state = CurrentCombatState.WON;
             availableSkills.clear();
             combatText.append("Du hast " + enemy.getName() + " besiegt!\n");
-
+            if (baseEnemy.isBoss()) {
+            	context.getLivingBosses().remove(baseEnemy.getId());
+            }
             Random r = new Random();
             List<Drop> drops = baseEnemy.getDrops();
             for (Drop drop : drops) {
