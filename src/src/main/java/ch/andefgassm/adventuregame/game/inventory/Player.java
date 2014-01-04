@@ -12,11 +12,6 @@ import ch.andefgassm.adventuregame.game.state.GameStateContext;
 
 public class Player {
 	private List<String> inventory = new ArrayList<String>();
-
-	public List<String> getInventory() {
-		return inventory;
-	}
-
 	private Map<ItemType, String> equipment = new HashMap<ItemType, String>();
 	private List<String> skills = new ArrayList<String>();
 	private GameStateContext context;
@@ -24,10 +19,6 @@ public class Player {
 	public Player(GameStateContext context) {
 		this.context = context;
     }
-
-	public Collection<String> getEquipment() {
-		return equipment.values();
-	}
 
 	public String getEquippedItem(ItemType itemType) {
 		return equipment.get(itemType);
@@ -65,5 +56,11 @@ public class Player {
 
 	public List<String> getSkills() {
 		return skills ;
+	}
+	public List<String> getInventory() {
+		return inventory;
+	}
+	public Collection<String> getEquipment() {
+		return equipment.values();
 	}
 }

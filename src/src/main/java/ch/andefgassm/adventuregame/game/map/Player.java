@@ -142,62 +142,53 @@ public class Player extends Sprite implements InputProcessor {
 		if (directions.size() != 0) {
 			currentDirection = directions.get(directions.size() - 1);
 		}
-		boolean noCollision = false;
 		if (velocity.x > 0 && currentDirection != Direction.RIGHT) {
 			float snapX = newX % 16;
 			if (snapX <= 3.0) {
 				newX -= snapX;
 				newVelocity();
-				noCollision = true;
 			}
 		} else if (velocity.x < 0 && currentDirection != Direction.LEFT) {
 			float snapX = newX % 16;
 			if (snapX >= 13.0) {
 				newX += 16 - snapX;
 				newVelocity();
-				noCollision = true;
 			}
 		} else if (velocity.y < 0 && currentDirection != Direction.DOWN) {
 			float snapY = newY % 16;
 			if (snapY >= 13.0) {
 				newY += 16 - snapY;
 				newVelocity();
-				noCollision = true;
 			}
 		} else if (velocity.y > 0 && currentDirection != Direction.UP) {
 			float snapY = newY % 16;
 			if (snapY <= 3.0) {
 				newY -= snapY;
 				newVelocity();
-				noCollision = true;
 			}
 		}
 		boolean collisionX = false;
-		if (!noCollision) {
-			if(velocity.x > 0) { // right
-				Cell cell = collisionLayer.getCell((int) ((newX + getWidth()) / TILE_WIDTH), (int) ((newY + getHeight() / 2) / TILE_HEIGHT));
-				if (cell != null) {
-					collisionX = true;
-				}
-			} else if(velocity.x < 0) { // left
-				Cell cell = collisionLayer.getCell((int) ((newX) / TILE_WIDTH), (int) ((newY + getHeight() / 2) / TILE_HEIGHT));
-				if (cell != null) {
-					collisionX = true;
-				}
+		if(velocity.x > 0) { // right
+			Cell cell = collisionLayer.getCell((int) ((newX + getWidth()) / TILE_WIDTH), (int) ((newY + getHeight() / 2) / TILE_HEIGHT));
+			if (cell != null) {
+				collisionX = true;
+			}
+		} else if(velocity.x < 0) { // left
+			Cell cell = collisionLayer.getCell((int) ((newX) / TILE_WIDTH), (int) ((newY + getHeight() / 2) / TILE_HEIGHT));
+			if (cell != null) {
+				collisionX = true;
 			}
 		}
 		boolean collisionY = false;
-		if (!noCollision) {
-			if(velocity.y > 0) { // up
-				Cell cell = collisionLayer.getCell((int) ((newX + getWidth() / 2) / TILE_WIDTH), (int) ((newY + getHeight()) / TILE_HEIGHT));
-				if (cell != null) {
-					collisionY = true;
-				}
-			} else if(velocity.y < 0) { // down
-				Cell cell = collisionLayer.getCell((int) ((newX + getWidth() / 2) / TILE_WIDTH), (int) ((newY) / TILE_HEIGHT));
-				if (cell != null) {
-					collisionY = true;
-				}
+		if(velocity.y > 0) { // up
+			Cell cell = collisionLayer.getCell((int) ((newX + getWidth() / 2) / TILE_WIDTH), (int) ((newY + getHeight()) / TILE_HEIGHT));
+			if (cell != null) {
+				collisionY = true;
+			}
+		} else if(velocity.y < 0) { // down
+			Cell cell = collisionLayer.getCell((int) ((newX + getWidth() / 2) / TILE_WIDTH), (int) ((newY) / TILE_HEIGHT));
+			if (cell != null) {
+				collisionY = true;
 			}
 		}
 		if (collisionX) {
