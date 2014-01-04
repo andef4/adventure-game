@@ -91,7 +91,7 @@ public class MapState extends AbstractGameState implements Screen  {
 
 		MapLayer collisionLayer = map.getLayers().get("collision");
 		player = new Player(still, left, right, up, down, (TiledMapTileLayer) collisionLayer);
-		player.setPosition(3*16, (177 - 157) * 15);
+		player.setPosition(3*16, (177 - 158) * 16);
 		inputMultiplexer = new InputMultiplexer(this, player);
 	}
 

@@ -40,8 +40,147 @@ public class Player extends Sprite implements InputProcessor {
 		super.draw(batch);
 	}
 
-	public void update(float delta) {
 
+	boolean upKey = false;
+	boolean downKey = false;
+	boolean leftKey = false;
+	boolean rightKey = false;
+
+
+
+	@Override
+	public boolean keyDown(int keycode) {
+		upKey = false;
+		downKey = false;
+		leftKey = false;
+		rightKey = false;
+
+		switch(keycode) {
+		case Keys.UP:
+			upKey = true;
+			velocity.x = 0;
+			velocity.y = speed;
+			animationTime = 0;
+			break;
+		case Keys.LEFT:
+			leftKey = true;
+			velocity.x = -speed;
+			velocity.y = 0;
+			animationTime = 0;
+			break;
+		case Keys.RIGHT:
+			rightKey = true;
+			velocity.x = speed;
+			velocity.y = 0;
+			animationTime = 0;
+			break;
+		case Keys.DOWN:
+			downKey = true;
+			velocity.x = 0;
+			velocity.y = -speed;
+			animationTime = 0;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		upKey = false;
+		downKey = false;
+		leftKey = false;
+		rightKey = false;
+		/*
+		switch(keycode) {
+		case Keys.UP:
+			directions.remove(Direction.UP);
+			break;
+		case Keys.LEFT:
+			directions.remove(Direction.LEFT);
+			break;
+		case Keys.RIGHT:
+			directions.remove(Direction.RIGHT);
+			break;
+		case Keys.DOWN:
+			directions.remove(Direction.DOWN);
+			break;
+		}*/
+		return true;
+	}
+
+	/*private void newVelocity() {
+		if (directions.size() > 0) {
+			Direction direction = directions.get(directions.size() - 1);
+			switch (direction) {
+			case UP:
+				velocity.x = 0;
+				velocity.y = speed;
+				break;
+			case LEFT:
+				velocity.x = -speed;
+				velocity.y = 0;
+				break;
+			case RIGHT:
+				velocity.x = speed;
+				velocity.y = 0;
+			case DOWN:
+				velocity.x = 0;
+				velocity.y = -speed;
+			}
+		} else {
+			velocity.x = 0;
+			velocity.y = 0;
+		}
+	}*/
+
+
+
+
+	/*enum Direction {
+		RIGHT, UP, DOWN, LEFT;
+	}
+	List<Direction> directions = new LinkedList<Direction>();
+	*/
+
+	public void update(float delta) {
+		float newX = getX() + velocity.x * delta;
+		float newY = getY() + velocity.y * delta;
+
+		if (velocity.x > 0 && !rightKey || velocity.x < 0 && !leftKey) {
+			float snapX = newX % 16;
+			if (snapX <= 3.0) {
+				newX -= snapX;
+				animationTime = 0;
+				velocity.x = 0;
+			} else if (snapX >= 13.0) {
+				newX += 16 - snapX;
+				animationTime = 0;
+				velocity.x = 0;
+			}
+		} else if (velocity.y < 0 && !downKey || velocity.y > 0 && !upKey) {
+			float snapY = newY % 16;
+			if (snapY <= 3.0) {
+				newY -= snapY;
+				animationTime = 0;
+				velocity.y = 0;
+			} else if (snapY >= 13.0) {
+				newY += 16 - snapY;
+				animationTime = 0;
+				velocity.y = 0;
+			}
+		}
+
+		setX(newX);
+		setY(newY);
+
+
+		// update animation
+		animationTime += delta;
+		setRegion(velocity.x < 0 ? left.getKeyFrame(animationTime) :
+			velocity.x > 0 ? right.getKeyFrame(animationTime) :
+				velocity.y < 0 ? down.getKeyFrame(animationTime) :
+					velocity.y > 0 ? up.getKeyFrame(animationTime) :
+						still.getKeyFrame(animationTime));
+		/*
 		// save old position
 		float oldX = getX(), oldY = getY(), tileWidth = collisionLayer.getTileWidth(), tileHeight = collisionLayer.getTileHeight();
 		boolean collisionX = false, collisionY = false;
@@ -52,7 +191,7 @@ public class Player extends Sprite implements InputProcessor {
 
 
 		// move on x
-		setX(getX() + velocity.x * delta);
+
 
 		if(velocity.x < 0) { // going left
 			// top left
@@ -118,15 +257,8 @@ public class Player extends Sprite implements InputProcessor {
 		if(collisionY) {
 			setY(oldY);
 			velocity.y = 0;
-		}
+		}*/
 
-		// update animation
-		animationTime += delta;
-		setRegion(velocity.x < 0 ? left.getKeyFrame(animationTime) :
-			velocity.x > 0 ? right.getKeyFrame(animationTime) :
-				velocity.y < 0 ? down.getKeyFrame(animationTime) :
-					velocity.y > 0 ? up.getKeyFrame(animationTime) :
-						still.getKeyFrame(animationTime));
 	}
 
 	private boolean isCellBlocked(Cell cell) {
@@ -166,68 +298,6 @@ public class Player extends Sprite implements InputProcessor {
 	public void setCollisionLayer(TiledMapTileLayer collisionLayer) {
 		this.collisionLayer = collisionLayer;
 	}
-
-	@Override
-	public boolean keyDown(int keycode) {
-		switch(keycode) {
-		case Keys.W:
-		case Keys.UP:
-			velocity.y = speed;
-			velocity.x = 0;
-			animationTime = 0;
-			break;
-		case Keys.A:
-		case Keys.LEFT:
-			velocity.x = -speed;
-			velocity.y = 0;
-			animationTime = 0;
-			break;
-		case Keys.D:
-		case Keys.RIGHT:
-			velocity.x = speed;
-			velocity.y = 0;
-			animationTime = 0;
-			break;
-		case Keys.S:
-		case Keys.DOWN:
-			velocity.x = 0;
-			velocity.y = -speed;
-			animationTime = 0;
-		}
-		return true;
-	}
-
-	@Override
-	public boolean keyUp(int keycode) {
-		switch(keycode) {
-		case Keys.UP:
-			if (velocity.y == speed) {
-				velocity.y = 0;
-				animationTime = 0;
-			}
-			break;
-		case Keys.LEFT:
-			if (velocity.x == -speed) {
-				velocity.x = 0;
-				animationTime = 0;
-			}
-			break;
-		case Keys.RIGHT:
-			if (velocity.x == speed) {
-				velocity.x = 0;
-				animationTime = 0;
-			}
-			break;
-		case Keys.DOWN:
-			if (velocity.y == -speed) {
-				velocity.y = 0;
-				animationTime = 0;
-			}
-			break;
-		}
-		return true;
-	}
-
 
 	public String getEnemyId() {
 		return enemyId ;
