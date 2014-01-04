@@ -20,8 +20,7 @@ public class Player extends Sprite implements InputProcessor {
 	private Animation still, left, right, up, down;
 	private TiledMapTileLayer collisionLayer;
 
-	private static final String BLOCKED_KEY = "blocked";
-	private static final String ENEMY_KEY = "enemy";
+//	private static final String ENEMY_KEY = "enemy";
 
 	private String enemyId = null;
 
@@ -131,7 +130,7 @@ public class Player extends Sprite implements InputProcessor {
 	}
 
 	private boolean isCellBlocked(Cell cell) {
-		if (cell.getTile() != null) {
+		/*if (cell.getTile() != null) {
 			String enemyId = cell.getTile().getProperties().get(ENEMY_KEY, String.class);
 			if (enemyId != null) {
 				this.enemyId = enemyId;
@@ -139,8 +138,9 @@ public class Player extends Sprite implements InputProcessor {
 			if (cell.getTile().getProperties().containsKey(BLOCKED_KEY)) {
 				return true;
 			}
-		}
-		return false;
+		}*/
+
+		return cell != null;
 	}
 
 	public Vector2 getVelocity() {

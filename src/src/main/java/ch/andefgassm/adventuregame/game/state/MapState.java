@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -31,8 +32,8 @@ public class MapState extends AbstractGameState implements Screen  {
 	private TextureAtlas playerAtlas;
 	private Player player;
 
-	private int[] background = new int[] {0};
-	private int[] foreground = new int[] {1};
+	private int[] background = null;
+	private int[] foreground = null;
 
 
 	private InputMultiplexer inputMultiplexer = null;
@@ -56,6 +57,24 @@ public class MapState extends AbstractGameState implements Screen  {
 		shapeRenderer = new ShapeRenderer();
 
 		camera = new OrthographicCamera();
+		camera.zoom = 1;
+		/*
+		 * Layers (example, more boss layers are possible):
+		 * 0: background
+		 * 1: mobs
+		 * 2: boss1
+		 * 3: foreground
+		 * 4: collision layer
+		 * Layers are rendered from 0-2, then the player is rendered, then layer 3.
+		 * The order is reversed from the Tiled map editor order.
+		 * The collision layer is only used for collision and is not rendered.
+		 */
+		int backgroundCount = map.getLayers().getCount() - 2;
+		background = new int[backgroundCount];
+		for (int i = 0; i < backgroundCount; i++) {
+			background[i] = i;
+		}
+		foreground = new int[] {backgroundCount}; // 3 in the example above
 
 		playerAtlas = new TextureAtlas("img/player/player.pack");
 		Animation still, left, right, up, down;
@@ -70,9 +89,9 @@ public class MapState extends AbstractGameState implements Screen  {
 		up.setPlayMode(Animation.LOOP);
 		down.setPlayMode(Animation.LOOP);
 
-		player = new Player(still, left, right, up, down, (TiledMapTileLayer) map.getLayers().get(0));
-		player.setPosition(11 * player.getCollisionLayer().getTileWidth(), (player.getCollisionLayer().getHeight() - 14) * player.getCollisionLayer().getTileHeight());
-
+		MapLayer collisionLayer = map.getLayers().get("collision");
+		player = new Player(still, left, right, up, down, (TiledMapTileLayer) collisionLayer);
+		player.setPosition(3*16, (177 - 157) * 15);
 		inputMultiplexer = new InputMultiplexer(this, player);
 	}
 
@@ -94,6 +113,10 @@ public class MapState extends AbstractGameState implements Screen  {
 
 		renderer.render(foreground);
 
+		renderHud();
+	}
+
+	private void renderHud() {
 		// render hud rectangle and border
 		shapeRenderer.begin(ShapeType.Filled);
 		shapeRenderer.setColor(new Color(255f/255, 200f/255, 120f/255, 1f));
