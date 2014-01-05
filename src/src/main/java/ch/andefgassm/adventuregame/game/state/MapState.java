@@ -17,7 +17,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -88,8 +87,7 @@ public class MapState extends AbstractGameState implements Screen  {
 		up.setPlayMode(Animation.LOOP);
 		down.setPlayMode(Animation.LOOP);
 
-		MapLayer collisionLayer = map.getLayers().get("collision");
-		player = new Player(still, left, right, up, down, (TiledMapTileLayer) collisionLayer);
+		player = new Player(still, left, right, up, down, map.getLayers());
 		player.setPosition(3*16, (177 - 158) * 16);
 		inputMultiplexer = new InputMultiplexer(this, player);
 	}
@@ -159,6 +157,7 @@ public class MapState extends AbstractGameState implements Screen  {
 	@Override
 	public void init(GameStateContext context, String param) {
 		this.context = context;
+		player.setLivingBosses(context.getLivingBosses());
 	}
 
 	@Override

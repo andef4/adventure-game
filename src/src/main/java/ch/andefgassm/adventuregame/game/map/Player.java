@@ -9,13 +9,13 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Vector2;
 
 public class Player extends Sprite implements InputProcessor {
+	private Animation still, left, right, up, down;
 
-	/** the movement velocity */
 	private Vector2 velocity = new Vector2();
 	private float speed = 60 * 2, animationTime = 0;
 	private enum Direction {
@@ -23,25 +23,27 @@ public class Player extends Sprite implements InputProcessor {
 	}
 	private List<Direction> directions = new LinkedList<Direction>();
 
-	private Animation still, left, right, up, down;
-	private TiledMapTileLayer collisionLayer;
-
-
-//	private static final String ENEMY_KEY = "enemy";
-
+	private MapLayers layers = null;
 	private String enemyId = null;
+	private TiledMapTileLayer mobLayer = null;
+	private TiledMapTileLayer collisionLayer = null;
+	private List<String> livingBosses = null;
 
 	private static final int TILE_WIDTH = 16;
 	private static final int TILE_HEIGHT = 16;
 
-	public Player(Animation still, Animation left, Animation right, Animation up, Animation down, TiledMapTileLayer collisionLayer) {
+	public Player(Animation still, Animation left, Animation right, Animation up, Animation down, MapLayers layers) {
 		super(still.getKeyFrame(0));
 		this.still = still;
 		this.left = left;
 		this.right = right;
 		this.up = up;
 		this.down = down;
-		this.collisionLayer = collisionLayer;
+		this.layers = layers;
+		this.livingBosses = livingBosses;
+
+		collisionLayer = (TiledMapTileLayer) layers.get("collision");
+		mobLayer = (TiledMapTileLayer) layers.get("mobs");
 	}
 
 	@Override
@@ -169,25 +171,21 @@ public class Player extends Sprite implements InputProcessor {
 		}
 		boolean collisionX = false;
 		if(velocity.x > 0) { // right
-			Cell cell = collisionLayer.getCell((int) ((newX + getWidth()) / TILE_WIDTH), (int) ((newY + getHeight() / 2) / TILE_HEIGHT));
-			if (cell != null) {
+			if (checkCollision((int) ((newX + getWidth()) / TILE_WIDTH), (int) ((newY + getHeight() / 2) / TILE_HEIGHT))) {
 				collisionX = true;
 			}
 		} else if(velocity.x < 0) { // left
-			Cell cell = collisionLayer.getCell((int) ((newX) / TILE_WIDTH), (int) ((newY + getHeight() / 2) / TILE_HEIGHT));
-			if (cell != null) {
+			if (checkCollision((int) ((newX) / TILE_WIDTH), (int) ((newY + getHeight() / 2) / TILE_HEIGHT))) {
 				collisionX = true;
 			}
 		}
 		boolean collisionY = false;
 		if(velocity.y > 0) { // up
-			Cell cell = collisionLayer.getCell((int) ((newX + getWidth() / 2) / TILE_WIDTH), (int) ((newY + getHeight()) / TILE_HEIGHT));
-			if (cell != null) {
+			if (checkCollision((int) ((newX + getWidth() / 2) / TILE_WIDTH), (int) ((newY + getHeight()) / TILE_HEIGHT))) {
 				collisionY = true;
 			}
 		} else if(velocity.y < 0) { // down
-			Cell cell = collisionLayer.getCell((int) ((newX + getWidth() / 2) / TILE_WIDTH), (int) ((newY) / TILE_HEIGHT));
-			if (cell != null) {
+			if (checkCollision((int) ((newX + getWidth() / 2) / TILE_WIDTH), (int) ((newY) / TILE_HEIGHT))) {
 				collisionY = true;
 			}
 		}
@@ -213,6 +211,36 @@ public class Player extends Sprite implements InputProcessor {
 						still.getKeyFrame(animationTime));
 
 	}
+
+
+	private boolean checkCollision(int cellX, int cellY) {
+		// check with collision layer
+		if (collisionLayer.getCell(cellX, cellY) != null) {
+			return true;
+		}
+
+		// check with mobs layer
+		if ((mobLayer.getCell(cellX, cellY) != null) ||
+				(mobLayer.getCell(cellX - 1, cellY) != null) ||
+				(mobLayer.getCell(cellX, cellY - 1) != null) ||
+				(mobLayer.getCell(cellX - 1, cellY - 1) != null)) {
+			return true;
+		}
+
+		// check with boss layers
+		for (String enemyId : livingBosses) {
+			TiledMapTileLayer bossLayer = (TiledMapTileLayer) layers.get("boss_" + enemyId);
+			if ((bossLayer.getCell(cellX, cellY) != null) ||
+					(bossLayer.getCell(cellX - 1, cellY) != null) ||
+					(bossLayer.getCell(cellX, cellY - 1) != null) ||
+					(bossLayer.getCell(cellX - 1, cellY - 1) != null)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+
 	/*
 	private boolean isCellBlocked(Cell cell) {
 		if (cell.getTile() != null) {
@@ -230,6 +258,10 @@ public class Player extends Sprite implements InputProcessor {
 	*/
 	public String getEnemyId() {
 		return enemyId;
+	}
+
+	public void setLivingBosses(List<String> livingBosses) {
+		this.livingBosses = livingBosses;
 	}
 
 	@Override
