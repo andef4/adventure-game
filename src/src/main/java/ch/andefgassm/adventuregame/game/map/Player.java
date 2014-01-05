@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Vector2;
 
 public class Player extends Sprite implements InputProcessor {
@@ -40,7 +41,6 @@ public class Player extends Sprite implements InputProcessor {
 		this.up = up;
 		this.down = down;
 		this.layers = layers;
-		this.livingBosses = livingBosses;
 
 		collisionLayer = (TiledMapTileLayer) layers.get("collision");
 		mobLayer = (TiledMapTileLayer) layers.get("mobs");
@@ -169,6 +169,12 @@ public class Player extends Sprite implements InputProcessor {
 				newVelocity();
 			}
 		}
+
+		// collision checks
+		if (velocity.x != 0 || velocity.y != 0) {
+			 enemyId = null;
+		}
+
 		boolean collisionX = false;
 		if(velocity.x > 0) { // right
 			if (checkCollision((int) ((newX + getWidth()) / TILE_WIDTH), (int) ((newY + getHeight() / 2) / TILE_HEIGHT))) {
@@ -220,42 +226,44 @@ public class Player extends Sprite implements InputProcessor {
 		}
 
 		// check with mobs layer
-		if ((mobLayer.getCell(cellX, cellY) != null) ||
-				(mobLayer.getCell(cellX - 1, cellY) != null) ||
-				(mobLayer.getCell(cellX, cellY - 1) != null) ||
-				(mobLayer.getCell(cellX - 1, cellY - 1) != null)) {
+		Cell cell = getCell(cellX, cellY, mobLayer);
+		if (cell != null) {
+			enemyId = (String) cell.getTile().getProperties().get("enemy");
 			return true;
 		}
 
 		// check with boss layers
 		for (String enemyId : livingBosses) {
 			TiledMapTileLayer bossLayer = (TiledMapTileLayer) layers.get("boss_" + enemyId);
-			if ((bossLayer.getCell(cellX, cellY) != null) ||
-					(bossLayer.getCell(cellX - 1, cellY) != null) ||
-					(bossLayer.getCell(cellX, cellY - 1) != null) ||
-					(bossLayer.getCell(cellX - 1, cellY - 1) != null)) {
+			cell = getCell(cellX, cellY, bossLayer);
+			if (cell != null) {
+				this.enemyId = enemyId;
 				return true;
 			}
 		}
 		return false;
 	}
 
-
-	/*
-	private boolean isCellBlocked(Cell cell) {
-		if (cell.getTile() != null) {
-			String enemyId = cell.getTile().getProperties().get(ENEMY_KEY, String.class);
-			if (enemyId != null) {
-				this.enemyId = enemyId;
-			}
-			if (cell.getTile().getProperties().containsKey(BLOCKED_KEY)) {
-				return true;
-			}
+	private Cell getCell(int cellX, int cellY, TiledMapTileLayer layer) {
+		Cell cell = layer.getCell(cellX, cellY);
+		if (cell != null) {
+			return cell;
 		}
-
-		return cell != null;
+		cell = layer.getCell(cellX - 1, cellY);
+		if (cell != null) {
+			return cell;
+		}
+		cell = layer.getCell(cellX, cellY - 1);
+		if (cell != null) {
+			return cell;
+		}
+		cell = layer.getCell(cellX - 1, cellY - 1);
+		if (cell != null) {
+			return cell;
+		}
+		return null;
 	}
-	*/
+
 	public String getEnemyId() {
 		return enemyId;
 	}

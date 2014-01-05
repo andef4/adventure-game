@@ -1,6 +1,6 @@
 {
     "id": "knight",
-    "name": "The Black Dragon",
+    "name": "Knight",
     "boss": false,
     "aiClass": "ch.andefgassm.adventuregame.game.ai.BlackDragonAI",
     "life": 500,
