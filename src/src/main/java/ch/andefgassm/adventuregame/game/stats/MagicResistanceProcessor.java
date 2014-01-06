@@ -8,18 +8,18 @@ import ch.andefgassm.adventuregame.game.Stat;
 
 public class MagicResistanceProcessor implements IStatProcessor {
 
-	@Override
-	public int modify(Combatant caster, Combatant target, Effect effect, int baseDamage) {
-		int effectiveDamage = baseDamage;
-		if (effect.getDamageType() == DamageType.MAGIC) {
-			Integer magicResistance = target.getCurrentStats().get(Stat.MAGIC_RESISTANCE);
-			if (magicResistance != null) {
-				effectiveDamage = baseDamage - magicResistance;
-				if (effectiveDamage > 0) {
-					effectiveDamage = 0;
-				}
-			}
-		}
-		return effectiveDamage;
-	}
+    @Override
+    public int modify(Combatant caster, Combatant target, Effect effect, int baseDamage) {
+        int effectiveDamage = baseDamage;
+        if (effect.getDamageType() == DamageType.MAGIC) {
+            Integer magicResistance = target.getCurrentStats().get(Stat.MAGIC_RESISTANCE);
+            if (magicResistance != null) {
+                effectiveDamage = baseDamage - magicResistance;
+                if (effectiveDamage > 0) {
+                    effectiveDamage = 0;
+                }
+            }
+        }
+        return effectiveDamage;
+    }
 }

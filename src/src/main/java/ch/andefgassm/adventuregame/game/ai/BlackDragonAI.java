@@ -9,7 +9,7 @@ public class BlackDragonAI extends AbstractAICombatant{
         super(system, name, maxLife);
         addSkill("black_dragon_breath");
     }
-    
+
     @Override
     public String getNextSkill() {
         return getAvailableSkills().get(0);

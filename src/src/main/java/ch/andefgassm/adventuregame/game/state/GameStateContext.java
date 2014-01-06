@@ -17,43 +17,43 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 
 public class GameStateContext {
-	public static final AbstractGameState INVENTORY = new InventoryState();
-	public static final AbstractGameState COMBAT = new CombatState();
-	public static final AbstractGameState MAP = new MapState();
+    public static final AbstractGameState INVENTORY = new InventoryState();
+    public static final AbstractGameState COMBAT = new CombatState();
+    public static final AbstractGameState MAP = new MapState();
 
-	private Game game = null;
+    private Game game = null;
 
-	private CombatSystem combatSystem = new CombatSystem();
-	private Map<String, Item> items = new HashMap<String, Item>();
-	private Map<String, Enemy> enemies = new HashMap<String, Enemy>();
-	private Player player = new Player(this);
-	private List<String> livingBosses = new ArrayList<String>();
+    private CombatSystem combatSystem = new CombatSystem();
+    private Map<String, Item> items = new HashMap<String, Item>();
+    private Map<String, Enemy> enemies = new HashMap<String, Enemy>();
+    private Player player = new Player(this);
+    private List<String> livingBosses = new ArrayList<String>();
 
-	public GameStateContext(Game game) {
-		this.game = game;
-	}
+    public GameStateContext(Game game) {
+        this.game = game;
+    }
 
-	public void init() {
-		List<Item> items = AssetLoader.getInstance().load("assets/data/items", Item.class);
-		for (Item item : items) {
-			this.items.put(item.getId(), item);
-		}
+    public void init() {
+        List<Item> items = AssetLoader.getInstance().load("assets/data/items", Item.class);
+        for (Item item : items) {
+            this.items.put(item.getId(), item);
+        }
 
-		List<Skill> skills = AssetLoader.getInstance().load("assets/data/skills", Skill.class);
-		for (Skill skill : skills) {
-			combatSystem.registerSkill(skill.getId(), skill);
-		}
+        List<Skill> skills = AssetLoader.getInstance().load("assets/data/skills", Skill.class);
+        for (Skill skill : skills) {
+            combatSystem.registerSkill(skill.getId(), skill);
+        }
 
-		List<Enemy> enemies = AssetLoader.getInstance().load("assets/data/enemies", Enemy.class);
-		for (Enemy enemy : enemies) {
-			this.enemies.put(enemy.getId(), enemy);
-			if (enemy.isBoss()) {
-				livingBosses.add(enemy.getId());
-			}
-		}
+        List<Enemy> enemies = AssetLoader.getInstance().load("assets/data/enemies", Enemy.class);
+        for (Enemy enemy : enemies) {
+            this.enemies.put(enemy.getId(), enemy);
+            if (enemy.isBoss()) {
+                livingBosses.add(enemy.getId());
+            }
+        }
 
-		combatSystem.getStatProcessors().add(new MagicResistanceProcessor());
-		//combatSystem.getSpellModifiers().put("fire", new FireSpellModifier());
+        combatSystem.getStatProcessors().add(new MagicResistanceProcessor());
+        //combatSystem.getSpellModifiers().put("fire", new FireSpellModifier());
 
         player.getSkills().add("instant_damage");
         player.getSkills().add("instant_damage_combo");
@@ -76,47 +76,47 @@ public class GameStateContext {
         //player.equip("legs1");
         player.equip("feet1");
 
-		changeState(MAP);
-	}
+        changeState(MAP);
+    }
 
-	public void changeState(AbstractGameState newState) {
-		changeState(newState, null);
-	}
+    public void changeState(AbstractGameState newState) {
+        changeState(newState, null);
+    }
 
-	public void changeState(AbstractGameState newState, String param) {
-		if (newState == null) {
-			Gdx.app.exit();
-			return;
-		}
-		newState.init(this, param);
-		game.setScreen(newState);
-		Gdx.input.setInputProcessor(newState.getInputProcessor());
-	}
+    public void changeState(AbstractGameState newState, String param) {
+        if (newState == null) {
+            Gdx.app.exit();
+            return;
+        }
+        newState.init(this, param);
+        game.setScreen(newState);
+        Gdx.input.setInputProcessor(newState.getInputProcessor());
+    }
 
-	public CombatSystem getCombatSystem() {
-		return combatSystem;
-	}
+    public CombatSystem getCombatSystem() {
+        return combatSystem;
+    }
 
     public Item getItem(String itemId) {
-    	Item item = items.get(itemId);
-		if (item == null) {
-			throw new IllegalArgumentException(String.format("Item with ID %s does not exist.", itemId));
-		}
-		return item;
+        Item item = items.get(itemId);
+        if (item == null) {
+            throw new IllegalArgumentException(String.format("Item with ID %s does not exist.", itemId));
+        }
+        return item;
     }
 
     public Enemy getEnemy(String id) {
-    	return enemies.get(id);
+        return enemies.get(id);
     }
 
-	public Player getPlayer() {
-		return player;
-	}
+    public Player getPlayer() {
+        return player;
+    }
 
-	public Map<String, Enemy> getEnemies() {
-		return enemies;
-	}
-	public List<String> getLivingBosses() {
-		return livingBosses;
-	}
+    public Map<String, Enemy> getEnemies() {
+        return enemies;
+    }
+    public List<String> getLivingBosses() {
+        return livingBosses;
+    }
 }

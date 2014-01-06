@@ -15,12 +15,15 @@ public enum Resource implements IResource {
         this.max = max;
         this.name = name;
     }
+    @Override
     public int getMin() {
         return min;
     }
+    @Override
     public int getMax() {
         return max;
     }
+    @Override
     public String getName() {
         return name;
     }

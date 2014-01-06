@@ -7,7 +7,7 @@ import java.util.Map;
 
 
 public class CombatSystem {
-    
+
     private Map<String, Skill> skills = new HashMap<String, Skill>();
     private List<IStatProcessor> statProcessors = new ArrayList<IStatProcessor>();
     private Map<String, ISpellModifier> spellModifiers = new HashMap<String, ISpellModifier>();
@@ -16,16 +16,16 @@ public class CombatSystem {
         skills.put(name, skill);
     }
 
-	public Skill getSkill(String skill) {
+    public Skill getSkill(String skill) {
         return skills.get(skill);
     }
 
-	public List<IStatProcessor> getStatProcessors() {
-		return statProcessors;
-	}
-	
-	
-	public Map<String, ISpellModifier> getSpellModifiers() {
-		return spellModifiers;
-	}
+    public List<IStatProcessor> getStatProcessors() {
+        return statProcessors;
+    }
+
+
+    public Map<String, ISpellModifier> getSpellModifiers() {
+        return spellModifiers;
+    }
 }

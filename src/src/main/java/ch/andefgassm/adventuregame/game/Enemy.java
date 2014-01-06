@@ -12,63 +12,63 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Enemy {
 
     public static class Drop {
-		private String itemId;
-		private float dropRate;
-		public Drop() {
-		}
-		public String getItemId() {
-			return itemId;
-		}
-		public void setItemId(String itemId) {
-			this.itemId = itemId;
-		}
-		public float getDropRate() {
-			return dropRate;
-		}
-		public void setDropRate(float dropRate) {
-			this.dropRate = dropRate;
-		}
-	}
+        private String itemId;
+        private float dropRate;
+        public Drop() {
+        }
+        public String getItemId() {
+            return itemId;
+        }
+        public void setItemId(String itemId) {
+            this.itemId = itemId;
+        }
+        public float getDropRate() {
+            return dropRate;
+        }
+        public void setDropRate(float dropRate) {
+            this.dropRate = dropRate;
+        }
+    }
 
     private String id = null;
-	private String name = null;
-	private boolean boss = false;
-	private int life = 0;
-	private String aiClass = null;
-	private List<Drop> drops = new ArrayList<Drop>();
-	private Map<IStat, Integer> stats = new HashMap<IStat, Integer>();
+    private String name = null;
+    private boolean boss = false;
+    private int life = 0;
+    private String aiClass = null;
+    private List<Drop> drops = new ArrayList<Drop>();
+    private Map<IStat, Integer> stats = new HashMap<IStat, Integer>();
 
-	public Enemy(@JsonProperty("id") String id,
-			@JsonProperty("name") String name,
-			@JsonProperty("life") int life,
-			@JsonProperty("aiClass") String aiClass) {
-		this.id = id;
-		this.name = name;
-		this.life = life;
-		this.aiClass = aiClass;
-	}
-	public List<Drop> getDrops() {
-		return drops;
-	}
-	public String getId() {
-		return id;
-	}
-	public String getName() {
-		return name;
-	}
-	public int getLife() {
-		return life;
-	}
-	public void setBoss(boolean boss) {
-		this.boss = boss;
-	}
-	public boolean isBoss() {
-		return boss;
-	}
-	public String getAiClass() {
-		return aiClass;
-	}
-	public Map<IStat, Integer> getStats() {
-		return stats;
-	}
+    public Enemy(@JsonProperty("id") String id,
+            @JsonProperty("name") String name,
+            @JsonProperty("life") int life,
+            @JsonProperty("aiClass") String aiClass) {
+        this.id = id;
+        this.name = name;
+        this.life = life;
+        this.aiClass = aiClass;
+    }
+    public List<Drop> getDrops() {
+        return drops;
+    }
+    public String getId() {
+        return id;
+    }
+    public String getName() {
+        return name;
+    }
+    public int getLife() {
+        return life;
+    }
+    public void setBoss(boolean boss) {
+        this.boss = boss;
+    }
+    public boolean isBoss() {
+        return boss;
+    }
+    public String getAiClass() {
+        return aiClass;
+    }
+    public Map<IStat, Integer> getStats() {
+        return stats;
+    }
 }

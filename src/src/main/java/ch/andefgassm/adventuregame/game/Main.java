@@ -8,18 +8,18 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 public class Main extends Game {
 
-	public static void main(String[] args) {
-		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = 1280;
-		config.height = 720;
-		config.useGL20 = true;
-		config.fullscreen = false;
-		new LwjglApplication(new Main(), config);
-	}
+    public static void main(String[] args) {
+        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+        config.width = 1280;
+        config.height = 720;
+        config.useGL20 = true;
+        config.fullscreen = false;
+        new LwjglApplication(new Main(), config);
+    }
 
-	@Override
-	public void create() {
-		new GameStateContext(this).init();
-	}
+    @Override
+    public void create() {
+        new GameStateContext(this).init();
+    }
 
 }

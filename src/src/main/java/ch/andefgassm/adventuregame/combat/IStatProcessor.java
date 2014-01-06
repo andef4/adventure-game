@@ -7,5 +7,5 @@ package ch.andefgassm.adventuregame.combat;
  * These modifiers are register on the combatSystem and modifies damage based on stats
  */
 public interface IStatProcessor {
-	public int modify(Combatant caster, Combatant target, Effect effect, int baseDamage);
+    public int modify(Combatant caster, Combatant target, Effect effect, int baseDamage);
 }
