@@ -1,0 +1,11 @@
+{
+    "id": "mummy",
+    "name": "Mummy",
+    "boss": false,
+    "aiClass": "ch.andefgassm.adventuregame.game.ai.BlackDragonAI",
+    "life": 670,
+    "stats": {
+        "magic_resistance": 50
+    },
+    "drops": [{"itemId": "weapon2", "dropRate": 0.5}]
+}

@@ -1,0 +1,11 @@
+{
+    "id": "townsman",
+    "name": "Townsman",
+    "boss": false,
+    "aiClass": "ch.andefgassm.adventuregame.game.ai.BlackDragonAI",
+    "life": 700,
+    "stats": {
+        "magic_resistance": 10
+    },
+    "drops": [{"itemId": "weapon1", "dropRate": 0.2}]
+}
