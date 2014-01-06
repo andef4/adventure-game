@@ -88,7 +88,7 @@ public class MapState extends AbstractGameState implements Screen  {
         down.setPlayMode(Animation.LOOP);
 
         player = new Player(still, left, right, up, down, map.getLayers());
-        player.setPosition(3*16, (177 - 158) * 16);
+        //player.setPosition(3*16, (177 - 158) * 16);
         inputMultiplexer = new InputMultiplexer(this, player);
     }
 
@@ -175,5 +175,17 @@ public class MapState extends AbstractGameState implements Screen  {
             context.changeState(null);
         }
         return false;
+    }
+
+    public void setPlayerPosition(int positionX, int positionY) {
+        player.setPosition(positionX * 16, positionY * 16);
+    }
+
+    public int getPlayerPositionX() {
+        return (int) (player.getX()/16);
+    }
+
+    public int getPlayerPositionY() {
+        return (int) (player.getY()/16);
     }
 }

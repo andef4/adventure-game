@@ -8,6 +8,7 @@ import java.util.Map;
 import ch.andefgassm.adventuregame.combat.CombatSystem;
 import ch.andefgassm.adventuregame.combat.Skill;
 import ch.andefgassm.adventuregame.game.Enemy;
+import ch.andefgassm.adventuregame.game.Savegame;
 import ch.andefgassm.adventuregame.game.assets.AssetLoader;
 import ch.andefgassm.adventuregame.game.inventory.Item;
 import ch.andefgassm.adventuregame.game.inventory.Player;
@@ -19,7 +20,7 @@ import com.badlogic.gdx.Gdx;
 public class GameStateContext {
     public static final AbstractGameState INVENTORY = new InventoryState();
     public static final AbstractGameState COMBAT = new CombatState();
-    public static final AbstractGameState MAP = new MapState();
+    public static final MapState MAP = new MapState();
 
     private Game game = null;
 
@@ -47,9 +48,6 @@ public class GameStateContext {
         List<Enemy> enemies = AssetLoader.getInstance().load("assets/data/enemies", Enemy.class);
         for (Enemy enemy : enemies) {
             this.enemies.put(enemy.getId(), enemy);
-            if (enemy.isBoss()) {
-                livingBosses.add(enemy.getId());
-            }
         }
 
         combatSystem.getStatProcessors().add(new MagicResistanceProcessor());
@@ -62,22 +60,54 @@ public class GameStateContext {
         player.getSkills().add("aura_enhance_damage");
         player.getSkills().add("aura_reduce_damage.");
 
-        player.addItem("weapon1");
-        player.addItem("weapon2");
-        player.addItem("weapon3");
-        player.addItem("chest1");
-        //player.addItem("legs1");
-        player.addItem("hands1");
-        player.addItem("feet1");
-
-        player.equip("weapon1");
-        //player.equip("chest1");
-        player.equip("hands1");
-        //player.equip("legs1");
-        player.equip("feet1");
+        loadSavegame();
 
         changeState(MAP);
     }
+
+    private void loadSavegame() {
+        // load json
+        Savegame savegame = Savegame.load();
+
+        // inventory & equipped items
+        player.getInventory().addAll(savegame.getInventoryItems());
+        for (String itemId : savegame.getEquippedItems()) {
+            player.equip(itemId);
+        }
+
+        // player position
+        MAP.setPlayerPosition(savegame.getPositionX(), savegame.getPositionY());
+
+
+        // killed bosses
+        for (Enemy enemy : enemies.values()) {
+            if (enemy.isBoss() && !savegame.getKilledBosses().contains(enemy.getId())) {
+                livingBosses.add(enemy.getId());
+            }
+        }
+    }
+
+    public void saveSavegame() {
+        Savegame savegame = new Savegame();
+
+        // inventory & equipped items
+        savegame.getInventoryItems().addAll(player.getInventory());
+        savegame.getEquippedItems().addAll(player.getEquipment());
+
+        // player position
+        savegame.setPositionX(MAP.getPlayerPositionX());
+        savegame.setPositionY(MAP.getPlayerPositionY());
+
+        // killed bosses
+        for (Enemy enemy : enemies.values()) {
+            if (enemy.isBoss() && !livingBosses.contains(enemy.getId())) {
+                savegame.getKilledBosses().add(enemy.getId());
+            }
+        }
+
+        Savegame.save(savegame);
+    }
+
 
     public void changeState(AbstractGameState newState) {
         changeState(newState, null);
@@ -85,6 +115,7 @@ public class GameStateContext {
 
     public void changeState(AbstractGameState newState, String param) {
         if (newState == null) {
+            saveSavegame();
             Gdx.app.exit();
             return;
         }
