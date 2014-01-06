@@ -58,16 +58,16 @@ public class Combatant {
         Skill skill = system.getSkill(skillName);
         // add effects to the caster
         for (Effect casterEffect : skill.getCasterEffects()) {
-            activeHelpfulEffects.add(new ActiveEffect(casterEffect, this, this, system));
+            activeHelpfulEffects.add(new ActiveEffect(skill.getName(), casterEffect, this, this, system));
         }
         // add effects to the target
         if (this == target) {
             for (Effect targetEffect : skill.getTargetEffects()) {
-                activeHelpfulEffects.add(new ActiveEffect(targetEffect, this, target, system));
+                activeHelpfulEffects.add(new ActiveEffect(skill.getName(), targetEffect, this, target, system));
             }
         } else {
             for (Effect targetEffect : skill.getTargetEffects()) {
-                target.activeHarmfulEffects.add(new ActiveEffect(targetEffect, this, target, system));
+                target.activeHarmfulEffects.add(new ActiveEffect(skill.getName(), targetEffect, this, target, system));
             }
         }
 
@@ -113,19 +113,21 @@ public class Combatant {
     /**
      * applies all effects on this combatant
      */
-    public void applyHelpfulEffects() {
-        applyEffects(activeHelpfulEffects);
+    public List<CombatEvent> applyHelpfulEffects() {
+        return applyEffects(activeHelpfulEffects);
     }
 
-    public void applyHarmfulEffects() {
-        applyEffects(activeHarmfulEffects);
+    public List<CombatEvent> applyHarmfulEffects() {
+        return applyEffects(activeHarmfulEffects);
     }
 
-    private void applyEffects(List<ActiveEffect> effects) {
+    private List<CombatEvent> applyEffects(List<ActiveEffect> effects) {
+        List<CombatEvent> events = new ArrayList<CombatEvent>();
         // calculate damage and healing and remove running out effects
         List<ActiveEffect> effectsToRemove = new ArrayList<ActiveEffect>(); // effects to delete after this round
         for (ActiveEffect activeEffect : effects) {
-            currentLife += activeEffect.calculateEffectiveLifeChange();
+            int effectiveLiveChange = activeEffect.calculateEffectiveLifeChange();
+            currentLife += effectiveLiveChange;
             if (activeEffect.decrementInterval()) {
                 effectsToRemove.add(activeEffect);
             }
@@ -145,11 +147,16 @@ public class Combatant {
                     resources.put(resource, current);
                 }
             }
+            if (effectiveLiveChange != 0) {
+                events.add(new CombatEvent(activeEffect.getCaster(), activeEffect.getTarget(),
+                        activeEffect.getSkillName(), effectiveLiveChange));
+            }
         }
         if (currentLife < 0) {
             currentLife = 0;
         }
         effects.removeAll(effectsToRemove);
+        return events;
     }
 
 

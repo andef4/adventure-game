@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import ch.andefgassm.adventuregame.combat.AbstractAICombatant;
+import ch.andefgassm.adventuregame.combat.CombatEvent;
 import ch.andefgassm.adventuregame.combat.CombatSystem;
 import ch.andefgassm.adventuregame.combat.Combatant;
 import ch.andefgassm.adventuregame.combat.Skill;
@@ -368,8 +369,8 @@ public class CombatState extends AbstractGameState {
         } else {
             player.cast(skill.getId(), player);
         }
-        player.applyHelpfulEffects();
-        enemy.applyHarmfulEffects();
+        showCombatEvents(player.applyHelpfulEffects());
+        showCombatEvents(enemy.applyHarmfulEffects());
 
         if (enemy.getCurrentLife() == 0) {
             state = CurrentCombatState.WON;
@@ -400,8 +401,8 @@ public class CombatState extends AbstractGameState {
         } else {
             enemy.cast(skillId, enemy);
         }
-        enemy.applyHelpfulEffects();
-        player.applyHarmfulEffects();
+        showCombatEvents(enemy.applyHelpfulEffects());
+        showCombatEvents(player.applyHarmfulEffects());
 
         if (player.getCurrentLife() == 0) {
             state = CurrentCombatState.LOST;
@@ -410,5 +411,20 @@ public class CombatState extends AbstractGameState {
             return;
         }
         loadSkills();
+    }
+
+
+    private void showCombatEvents(List<CombatEvent> combatEvents) {
+        for (CombatEvent event : combatEvents) {
+            String entry = null;
+            if (event.getHealOrDamage() > 0) {
+                entry = String.format("%s von %s heilt %s um %d.\n", event.getSkillName(),
+                        event.getCaster(), event.getTarget(), event.getHealOrDamage());
+            } else {
+                entry = String.format("%s von %s fügt %s %d Schaden zu.\n", event.getSkillName(),
+                        event.getCaster().getName(), event.getTarget().getName(), -event.getHealOrDamage());
+            }
+            combatText.append(entry);
+        }
     }
 }

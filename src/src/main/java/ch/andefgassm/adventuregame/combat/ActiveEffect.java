@@ -10,22 +10,16 @@ public class ActiveEffect {
     private Combatant caster;
     private Combatant target;
     private CombatSystem system;
+    private String skillName;
 
-    public ActiveEffect(Effect effect, Combatant caster, Combatant target, CombatSystem system) {
+    public ActiveEffect(String skillName, Effect effect, Combatant caster, Combatant target, CombatSystem system) {
         this.effect = effect;
         this.intervalsLeft = effect.getIntervalsRunning();
         this.caster = caster;
         this.target = target;
         this.system = system;
+        this.skillName = skillName;
         calculateBaseLifeChange();
-    }
-
-    public Effect getEffect() {
-        return effect;
-    }
-
-    public int getIntervalsLeft() {
-        return intervalsLeft;
     }
 
     /**
@@ -79,5 +73,25 @@ public class ActiveEffect {
             }
         }
         return baseLifeChange;
+    }
+
+    public Effect getEffect() {
+        return effect;
+    }
+
+    public int getIntervalsLeft() {
+        return intervalsLeft;
+    }
+
+    public String getSkillName() {
+        return skillName;
+    }
+
+    public Combatant getCaster() {
+        return caster;
+    }
+
+    public Combatant getTarget() {
+        return target;
     }
 }
