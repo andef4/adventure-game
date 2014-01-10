@@ -40,6 +40,7 @@ public class CombatState extends AbstractGameState {
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
     private BitmapFont font = Graphics.getFont();
     private BitmapFont boldFont = Graphics.getBoldFont();
+    private BitmapFont smallFont = Graphics.getSmallFont();
     private SpriteBatch batch = new SpriteBatch();
 
     private List<Skill> allSkills = null;
@@ -283,9 +284,10 @@ public class CombatState extends AbstractGameState {
         boldFont.setColor(Color.BLACK);
         boldFont.draw(batch, skill.getName(), textX, textY);
         if (skill.getRequiredResources().size() > 0) {
-            font.draw(batch, "Combo Punkte: " + skill.getRequiredResources().get(Resource.COMBO_POINT), textX, textY - LINE_HEIGHT);
+            font.draw(batch, "Combopunkte: " + skill.getRequiredResources().get(Resource.COMBO_POINT), textX, textY - LINE_HEIGHT);
         }
-        font.draw(batch, skill.getDescription(), textX, textY - LINE_HEIGHT*2);
+        smallFont.setColor(Color.BLACK);
+        smallFont.draw(batch, skill.getDescription(), textX, textY - LINE_HEIGHT*2);
         batch.end();
     }
 

@@ -23,6 +23,7 @@ public class Graphics {
 
     private static BitmapFont font = null;
     private static BitmapFont boldFont = null;
+    private static BitmapFont smallFont = null;
 
     public static BitmapFont getFont() {
         if (font == null) {
@@ -36,5 +37,11 @@ public class Graphics {
             boldFont = new BitmapFont(Gdx.files.internal("font/font_bold.fnt"));
         }
         return boldFont;
+    }
+    public static BitmapFont getSmallFont() {
+        if (smallFont == null) {
+            smallFont = new BitmapFont(Gdx.files.internal("font/small.fnt"));
+        }
+        return smallFont;
     }
 }
