@@ -8,6 +8,7 @@ import ch.andefgassm.adventuregame.combat.Skill;
 public class CombatPlayer extends Combatant {
 
     public static final String PLAYER_NAME = "Spieler";
+    public static final int BASE_HEALTH = 500;
 
     public CombatPlayer(CombatSystem system, int maxLife) {
         super(system, PLAYER_NAME, maxLife);

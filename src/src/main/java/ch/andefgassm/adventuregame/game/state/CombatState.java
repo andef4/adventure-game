@@ -14,6 +14,7 @@ import ch.andefgassm.adventuregame.game.AdventureGameException;
 import ch.andefgassm.adventuregame.game.Enemy;
 import ch.andefgassm.adventuregame.game.Enemy.Drop;
 import ch.andefgassm.adventuregame.game.Resource;
+import ch.andefgassm.adventuregame.game.Stat;
 import ch.andefgassm.adventuregame.game.assets.Graphics;
 import ch.andefgassm.adventuregame.game.inventory.Item;
 
@@ -77,8 +78,13 @@ public class CombatState extends AbstractGameState {
         this.context = context;
         system = context.getCombatSystem();
 
-        // TODO calculate health
-        player = new CombatPlayer(system, 500);
+        // calculate initial health of player based on equipped items
+        int health = CombatPlayer.BASE_HEALTH;
+        for (String itemId : context.getPlayer().getEquipment()) {
+            health += context.getItem(itemId).getStat(Stat.LIFE);
+        }
+
+        player = new CombatPlayer(system, health);
         List<String> skills = context.getPlayer().getSkills();
         for (String skill : skills) {
             player.addSkill(skill);
