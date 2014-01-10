@@ -1,7 +1,7 @@
 {
     "type": "chest",
     "id": "chest1",
-    "name": "Chest 1",
+    "name": "Lederbrustpanzer des Waldläufers",
     "icon": "armor/chest/chest1.png",
     "stats": {
         "life": 0,

@@ -1,7 +1,7 @@
 {
     "type": "legs",
     "id": "legs1",
-    "name": "Legs 1",
+    "name": "Lederbeinschienen des Waldläufers",
     "icon": "armor/legs/legs1.png",
     "stats": {
         "life": 0,

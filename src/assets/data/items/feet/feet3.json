@@ -1,8 +1,8 @@
 {
-    "type": "hands",
-    "id": "hands1",
-    "name": "Lederhandschuhe des Waldläufers",
-    "icon": "armor/hands/hands1.png",
+    "type": "feet",
+    "id": "feet3",
+    "name": "Zwergenstiefel",
+    "icon": "armor/feet/feet3.png",
     "stats": {
         "life": 0,
         "heal": 0,

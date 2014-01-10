@@ -1,6 +1,6 @@
 {
     "id": "dot",
-    "name": "Damage over time",
+    "name": "Flamme des Inferno",
     "description": "Fügt über 5 Runden hohen Schaden zu.",
     "icon": "skills/dot.png",
     "harmful": true,

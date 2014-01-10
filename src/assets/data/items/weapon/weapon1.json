@@ -1,7 +1,7 @@
 {
     "type": "weapon",
     "id": "weapon1",
-    "name": "Weapon 1",
+    "name": "Ungeschliffene rostige Klinge",
     "icon": "armor/weapon/weapon1.png",    
     "stats": {
         "life": 100,

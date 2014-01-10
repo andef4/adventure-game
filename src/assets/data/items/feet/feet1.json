@@ -1,7 +1,7 @@
 {
     "type": "feet",
     "id": "feet1",
-    "name": "Feet 1",
+    "name": "Lederstiefel des Waldläufers",
     "icon": "armor/feet/feet1.png",
     "stats": {
         "life": 0,

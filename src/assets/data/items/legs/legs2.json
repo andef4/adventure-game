@@ -1,8 +1,8 @@
 {
-    "type": "hands",
-    "id": "hands1",
-    "name": "Lederhandschuhe des Waldläufers",
-    "icon": "armor/hands/hands1.png",
+    "type": "legs",
+    "id": "legs2",
+    "name": "Kettenstiefel der Drachenmenschen",
+    "icon": "armor/legs/legs2.png",
     "stats": {
         "life": 0,
         "heal": 0,

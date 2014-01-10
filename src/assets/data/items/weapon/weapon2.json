@@ -1,12 +1,12 @@
 {
     "type": "weapon",
     "id": "weapon2",
-    "name": "Weapon 2",
+    "name": "Drachenschlächter",
     "icon": "armor/weapon/weapon2.png",    
     "stats": {
         "life": 150,
         "heal": 50,
-        "damage": 0,
+        "damage": 50,
         "armor": 100,
         "magic_resistance": 50
     }

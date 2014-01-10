@@ -7,5 +7,5 @@
     "stats": {
         "magic_resistance": 10
     },
-    "drops": [{"itemId": "weapon1", "dropRate": 0.2}]
+    "drops": [{"itemId": "hands4", "dropRate": 0.2}]
 }

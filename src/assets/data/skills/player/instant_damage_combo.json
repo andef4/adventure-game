@@ -1,6 +1,6 @@
 {
     "id": "instant_damage_combo",
-    "name": "Instant Damage Combo",
+    "name": "Brennender Blitz",
     "description": "Fügt sofort hohen Schaden zu.",
     "icon": "skills/instant_damage_combo.png",
     "harmful": true,

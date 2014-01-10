@@ -1,8 +1,8 @@
 {
-    "type": "hands",
-    "id": "hands1",
-    "name": "Lederhandschuhe des Waldläufers",
-    "icon": "armor/hands/hands1.png",
+    "type": "chest",
+    "id": "chest3",
+    "name": "Zwergenbrustpanzer",
+    "icon": "armor/chest/chest3.png",
     "stats": {
         "life": 0,
         "heal": 0,

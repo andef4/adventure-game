@@ -1,0 +1,13 @@
+{
+    "type": "hands",
+    "id": "hands4",
+    "name": "Handschuhe des Drachenbändigers",
+    "icon": "armor/hands/hands4.png",
+    "stats": {
+        "life": 0,
+        "heal": 0,
+        "damage": 50,
+        "armor": 0,
+        "magic_resistance": 100
+    }
+}

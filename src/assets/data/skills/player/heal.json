@@ -1,7 +1,7 @@
 {
     "id": "heal",
-    "name": "Heal over time",
-    "description": "Heilt den Spieler.",
+    "name": "Heilen",
+    "description": "Stellt Gesundheit wieder her.",
     "icon": "skills/heal.png",
     "harmful": false,
     "requiredResources": {
