@@ -68,6 +68,8 @@ public class CombatState extends AbstractGameState {
 
     private static final int HUD_HEIGHT = 150;
 
+    public static final String PLAYER_NAME = "Spieler";
+
     enum CurrentCombatState {
         FIGHTING, LOST, WON, BAD_INPUT, GIVE_UP
     }
@@ -77,7 +79,7 @@ public class CombatState extends AbstractGameState {
         this.context = context;
         system = context.getCombatSystem();
 
-        player = new Combatant(system, "Player", 500);
+        player = new Combatant(system, PLAYER_NAME, 500);
         List<String> skills = context.getPlayer().getSkills();
         for (String skill : skills) {
             player.addSkill(skill);
@@ -421,7 +423,7 @@ public class CombatState extends AbstractGameState {
             String entry = null;
             if (event.getHealOrDamage() > 0) {
                 entry = String.format("%s von %s heilt %s um %d.\n", event.getSkillName(),
-                        event.getCaster(), event.getTarget(), event.getHealOrDamage());
+                        event.getCaster(), event.getTarget().getName(), event.getHealOrDamage());
             } else {
                 entry = String.format("%s von %s fügt %s %d Schaden zu.\n", event.getSkillName(),
                         event.getCaster().getName(), event.getTarget().getName(), -event.getHealOrDamage());

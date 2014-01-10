@@ -52,6 +52,13 @@ public class ActiveEffect {
                 baseLifeChange = skilllModifier.modify(caster, target, effect, baseLifeChange, entry.getValue());
             }
         }
+        for (ActiveEffect activeEffect : caster.getActiveHarmfulEffects()) {
+            Map<String, Float> skillModifiers = activeEffect.getEffect().getSkillModifiers();
+            for (Entry<String, Float> entry : skillModifiers.entrySet()) {
+                ISkillModifier skilllModifier = system.getSkillModifiers().get(entry.getKey());
+                baseLifeChange = skilllModifier.modify(caster, target, effect, baseLifeChange, entry.getValue());
+            }
+        }
     }
 
     /**
@@ -65,6 +72,13 @@ public class ActiveEffect {
             baseLifeChange = statProcessor.modify(caster, target, effect, baseLifeChange);
         }
 
+        for (ActiveEffect activeEffect : target.getActiveHelpfulEffects()) {
+            Map<String, Float> skillModifiers = activeEffect.getEffect().getSkillModifiers();
+            for (Entry<String, Float> entry : skillModifiers.entrySet()) {
+                ISkillModifier skillModifier = system.getSkillModifiers().get(entry.getKey());
+                baseLifeChange = skillModifier.modify(caster, target, effect, baseLifeChange, entry.getValue());
+            }
+        }
         for (ActiveEffect activeEffect : target.getActiveHarmfulEffects()) {
             Map<String, Float> skillModifiers = activeEffect.getEffect().getSkillModifiers();
             for (Entry<String, Float> entry : skillModifiers.entrySet()) {

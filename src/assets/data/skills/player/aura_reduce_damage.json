@@ -8,7 +8,7 @@
         "COMBO_POINT": 3
     },
     "casterEffects": [{
-        "intervalsRunning": 1,
+        "intervalsRunning": 1000000,
         "skillModifiers": {
             "aura_reduce_damage": 0.3
         }
