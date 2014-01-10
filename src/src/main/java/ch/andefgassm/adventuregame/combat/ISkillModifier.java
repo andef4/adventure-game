@@ -8,6 +8,6 @@ package ch.andefgassm.adventuregame.combat;
  * 
  * These modifiers are added as buffs/talents/potions
  */
-public interface ISpellModifier {
+public interface ISkillModifier {
     public int modify(Combatant caster, Combatant target, Effect effect, int baseDamage, float value);
 }

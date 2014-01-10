@@ -2,6 +2,7 @@ package ch.andefgassm.adventuregame.game.state;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -14,6 +15,7 @@ import ch.andefgassm.adventuregame.game.AdventureGameException;
 import ch.andefgassm.adventuregame.game.Enemy;
 import ch.andefgassm.adventuregame.game.Enemy.Drop;
 import ch.andefgassm.adventuregame.game.Resource;
+import ch.andefgassm.adventuregame.game.Stat;
 import ch.andefgassm.adventuregame.game.assets.Graphics;
 import ch.andefgassm.adventuregame.game.inventory.Item;
 
@@ -46,7 +48,7 @@ public class CombatState extends AbstractGameState {
     private List<Skill> allSkills = null;
     private List<Skill> availableSkills = null;
     private int selectedSkill = 0;
-    private StringBuilder combatText = null;
+    private LinkedList<String> combatText = null;
 
     private int width;
     private int height;
@@ -60,8 +62,8 @@ public class CombatState extends AbstractGameState {
 
     private static final int COMBO_RADIUS = 15;
 
-    private static final int SPELL_WIDTH = 630;
-    private static final int SPELL_ICON_SIZE = 64;
+    private static final int SKILL_WIDTH = 630;
+    private static final int SKILL_ICON_SIZE = 64;
 
     private static final int COMBAT_TEXT_HEIGHT = 500;
     private static final int COMBAT_TEXT_WIDTH = 630;
@@ -77,7 +79,13 @@ public class CombatState extends AbstractGameState {
         this.context = context;
         system = context.getCombatSystem();
 
-        player = new Combatant(system, "Player", 500);
+        // calculate initial health of player based on equipped items
+        int health = CombatPlayer.BASE_HEALTH;
+        for (String itemId : context.getPlayer().getEquipment()) {
+            health += context.getItem(itemId).getStat(Stat.LIFE);
+        }
+
+        player = new CombatPlayer(system, health);
         List<String> skills = context.getPlayer().getSkills();
         for (String skill : skills) {
             player.addSkill(skill);
@@ -100,7 +108,7 @@ public class CombatState extends AbstractGameState {
         loadSkills();
 
         state = CurrentCombatState.FIGHTING;
-        combatText = new StringBuilder();
+        combatText = new LinkedList<String>();
     }
 
 
@@ -151,7 +159,7 @@ public class CombatState extends AbstractGameState {
         for (Skill skill : allSkills) {
             boolean selected = i == selectedSkill;
             boolean available = availableSkills.contains(skill);
-            renderSkill(skill, x, y - (i * (SPELL_ICON_SIZE + PADDING)), available, selected);
+            renderSkill(skill, x, y - (i * (SKILL_ICON_SIZE + PADDING)), available, selected);
             i++;
         }
     }
@@ -179,7 +187,20 @@ public class CombatState extends AbstractGameState {
 
         batch.begin();
         font.setColor(Color.BLACK);
-        font.drawWrapped(batch, combatText, x + PADDING, y - PADDING, COMBAT_TEXT_WIDTH - PADDING * 2);
+
+        StringBuilder text = new StringBuilder();
+        while (true) {
+            for (String line : combatText) {
+                text.append(line);
+                text.append("\n");
+            }
+            if (font.getWrappedBounds(text, COMBAT_TEXT_WIDTH).height < (COMBAT_TEXT_HEIGHT - PADDING)) {
+                break;
+            }
+            text = new StringBuilder();
+            combatText.removeFirst();
+        }
+        font.drawWrapped(batch, text, x + PADDING, y - PADDING, COMBAT_TEXT_WIDTH - PADDING * 2);
         batch.end();
     }
 
@@ -263,20 +284,20 @@ public class CombatState extends AbstractGameState {
             shapeRenderer.setColor(Color.DARK_GRAY);
         }
 
-        shapeRenderer.rect(x, y - SPELL_ICON_SIZE, SPELL_WIDTH, 64);
+        shapeRenderer.rect(x, y - SKILL_ICON_SIZE, SKILL_WIDTH, 64);
         shapeRenderer.end();
 
         batch.begin();
-        batch.draw(Graphics.getTexture(skill.getIcon()), x - 1, y - SPELL_ICON_SIZE);
+        batch.draw(Graphics.getTexture(skill.getIcon()), x - 1, y - SKILL_ICON_SIZE);
         batch.end();
 
         shapeRenderer.begin(ShapeType.Line);
         shapeRenderer.setColor(Color.BLACK);
-        shapeRenderer.rect(x, y - SPELL_ICON_SIZE, SPELL_WIDTH, 64);
-        shapeRenderer.line(x + SPELL_ICON_SIZE, y, x + SPELL_ICON_SIZE, y - SPELL_ICON_SIZE);
+        shapeRenderer.rect(x, y - SKILL_ICON_SIZE, SKILL_WIDTH, 64);
+        shapeRenderer.line(x + SKILL_ICON_SIZE, y, x + SKILL_ICON_SIZE, y - SKILL_ICON_SIZE);
         shapeRenderer.end();
 
-        int textX = x + SPELL_ICON_SIZE + PADDING;
+        int textX = x + SKILL_ICON_SIZE + PADDING;
         int textY = y - PADDING;
 
         batch.begin();
@@ -377,7 +398,7 @@ public class CombatState extends AbstractGameState {
         if (enemy.getCurrentLife() == 0) {
             state = CurrentCombatState.WON;
             availableSkills.clear();
-            combatText.append("Du hast " + enemy.getName() + " besiegt!\n");
+            combatText.add("Du hast " + enemy.getName() + " besiegt!");
             if (baseEnemy.isBoss()) {
                 context.getLivingBosses().remove(baseEnemy.getId());
             }
@@ -388,7 +409,7 @@ public class CombatState extends AbstractGameState {
                 if (rnd <= drop.getDropRate()) {
                     Item item = context.getItem(drop.getItemId());
                     if (!context.getPlayer().getInventory().contains(item.getId())) {
-                        combatText.append("Du hast ein Gegenstand gewonnen: " + item.getName() + "\n");
+                        combatText.add("Du hast ein Gegenstand gewonnen: " + item.getName() + "");
                         context.getPlayer().getInventory().add(item.getId());
                     }
                 }
@@ -409,7 +430,7 @@ public class CombatState extends AbstractGameState {
         if (player.getCurrentLife() == 0) {
             state = CurrentCombatState.LOST;
             availableSkills.clear();
-            combatText.append(enemy.getName() + " hat dich besiegt!\n");
+            combatText.add(enemy.getName() + " hat dich besiegt!");
             return;
         }
         loadSkills();
@@ -420,13 +441,13 @@ public class CombatState extends AbstractGameState {
         for (CombatEvent event : combatEvents) {
             String entry = null;
             if (event.getHealOrDamage() > 0) {
-                entry = String.format("%s von %s heilt %s um %d.\n", event.getSkillName(),
-                        event.getCaster(), event.getTarget(), event.getHealOrDamage());
+                entry = String.format("%s von %s heilt %s um %d.", event.getSkillName(),
+                        event.getCaster().getName(), event.getTarget().getName(), event.getHealOrDamage());
             } else {
-                entry = String.format("%s von %s fügt %s %d Schaden zu.\n", event.getSkillName(),
+                entry = String.format("%s von %s fügt %s %d Schaden zu.", event.getSkillName(),
                         event.getCaster().getName(), event.getTarget().getName(), -event.getHealOrDamage());
             }
-            combatText.append(entry);
+            combatText.add(entry);
         }
     }
 }

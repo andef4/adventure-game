@@ -1,5 +1,5 @@
 {
-    "id": "aura_reduce_damage.",
+    "id": "aura_reduce_damage",
     "name": "Aura des Schutzes",
     "description": "Verringert erhaltenen Schaden um 30%.",
     "icon": "skills/aura_reduce_damage.png",
@@ -8,8 +8,8 @@
         "COMBO_POINT": 3
     },
     "casterEffects": [{
-        "intervalsRunning": 1,
-        "spellModifiers": {
+        "intervalsRunning": 1000000,
+        "skillModifiers": {
             "aura_reduce_damage": 0.3
         }
     }]

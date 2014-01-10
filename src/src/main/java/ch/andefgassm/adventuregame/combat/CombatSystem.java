@@ -10,7 +10,7 @@ public class CombatSystem {
 
     private Map<String, Skill> skills = new HashMap<String, Skill>();
     private List<IStatProcessor> statProcessors = new ArrayList<IStatProcessor>();
-    private Map<String, ISpellModifier> spellModifiers = new HashMap<String, ISpellModifier>();
+    private Map<String, ISkillModifier> skillModifiers = new HashMap<String, ISkillModifier>();
 
     public void registerSkill(String name, Skill skill) {
         skills.put(name, skill);
@@ -25,7 +25,7 @@ public class CombatSystem {
     }
 
 
-    public Map<String, ISpellModifier> getSpellModifiers() {
-        return spellModifiers;
+    public Map<String, ISkillModifier> getSkillModifiers() {
+        return skillModifiers;
     }
 }

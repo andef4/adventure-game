@@ -8,8 +8,8 @@
         "COMBO_POINT": 3
     },
     "casterEffects": [{
-        "intervalsRunning": 1,
-        "spellModifiers": {
+        "intervalsRunning": 1000000,
+        "skillModifiers": {
             "aura_enhance_damage": 0.4
         }
     }]
