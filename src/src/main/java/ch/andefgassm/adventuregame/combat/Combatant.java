@@ -11,10 +11,10 @@ public class Combatant {
     private Map<IStat, Integer> baseStats = new HashMap<IStat, Integer>();
     private Map<IResource, Integer> resources = new HashMap<IResource, Integer>();
     private List<String> skills = new ArrayList<String>();
-    private CombatSystem system = null;
+    protected CombatSystem system = null;
 
-    private List<ActiveEffect> activeHarmfulEffects = new ArrayList<ActiveEffect>();
-    private List<ActiveEffect> activeHelpfulEffects = new ArrayList<ActiveEffect>();
+    protected List<ActiveEffect> activeHarmfulEffects = new ArrayList<ActiveEffect>();
+    protected List<ActiveEffect> activeHelpfulEffects = new ArrayList<ActiveEffect>();
 
     private String name = null;
     private int currentLife = 0;
@@ -54,8 +54,8 @@ public class Combatant {
         skills.add(skill);
     }
 
-    public void cast(String skillName, Combatant target) {
-        Skill skill = system.getSkill(skillName);
+    public void cast(String skillId, Combatant target) {
+        Skill skill = system.getSkill(skillId);
         // add effects to the caster
         for (Effect casterEffect : skill.getCasterEffects()) {
             activeHelpfulEffects.add(new ActiveEffect(skill.getName(), casterEffect, this, this, system));

@@ -68,8 +68,6 @@ public class CombatState extends AbstractGameState {
 
     private static final int HUD_HEIGHT = 150;
 
-    public static final String PLAYER_NAME = "Spieler";
-
     enum CurrentCombatState {
         FIGHTING, LOST, WON, BAD_INPUT, GIVE_UP
     }
@@ -79,7 +77,8 @@ public class CombatState extends AbstractGameState {
         this.context = context;
         system = context.getCombatSystem();
 
-        player = new Combatant(system, PLAYER_NAME, 500);
+        // TODO calculate health
+        player = new CombatPlayer(system, 500);
         List<String> skills = context.getPlayer().getSkills();
         for (String skill : skills) {
             player.addSkill(skill);
