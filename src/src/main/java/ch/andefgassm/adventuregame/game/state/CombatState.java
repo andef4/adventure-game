@@ -2,6 +2,7 @@ package ch.andefgassm.adventuregame.game.state;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -47,7 +48,7 @@ public class CombatState extends AbstractGameState {
     private List<Skill> allSkills = null;
     private List<Skill> availableSkills = null;
     private int selectedSkill = 0;
-    private StringBuilder combatText = null;
+    private LinkedList<String> combatText = null;
 
     private int width;
     private int height;
@@ -107,7 +108,7 @@ public class CombatState extends AbstractGameState {
         loadSkills();
 
         state = CurrentCombatState.FIGHTING;
-        combatText = new StringBuilder();
+        combatText = new LinkedList<String>();
     }
 
 
@@ -186,7 +187,20 @@ public class CombatState extends AbstractGameState {
 
         batch.begin();
         font.setColor(Color.BLACK);
-        font.drawWrapped(batch, combatText, x + PADDING, y - PADDING, COMBAT_TEXT_WIDTH - PADDING * 2);
+
+        StringBuilder text = new StringBuilder();
+        while (true) {
+            for (String line : combatText) {
+                text.append(line);
+                text.append("\n");
+            }
+            if (font.getWrappedBounds(text, COMBAT_TEXT_WIDTH).height < (COMBAT_TEXT_HEIGHT - PADDING)) {
+                break;
+            }
+            text = new StringBuilder();
+            combatText.removeFirst();
+        }
+        font.drawWrapped(batch, text, x + PADDING, y - PADDING, COMBAT_TEXT_WIDTH - PADDING * 2);
         batch.end();
     }
 
@@ -384,7 +398,7 @@ public class CombatState extends AbstractGameState {
         if (enemy.getCurrentLife() == 0) {
             state = CurrentCombatState.WON;
             availableSkills.clear();
-            combatText.append("Du hast " + enemy.getName() + " besiegt!\n");
+            combatText.add("Du hast " + enemy.getName() + " besiegt!");
             if (baseEnemy.isBoss()) {
                 context.getLivingBosses().remove(baseEnemy.getId());
             }
@@ -395,7 +409,7 @@ public class CombatState extends AbstractGameState {
                 if (rnd <= drop.getDropRate()) {
                     Item item = context.getItem(drop.getItemId());
                     if (!context.getPlayer().getInventory().contains(item.getId())) {
-                        combatText.append("Du hast ein Gegenstand gewonnen: " + item.getName() + "\n");
+                        combatText.add("Du hast ein Gegenstand gewonnen: " + item.getName() + "");
                         context.getPlayer().getInventory().add(item.getId());
                     }
                 }
@@ -416,7 +430,7 @@ public class CombatState extends AbstractGameState {
         if (player.getCurrentLife() == 0) {
             state = CurrentCombatState.LOST;
             availableSkills.clear();
-            combatText.append(enemy.getName() + " hat dich besiegt!\n");
+            combatText.add(enemy.getName() + " hat dich besiegt!");
             return;
         }
         loadSkills();
@@ -427,13 +441,13 @@ public class CombatState extends AbstractGameState {
         for (CombatEvent event : combatEvents) {
             String entry = null;
             if (event.getHealOrDamage() > 0) {
-                entry = String.format("%s von %s heilt %s um %d.\n", event.getSkillName(),
-                        event.getCaster(), event.getTarget().getName(), event.getHealOrDamage());
+                entry = String.format("%s von %s heilt %s um %d.", event.getSkillName(),
+                        event.getCaster().getName(), event.getTarget().getName(), event.getHealOrDamage());
             } else {
-                entry = String.format("%s von %s fügt %s %d Schaden zu.\n", event.getSkillName(),
+                entry = String.format("%s von %s fügt %s %d Schaden zu.", event.getSkillName(),
                         event.getCaster().getName(), event.getTarget().getName(), -event.getHealOrDamage());
             }
-            combatText.append(entry);
+            combatText.add(entry);
         }
     }
 }
