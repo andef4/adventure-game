@@ -1,10 +1,8 @@
-package ch.andefgassm.adventuregame.game.stats;
+package ch.andefgassm.adventuregame.game;
 
 import ch.andefgassm.adventuregame.combat.Combatant;
 import ch.andefgassm.adventuregame.combat.Effect;
 import ch.andefgassm.adventuregame.combat.IStatProcessor;
-import ch.andefgassm.adventuregame.game.DamageType;
-import ch.andefgassm.adventuregame.game.Stat;
 
 public class MagicResistanceProcessor implements IStatProcessor {
 

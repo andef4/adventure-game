@@ -8,11 +8,13 @@ import java.util.Map;
 import ch.andefgassm.adventuregame.combat.CombatSystem;
 import ch.andefgassm.adventuregame.combat.Skill;
 import ch.andefgassm.adventuregame.game.Enemy;
+import ch.andefgassm.adventuregame.game.MagicResistanceProcessor;
 import ch.andefgassm.adventuregame.game.Savegame;
 import ch.andefgassm.adventuregame.game.assets.AssetLoader;
 import ch.andefgassm.adventuregame.game.inventory.Item;
 import ch.andefgassm.adventuregame.game.inventory.Player;
-import ch.andefgassm.adventuregame.game.stats.MagicResistanceProcessor;
+import ch.andefgassm.adventuregame.game.spellmodifiers.AuraEnhanceDamage;
+import ch.andefgassm.adventuregame.game.spellmodifiers.AuraReduceDamage;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -51,7 +53,8 @@ public class GameStateContext {
         }
 
         combatSystem.getStatProcessors().add(new MagicResistanceProcessor());
-        //combatSystem.getSpellModifiers().put("fire", new FireSpellModifier());
+        combatSystem.getSpellModifiers().put("aura_reduce_damage", new AuraReduceDamage());
+        combatSystem.getSpellModifiers().put("aura_enhance_damage", new AuraEnhanceDamage());
 
         player.getSkills().add("instant_damage");
         player.getSkills().add("instant_damage_combo");

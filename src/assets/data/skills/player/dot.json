@@ -1,32 +1,17 @@
 {
     "id": "dot",
     "name": "Damage over time",
-    "description": "Description",
+    "description": "Fügt über 5 Runden hohen Schaden zu.",
     "icon": "skills/dot.png",
     "harmful": true,
     "requiredResources": {
         "COMBO_POINT": 2
     },
     "targetEffects": [{
-        "intervalsRunning": 1,
-        "everyInterval": 1,
-        "damageType": null,
+        "intervalsRunning": 5,
         "baseLifeChange": -50,
-        "resourceChanges": {},
-        "statChanges": {},
         "statScaling": {
-            "damage": -1.0
+            "damage": -2.0
         }
-    }],
-    "casterEffects": [{
-        "intervalsRunning": 1,
-        "everyInterval": 1,
-        "damageType": null,
-        "baseLifeChange": 0,
-        "resourceChanges": {
-            "COMBO_POINT": 1
-        },
-        "statChanges": {},
-        "statScaling": {}
     }]
 }

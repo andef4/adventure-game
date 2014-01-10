@@ -1,32 +1,16 @@
 {
     "id": "heal",
     "name": "Heal over time",
-    "description": "Description",
+    "description": "Heilt den Spieler.",
     "icon": "skills/heal.png",
     "harmful": false,
     "requiredResources": {
         "COMBO_POINT": 2
     },
     "targetEffects": [{
-        "intervalsRunning": 1,
-        "everyInterval": 1,
-        "damageType": null,
-        "baseLifeChange": -50,
-        "resourceChanges": {},
-        "statChanges": {},
+        "baseLifeChange": 50,
         "statScaling": {
-            "damage": -1.0
+            "heal": 1.0
         }
-    }],
-    "casterEffects": [{
-        "intervalsRunning": 1,
-        "everyInterval": 1,
-        "damageType": null,
-        "baseLifeChange": 0,
-        "resourceChanges": {
-            "COMBO_POINT": 1
-        },
-        "statChanges": {},
-        "statScaling": {}
     }]
 }
