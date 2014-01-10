@@ -9,7 +9,7 @@
     },
     "casterEffects": [{
         "intervalsRunning": 1,
-        "spellModifiers": {
+        "skillModifiers": {
             "aura_enhance_damage": 0.4
         }
     }]

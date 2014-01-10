@@ -60,8 +60,8 @@ public class CombatState extends AbstractGameState {
 
     private static final int COMBO_RADIUS = 15;
 
-    private static final int SPELL_WIDTH = 630;
-    private static final int SPELL_ICON_SIZE = 64;
+    private static final int SKILL_WIDTH = 630;
+    private static final int SKILL_ICON_SIZE = 64;
 
     private static final int COMBAT_TEXT_HEIGHT = 500;
     private static final int COMBAT_TEXT_WIDTH = 630;
@@ -151,7 +151,7 @@ public class CombatState extends AbstractGameState {
         for (Skill skill : allSkills) {
             boolean selected = i == selectedSkill;
             boolean available = availableSkills.contains(skill);
-            renderSkill(skill, x, y - (i * (SPELL_ICON_SIZE + PADDING)), available, selected);
+            renderSkill(skill, x, y - (i * (SKILL_ICON_SIZE + PADDING)), available, selected);
             i++;
         }
     }
@@ -263,20 +263,20 @@ public class CombatState extends AbstractGameState {
             shapeRenderer.setColor(Color.DARK_GRAY);
         }
 
-        shapeRenderer.rect(x, y - SPELL_ICON_SIZE, SPELL_WIDTH, 64);
+        shapeRenderer.rect(x, y - SKILL_ICON_SIZE, SKILL_WIDTH, 64);
         shapeRenderer.end();
 
         batch.begin();
-        batch.draw(Graphics.getTexture(skill.getIcon()), x - 1, y - SPELL_ICON_SIZE);
+        batch.draw(Graphics.getTexture(skill.getIcon()), x - 1, y - SKILL_ICON_SIZE);
         batch.end();
 
         shapeRenderer.begin(ShapeType.Line);
         shapeRenderer.setColor(Color.BLACK);
-        shapeRenderer.rect(x, y - SPELL_ICON_SIZE, SPELL_WIDTH, 64);
-        shapeRenderer.line(x + SPELL_ICON_SIZE, y, x + SPELL_ICON_SIZE, y - SPELL_ICON_SIZE);
+        shapeRenderer.rect(x, y - SKILL_ICON_SIZE, SKILL_WIDTH, 64);
+        shapeRenderer.line(x + SKILL_ICON_SIZE, y, x + SKILL_ICON_SIZE, y - SKILL_ICON_SIZE);
         shapeRenderer.end();
 
-        int textX = x + SPELL_ICON_SIZE + PADDING;
+        int textX = x + SKILL_ICON_SIZE + PADDING;
         int textY = y - PADDING;
 
         batch.begin();
