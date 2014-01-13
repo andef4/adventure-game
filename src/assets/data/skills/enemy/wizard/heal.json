@@ -7,5 +7,6 @@
         "baseLifeChange": 50,
         "statScaling": {
             "heal": 1.0
+        }
     }]
 }
