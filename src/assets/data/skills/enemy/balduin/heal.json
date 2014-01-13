@@ -1,0 +1,11 @@
+{
+    "id": "balduin_heal",
+    "name": "Heilen",
+    "harmful": false,
+    "targetEffects": [{
+        "baseLifeChange": 100,
+        "statScaling": {
+            "heal": 1.0
+        }
+    }]
+}

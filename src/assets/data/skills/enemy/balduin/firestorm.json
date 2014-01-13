@@ -1,0 +1,11 @@
+{
+    "id": "balduin_firestorm",
+    "name": "Feuersturm",
+    "harmful": true,
+    "targetEffects": [{
+        "baseLifeChange": -250,
+        "statScaling": {
+            "damage": -1.0
+        }
+    }]
+}

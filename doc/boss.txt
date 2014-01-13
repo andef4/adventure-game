@@ -1,0 +1,52 @@
+Aktuelle Rundenzahl()
+Aktuelles Leben Gegner()
+Berserker magie effekt()
+
+Der rote Drache
+---------------
+* Krallenhieb (normaler Physikalischer schaden)
+* Flammenatem (hoher Magieschaden)
+
+Der black Drache
+----------------
+* Schwanzfeger
+* Spalten
+* Berseker (30 Runden schaden um 500% erhöht)
+
+Alfons
+--------
+Phase 1 {
+* Blitz
+* Heilen
+}
+
+Phase 2 {
+* Blitz
+* Gewittersturm
+}
+
+Balduin
+-------
+Phase 1 (100-75%) {
+* Zuschlagen (66%)
+* Schwerteln (33%)
+}
+
+Phase 2 (75-50%) {
+// extemer schaden
+* Feuersturm
+* Zuschlagen (66%)
+}
+
+Phase 3 (50-25%) {
+// heal
+* Zuschlagen (66%)
+* Heilen (33%)
+}
+
+Phase 4 (25-0%) {
+* Feuersturm (33%)
+* Zuschlagen (33%)
+* Heilen (33%)
+}
+

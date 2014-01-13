@@ -1,0 +1,11 @@
+{
+    "id": "balduin_pummel",
+    "name": "Zuschlagen",
+    "harmful": true,
+    "targetEffects": [{
+        "baseLifeChange": -100,
+        "statScaling": {
+            "damage": -1.0
+        }
+    }]
+}
