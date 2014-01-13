@@ -1,0 +1,20 @@
+{
+    "id": "black_dragon_berserker",
+    "name": "Berserker",
+    "harmful": true,
+    "requiredResources": {},
+    "casterEffects": [{
+        "intervalsRunning": 100000,
+        "skillModifiers": {
+            "berserker": 5.0
+        }
+    }],
+    "targetEffects": [{
+        "damageType": "PHYSICAL",
+        "baseLifeChange": -60
+    }]
+}
+
+
+
+

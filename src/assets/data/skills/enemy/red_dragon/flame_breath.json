@@ -1,10 +1,10 @@
 {
-    "id": "black_dragon_breath",
-    "name": "Breath",
+    "id": "red_dragon_flame_breath",
+    "name": "Flammenatem",
     "harmful": true,
     "requiredResources": {},
     "targetEffects": [{
         "damageType": "MAGIC",
-        "baseLifeChange": -40
+        "baseLifeChange": -60
     }]
 }

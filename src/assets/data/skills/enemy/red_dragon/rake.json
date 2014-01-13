@@ -1,0 +1,10 @@
+{
+    "id": "red_dragon_rake",
+    "name": "Krallenhieb",
+    "harmful": true,
+    "requiredResources": {},
+    "targetEffects": [{
+        "damageType": "PHYSICAL",
+        "baseLifeChange": -50
+    }]
+}

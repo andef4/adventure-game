@@ -1,0 +1,10 @@
+{
+    "id": "mob_attack",
+    "name": "Angriff",
+    "harmful": true,
+    "requiredResources": {},
+    "targetEffects": [{
+        "damageType": "PHYSICAL",
+        "baseLifeChange": -50
+    }]
+}

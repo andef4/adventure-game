@@ -1,0 +1,10 @@
+{
+    "id": "black_dragon_split",
+    "name": "Spalten",
+    "harmful": true,
+    "requiredResources": {},
+    "targetEffects": [{
+        "damageType": "PHYSICAL",
+        "baseLifeChange": -70
+    }]
+}
