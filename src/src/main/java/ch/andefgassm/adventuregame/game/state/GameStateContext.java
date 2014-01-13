@@ -15,6 +15,7 @@ import ch.andefgassm.adventuregame.game.inventory.Item;
 import ch.andefgassm.adventuregame.game.inventory.Player;
 import ch.andefgassm.adventuregame.game.skillmodifiers.AuraEnhanceDamage;
 import ch.andefgassm.adventuregame.game.skillmodifiers.AuraReduceDamage;
+import ch.andefgassm.adventuregame.game.skillmodifiers.Berserker;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -55,6 +56,7 @@ public class GameStateContext {
         combatSystem.getStatProcessors().add(new MagicResistanceProcessor());
         combatSystem.getSkillModifiers().put("aura_reduce_damage", new AuraReduceDamage());
         combatSystem.getSkillModifiers().put("aura_enhance_damage", new AuraEnhanceDamage());
+        combatSystem.getSkillModifiers().put("berserker", new Berserker());
 
         player.getSkills().add("instant_damage");
         player.getSkills().add("instant_damage_combo");

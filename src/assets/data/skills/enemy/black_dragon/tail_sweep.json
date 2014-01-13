@@ -1,0 +1,10 @@
+{
+    "id": "black_dragon_tail_sweep",
+    "name": "Schwanzfeger",
+    "harmful": true,
+    "requiredResources": {},
+    "targetEffects": [{
+        "damageType": "PHYSICAL",
+        "baseLifeChange": -60
+    }]
+}
