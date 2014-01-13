@@ -2,7 +2,7 @@
     "id": "knight",
     "name": "Blauer Ritter",
     "boss": false,
-    "aiClass": "ch.andefgassm.adventuregame.game.ai.BlackDragonAI",
+    "aiClass": "ch.andefgassm.adventuregame.game.ai.MobAI",
     "life": 500,
     "stats": {
         "magic_resistance": 30

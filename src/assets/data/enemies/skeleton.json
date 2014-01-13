@@ -2,7 +2,7 @@
     "id": "skeleton",
     "name": "Skelett",
     "boss": false,
-    "aiClass": "ch.andefgassm.adventuregame.game.ai.BlackDragonAI",
+    "aiClass": "ch.andefgassm.adventuregame.game.ai.MobAI",
     "life": 700,
     "stats": {
         "magic_resistance": 10

@@ -134,7 +134,7 @@ public class MapState extends AbstractGameState implements Screen  {
         batch.begin();
         font.setColor(Color.BLACK);
         boldFont.setColor(Color.BLACK);
-        boldFont.draw(batch, "Wilkommen zu Adventure Game!", HUD_PADDING, HUD_HEIGHT - HUD_PADDING);
+        boldFont.draw(batch, "Willkommen zu Adventure Game!", HUD_PADDING, HUD_HEIGHT - HUD_PADDING);
         font.draw(batch, "Bewege dich mit den Cursor Tasten", HUD_PADDING, HUD_HEIGHT - HUD_PADDING - LINE_HEIGHT);
         font.draw(batch, "[i] Inventar öffnen", HUD_PADDING, HUD_HEIGHT - HUD_PADDING - LINE_HEIGHT*2);
         font.draw(batch, "[e] Kampf beginnen. Du musst direkt neben dem Gegner stehen.", HUD_PADDING, HUD_HEIGHT - HUD_PADDING - LINE_HEIGHT*3);
