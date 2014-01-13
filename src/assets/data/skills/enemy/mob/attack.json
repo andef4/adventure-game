@@ -5,6 +5,9 @@
     "requiredResources": {},
     "targetEffects": [{
         "damageType": "PHYSICAL",
-        "baseLifeChange": -50
+        "baseLifeChange": -50,
+        "statScaling": {
+            "damage": -1.0
+        }
     }]
 }

@@ -5,7 +5,7 @@
     "aiClass": "ch.andefgassm.adventuregame.game.ai.MobAI",
     "life": 670,
     "stats": {
-        "magic_resistance": 50
+        "damage": 50
     },
     "drops": [
     			{"itemId": "chest2", "dropRate": 0.1},

@@ -5,7 +5,7 @@
     "aiClass": "ch.andefgassm.adventuregame.game.ai.MobAI",
     "life": 700,
     "stats": {
-        "magic_resistance": 10
+        "damage": 300
     },
     "drops": [{"itemId": "hands4", "dropRate": 0.2}]
 }
