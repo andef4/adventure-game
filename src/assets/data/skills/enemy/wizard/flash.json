@@ -1,0 +1,10 @@
+{
+    "id": "wizard_flash",
+    "name": "Blitz",
+    "harmful": true,
+    "requiredResources": {},
+    "targetEffects": [{
+        "damageType": "MAGIC",
+        "baseLifeChange": -80
+    }]
+}
