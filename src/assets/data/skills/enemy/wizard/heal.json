@@ -1,0 +1,11 @@
+{
+    "id": "wizard_heal",
+    "name": "Heilen",
+    "harmful": false,
+    "requiredResources": {},
+    "targetEffects": [{
+        "baseLifeChange": 50,
+        "statScaling": {
+            "heal": 1.0
+    }]
+}

@@ -1,0 +1,10 @@
+{
+    "id": "wizard_tempest",
+    "name": "Gewittersturm",
+    "harmful": true,
+    "requiredResources": {},
+    "targetEffects": [{
+        "damageType": "MAGIC",
+        "baseLifeChange": -100
+    }]
+}

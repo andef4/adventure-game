@@ -1,6 +1,6 @@
 {
     "id": "black_dragon",
-    "name": "The Black Dragon",
+    "name": "Schwarzer Drache",
     "boss": true,
     "aiClass": "ch.andefgassm.adventuregame.game.ai.BlackDragonAI",
     "life": 500,
