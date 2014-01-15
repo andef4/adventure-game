@@ -4,9 +4,9 @@
     "name": "Ungeschliffene rostige Klinge",
     "icon": "armor/weapon/weapon1.png",    
     "stats": {
-        "life": 100,
+        "life": 50,
         "heal": 0,
-        "damage": 50,
+        "damage": 20,
         "armor": 50,
         "magic_resistance": 0
     }

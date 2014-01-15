@@ -3,7 +3,7 @@
     "name": "Roter Drache",
     "boss": true,
     "aiClass": "ch.andefgassm.adventuregame.game.ai.RedDragonAI",
-    "life": 500,
+    "life": 600,
     "stats": {
         "magic_resistance": 30
     },

@@ -18,7 +18,7 @@ public class RedDragonAI extends AbstractAICombatant {
         Random r = new Random();
         float rnd = r.nextFloat();
 
-        if (rnd > 0.7) {
+        if (rnd < 0.7) {
             return "red_dragon_rake";
         } else {
             return "red_dragon_flame_breath";
