@@ -186,7 +186,7 @@ public class CombatState extends AbstractGameState {
         shapeRenderer.end();
 
         batch.begin();
-        font.setColor(Color.BLACK);
+        smallFont.setColor(Color.BLACK);
 
         StringBuilder text = new StringBuilder();
         while (true) {
@@ -194,13 +194,13 @@ public class CombatState extends AbstractGameState {
                 text.append(line);
                 text.append("\n");
             }
-            if (font.getWrappedBounds(text, COMBAT_TEXT_WIDTH).height < (COMBAT_TEXT_HEIGHT - PADDING)) {
+            if (smallFont.getWrappedBounds(text, COMBAT_TEXT_WIDTH).height < (COMBAT_TEXT_HEIGHT - PADDING)) {
                 break;
             }
             text = new StringBuilder();
             combatText.removeFirst();
         }
-        font.drawWrapped(batch, text, x + PADDING, y - PADDING, COMBAT_TEXT_WIDTH - PADDING * 2);
+        smallFont.drawWrapped(batch, text, x + PADDING, y - PADDING, COMBAT_TEXT_WIDTH - PADDING * 2);
         batch.end();
     }
 
