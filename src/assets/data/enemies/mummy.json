@@ -1,6 +1,6 @@
 {
     "id": "mummy",
-    "name": "Mummy",
+    "name": "Untote Mumie",
     "boss": false,
     "aiClass": "ch.andefgassm.adventuregame.game.ai.MobAI",
     "life": 670,
