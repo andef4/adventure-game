@@ -3,5 +3,5 @@
     "name": "Balduin",
     "boss": true,
     "aiClass": "ch.andefgassm.adventuregame.game.ai.BalduinAI",
-    "life": 50000
+    "life": 30000
 }
