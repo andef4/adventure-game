@@ -6,7 +6,7 @@
     "casterEffects": [{
         "intervalsRunning": 100000,
         "skillModifiers": {
-            "berserker": 5.0
+            "berserker": 2.0
         }
     }],
     "targetEffects": [{

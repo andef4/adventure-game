@@ -3,7 +3,7 @@
     "name": "Schwarzer Drache",
     "boss": true,
     "aiClass": "ch.andefgassm.adventuregame.game.ai.BlackDragonAI",
-    "life": 1500,
+    "life": 2000,
     "stats": {
         "magic_resistance": 30
     },

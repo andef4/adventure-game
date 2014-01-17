@@ -1,13 +1,13 @@
 {
     "type": "legs",
     "id": "legs2",
-    "name": "Kettenstiefel der Drachenmenschen",
+    "name": "Kettenbeinschienen der Drachenmenschen",
     "icon": "armor/legs/legs2.png",
     "stats": {
-        "life": 0,
-        "heal": 0,
-        "damage": 0,
-        "armor": 0,
-        "magic_resistance": 0
+        "life": 30,
+        "heal": 20,
+        "damage":20,
+        "armor": 50,
+        "magic_resistance": 50
     }
 }

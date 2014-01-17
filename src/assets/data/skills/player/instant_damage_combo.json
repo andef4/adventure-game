@@ -9,9 +9,9 @@
     },
     "targetEffects": [{
         "damageType": null,
-        "baseLifeChange": -150,
+        "baseLifeChange": -190,
         "statScaling": {
-            "damage": -2.0
+            "damage": -1.0
         }
     }]
 }

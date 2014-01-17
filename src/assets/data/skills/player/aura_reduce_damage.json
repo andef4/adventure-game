@@ -5,7 +5,7 @@
     "icon": "skills/aura_reduce_damage.png",
     "harmful": false,
     "requiredResources": {
-        "COMBO_POINT": 3
+        "COMBO_POINT": 1
     },
     "casterEffects": [{
         "intervalsRunning": 1000000,

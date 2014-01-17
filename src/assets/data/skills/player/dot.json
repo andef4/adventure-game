@@ -11,7 +11,7 @@
         "intervalsRunning": 5,
         "baseLifeChange": -50,
         "statScaling": {
-            "damage": -2.0
+            "damage": -1.0
         }
     }]
 }
