@@ -10,9 +10,9 @@ public class ArmorProcessor implements IStatProcessor {
     public int modify(Combatant caster, Combatant target, Effect effect, int baseDamage) {
         int effectiveDamage = baseDamage;
         if (effect.getDamageType() == DamageType.PHYSICAL && baseDamage < 0) {
-            Integer magicResistance = target.getCurrentStats().get(Stat.ARMOR);
-            if (magicResistance != null) {
-                effectiveDamage = baseDamage + magicResistance;
+            Integer armor = target.getCurrentStats().get(Stat.ARMOR);
+            if (armor != null) {
+                effectiveDamage = baseDamage + armor;
                 if (effectiveDamage > 0) {
                     effectiveDamage = 0;
                 }
