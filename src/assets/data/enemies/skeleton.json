@@ -3,9 +3,9 @@
     "name": "Skelett",
     "boss": false,
     "aiClass": "ch.andefgassm.adventuregame.game.ai.MobAI",
-    "life": 700,
+    "life": 2100,
     "stats": {
-        "damage": 300
+        "damage": 150
     },
     "drops": [{"itemId": "hands4", "dropRate": 0.2}]
 }

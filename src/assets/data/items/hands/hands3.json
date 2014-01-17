@@ -8,6 +8,6 @@
         "heal": 10,
         "damage": 40,
         "armor": 20,
-        "magic_resistance": 10
+        "magic_resistance": 5
     }
 }

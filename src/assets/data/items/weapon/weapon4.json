@@ -4,10 +4,10 @@
     "name": "Elfenklinge der Achtsamkeit",
     "icon": "armor/weapon/weapon4.png",    
     "stats": {
-        "life": 100,
-        "heal": 100,
-        "damage": 50,
-        "armor": 0,
+        "life": 250,
+        "heal": 150,
+        "damage": 150,
+        "armor": 200,
         "magic_resistance": 0
     }
 }

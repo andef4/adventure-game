@@ -4,10 +4,10 @@
     "name": "Magischer Orkspalter",
     "icon": "armor/weapon/weapon5.png",    
     "stats": {
-        "life": 200,
-        "heal": 120,
-        "damage": 80,
+        "life": 300,
+        "heal": 200,
+        "damage": 280,
         "armor": 50,
         "magic_resistance": 100
     }
-}
+}q
