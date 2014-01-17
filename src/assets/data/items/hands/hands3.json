@@ -4,10 +4,10 @@
     "name": "Zwergenhandschuhe",
     "icon": "armor/hands/hands3.png",
     "stats": {
-        "life": 0,
-        "heal": 0,
-        "damage": 0,
-        "armor": 0,
-        "magic_resistance": 0
+        "life": 60,
+        "heal": 10,
+        "damage": 40,
+        "armor": 20,
+        "magic_resistance": 10
     }
 }
