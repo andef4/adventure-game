@@ -3,9 +3,9 @@
     "name": "Glueckliches Skelett",
     "boss": false,
     "aiClass": "ch.andefgassm.adventuregame.game.ai.MobAI",
-    "life": 700,
+    "life": 2100,
     "stats": {
-        "damage": 300
+        "damage": 180
     },
-    "drops": [{"itemId": "weapon5", "dropRate": 0.1}]
+    "drops": [{"itemId": "weapon5", "dropRate": 0.2}]
 }
