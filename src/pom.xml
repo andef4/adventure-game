@@ -5,13 +5,13 @@
 
 	<artifactId>adventuregame</artifactId>
 	<packaging>jar</packaging>
-	<name>Main Core</name>
+	<name>Adventure Game</name>
 	<groupId>ch.andefgassm</groupId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0</version>
 
 	<properties>
 		<gdx.version>1.0-SNAPSHOT</gdx.version>
-		<mainClass>com.andefgassm.adventuregame.core.MainDesktop</mainClass>
+		<mainClass>ch.andefgassm.adventuregame.game.Main</mainClass>
 	</properties>
 
 	<dependencies>
@@ -41,11 +41,6 @@
 			<version>${gdx.version}</version>
 			<classifier>natives-desktop</classifier>
 		</dependency>
-        <dependency>
-            <groupId>com.badlogicgames.gdx</groupId>
-            <artifactId>gdx-tools</artifactId>
-            <version>${gdx.version}</version>
-        </dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
