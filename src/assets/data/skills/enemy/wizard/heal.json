@@ -4,7 +4,7 @@
     "harmful": false,
     "requiredResources": {},
     "targetEffects": [{
-        "baseLifeChange": 50,
+        "baseLifeChange": 90,
         "statScaling": {
             "heal": 1.0
         }

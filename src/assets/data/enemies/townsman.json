@@ -3,13 +3,13 @@
     "name": "Townsman",
     "boss": false,
     "aiClass": "ch.andefgassm.adventuregame.game.ai.MobAI",
-    "life": 700,
+    "life": 1700,
     "stats": {
-        "magic_resistance": 150
+        "magic_resistance": 100,
+        "damage": 100
     },
     "drops": [
-    			{"itemId": "chest3", "dropRate": 0.1},
-    			{"itemId": "feet3", "dropRate": 0.1},
-    			{"itemId": "hands3", "dropRate": 0.1},
-    			{"itemId": "legs3", "dropRate": 0.1}
+    			{"itemId": "chest3", "dropRate": 0.2},
+    			{"itemId": "feet3", "dropRate": 0.2},
+    			{"itemId": "hands3", "dropRate": 0.2}
     	     ]}

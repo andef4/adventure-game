@@ -5,6 +5,6 @@
     "requiredResources": {},
     "targetEffects": [{
         "damageType": "MAGIC",
-        "baseLifeChange": -100
+        "baseLifeChange": -260
     }]
 }
