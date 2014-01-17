@@ -3,7 +3,7 @@
     "name": "Alfons",
     "boss": true,
     "aiClass": "ch.andefgassm.adventuregame.game.ai.WizardAI",
-    "life": 1000,
+    "life": 3000,
     "stats": {
         "magic_resistance": 100
     },

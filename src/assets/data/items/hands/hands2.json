@@ -4,10 +4,10 @@
     "name": "Kettenhandschuhe der Drachenmenschen",
     "icon": "armor/hands/hands2.png",
     "stats": {
-        "life": 0,
-        "heal": 0,
-        "damage": 0,
-        "armor": 0,
+        "life": 30,
+        "heal": 5,
+        "damage": 20,
+        "armor": 20,
         "magic_resistance": 0
     }
 }

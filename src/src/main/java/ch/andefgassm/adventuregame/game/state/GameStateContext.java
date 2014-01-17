@@ -59,11 +59,11 @@ public class GameStateContext {
         combatSystem.getSkillModifiers().put("berserker", new Berserker());
 
         player.getSkills().add("instant_damage");
+        player.getSkills().add("aura_reduce_damage");
+        player.getSkills().add("aura_enhance_damage");
         player.getSkills().add("instant_damage_combo");
         player.getSkills().add("dot");
         player.getSkills().add("heal");
-        player.getSkills().add("aura_enhance_damage");
-        player.getSkills().add("aura_reduce_damage");
 
         loadSavegame();
 
