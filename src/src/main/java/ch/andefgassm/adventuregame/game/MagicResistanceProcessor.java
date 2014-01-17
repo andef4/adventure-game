@@ -12,7 +12,7 @@ public class MagicResistanceProcessor implements IStatProcessor {
         if (effect.getDamageType() == DamageType.MAGIC && baseDamage < 0) {
             Integer magicResistance = target.getCurrentStats().get(Stat.MAGIC_RESISTANCE);
             if (magicResistance != null) {
-                effectiveDamage = baseDamage - magicResistance;
+                effectiveDamage = baseDamage + magicResistance;
                 if (effectiveDamage > 0) {
                     effectiveDamage = 0;
                 }
